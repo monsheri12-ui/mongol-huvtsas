@@ -62,13 +62,33 @@
     const boot=['boots','ankleboots','chelsea','winterboots','hiking'].includes(shape);
     const open=['sandals','slides','flipflops'].includes(shape);
     const heels=['pumps','stilettos','wedges'].includes(shape);
-    const shade=tint(c,-.29),light=tint(c,.3),skin=iconMode?tint(c,-.42):hero==='temuulen'?'#d7aa86':'#e5bb9c';
+    const shade=tint(c,-.29),light=tint(c,.3),skin=iconMode?(open||shape==='slippers'?'#e6c0a2':tint(c,-.42)):hero==='temuulen'?'#d7aa86':'#e5bb9c';
     const P=(d,f=c,extra='')=>`<path d="${d}" fill="${f}" ${extra}/>`;
     const L=(d,col=shade,w=.8)=>`<path d="${d}" fill="none" stroke="${col}" stroke-width="${w}"/>`;
     let unit='',top=tall?352:boot?394:416;
-    const sole=sporty?'#e9e5d9':shape==='feltboots'?'#b4a994':tint(c,-.4);
+    const sole=shape==='watershoes'?tint(c,-.34):sporty?'#e9e5d9':shape==='feltboots'?'#b4a994':tint(c,-.4);
     if(shape==='womensflat'){
       unit=P('M106 421Q114 426 123 420L126 426Q131 435 125 439 113 443 101 438 97 434 103 428Z')+P('M106 421Q114 425 123 420L122 425Q114 432 105 426Z',skin,'stroke-width=".65"')+L('M105 427Q113 434 123 426',light,.75)+L('M109 433q4-3 8 0m-4-2v4',shade,.8)+P('M100 438Q114 442 127 437v2q-13 5-26 1Z',sole);
+    }else if(shape==='watershoes'){
+      unit=P('M106 417Q114 414 123 417L124 426Q127 431 128 436Q125 442 111 441L99 438Q97 434 102 429L105 424Z');
+      unit+=P('M106 417Q114 414 123 417L122 421Q114 419 105 422Z',shade)+P('M109 417Q114 416 120 418L119 421Q114 420 109 422Z',skin,'stroke="none"');
+      unit+=L('M106 424 102 434m20-10 4 10',light,.7);
+      for(const [x,y]of[[110,425],[116,425],[108,429],[114,429],[120,429],[107,433],[113,433],[119,433]])unit+=`<ellipse cx="${x}" cy="${y}" rx="1.05" ry=".7" fill="${shade}" stroke="none" opacity=".6"/>`;
+      unit+=P('M99 439Q114 442 128 438L128 440.1Q114 446.05 99 442.1Z',sole)+L('M102 438q11 2 23-1',tint(c,.17),.6);
+    }else if(shape==='canvas'){
+      unit=P('M106 419Q114 416 123 419L123 425Q127 430 128 435Q130 439 125 440Q112 444 99 439Q97 436 102 430L105 425Z');
+      unit+=P('M107 419Q114 416 122 419L121 423Q114 421 106 424Z',skin,'stroke-width=".55"')+P('M101 431Q114 428 126 431L128 436Q114 441 99 436Z','#efebe0');
+      unit+=L('M107 423l4 7m10-7 3 7',shade,.8)+L('M110 423l9 1m-10 2 11 1m-11 2 12 1','#f6f1e5',1.05)+L('M101 434q13-3 25 0','#b6b1a5',.7);
+      unit+=P('M98 437Q113 442 129 436L129 440.1Q114 446.05 99 442.1Z','#ece8dc')+L('M101 439q12 3 25-1','#8d8a7f',.6);
+    }else if(shape==='platforms'){
+      unit=P('M105 410Q114 406 124 410L124 420Q127 425 129 431L128 434Q114 438 98 433Q96 430 102 424L104 420Z');
+      unit+=P('M106 410Q114 406 123 410L122 415Q114 413 105 416Z',shade)+P('M109 410Q114 408 120 411L119 415Q114 413 109 416Z',skin,'stroke="none"');
+      unit+=P('M109 415Q114 413 119 417L123 430Q114 432 105 429Z',tint(c,.1))+L('M110 418l9 1m-10 3 11 1m-12 3 13 1','#f6f0e3',1.25);
+      unit+=P('M98 432Q113 437 129 432L129 441.4Q114 446.7 99 443.4Z','#ebe6d9')+L('M99 436q15 4 29 0','#bcb5a7',.8)+L('M102 439h24','#d6cfc0',.7);
+    }else if(shape==='slippers'){
+      unit=P('M106 416Q114 412 122 416L123 425Q126 428 128 434Q130 439 125 441Q112 444 99 440Q96 438 100 432L104 425Z',skin);
+      unit+=P('M103 425Q114 421 125 425L129 435Q127 442 113 442Q102 442 98 438Q98 431 103 425Z');
+      unit+=P('M103 425Q114 420 125 425L126 429Q114 425 101 430Z','#e9dfc8')+L('M102 429q12-4 24 0',tint(c,-.12),.65)+P('M98 437Q114 442 129 436L129 440.1Q114 446.05 99 442.1Z',sole);
     }else if(heels){
       unit=P(shape==='pumps'?'M103 424Q112 429 121 416L125 415Q129 419 127 426L126 432 126 442H119L119 432Q109 438 100 440Q94 440 97 435Z':'M102 426Q111 429 121 415L125 413Q129 417 127 425L125 430 124 442H121L120 431Q111 438 99 440 95 440 97 435Z')+
        P(shape==='wedges'?'M97 437Q111 438 126 425L125 443H121Q109 442 98 440Z':shape==='pumps'?'M98 438Q109 438 120 428L127 427 126 443H119L119 432Q108 442 99 441Z':'M98 438Q110 438 122 428L126 427 124 443H121L121 431Q109 441 99 441Z',sole)+
@@ -82,16 +102,26 @@
       unit+=L('M103 438h.1m3 .7h.1m3 .4h.1',tint(skin,-.2),.55);
     }else{
       if(tall||boot){
-        unit=P(`M${tall?102:104} ${top}Q114 ${top-4} ${tall?129:126} ${top}L123 418Q124 424 127 429 132 437 126 440 111 444 99 439 95 435 102 427L105 420Z`);
-        unit+=L(`M${tall?103:105} ${top+3}Q115 ${top+6} ${tall?128:125} ${top+2}`,light,1.2);
-        if(shape==='chelsea')unit+=P('M113 398Q118 397 122 399L121 419 112 421Z',shade)+L('M115 400v17m3-17v16',tint(c,.07),.55);
+        if(shape==='chelsea'){
+          unit=P('M120 409v-6q2-4 4-1l1 8Z',shade)+P('M106 407Q114 404 123 407L122 419Q124 425 127 430Q132 437 126 440Q112 444 99 439Q95 436 101 430L105 421Z');
+          unit+=P('M115 408Q119 406 123 408L122 421Q118 425 114 422Z',shade)+L('M116 410v10m2-11v12m2-12v11',tint(c,-.1),.55)+L('M106 409q4 2 8 1M104 427q6-5 10-2m-13 9q10 3 23 0',light,.7)+P('M118 437h10v6h-10Z',sole,'stroke="none"');
+        }else if(shape==='mongolboots'){
+          unit=P('M102 352Q114 348 129 352L123 418Q124 424 127 429Q131 437 125 440Q111 444 99 439Q96 436 95 431Q94 427 97 428L104 432L105 420Z');
+          unit+=L('M103 355Q115 358 128 354',light,1.2);
+        }else{
+          unit=P(`M${tall?102:104} ${top}Q114 ${top-4} ${tall?129:126} ${top}L123 418Q124 424 127 429 132 437 126 440 111 444 99 439 95 435 102 427L105 420Z`);
+          unit+=L(`M${tall?103:105} ${top+3}Q115 ${top+6} ${tall?128:125} ${top+2}`,light,1.2);
+        }
         if(['boots','ankleboots','winterboots','hiking'].includes(shape)){
           unit+=P('M109 400Q114 398 119 400L119 422 108 425Z',tint(c,.08));
-          for(let y=404;y<421;y+=5)unit+=L(`M109 ${y} 119 ${y+1}`,tint(c,.65),1.25);
+          if(shape==='hiking'){
+            unit+=P('M104 394Q115 390 126 394L126 401Q115 398 104 401Z',shade)+L('M109 404 119 408 109 412 119 416 109 420',tint(c,.72),1.2);
+            for(const [x,y]of[[108,404],[120,408],[108,412],[120,416]])unit+=`<circle cx="${x}" cy="${y}" r=".9" fill="#c7bb9b" stroke="${shade}" stroke-width=".4"/>`;
+          }else for(let y=404;y<421;y+=5)unit+=L(`M109 ${y} 119 ${y+1}`,tint(c,.65),1.25);
         }
         if(shape==='winterboots')unit+=P('M104 394Q115 389 126 394L126 401Q115 398 104 401Z','#e1dacb');
         if(shape==='rainboots')unit+=P('M102 352Q114 348 129 352v6q-14-4-27 0Z',shade)+L('M106 362v48',light,1.1);
-        if(shape==='feltboots')unit+=L('M109 360q-4 26 0 51',light,1.8);
+        if(shape==='feltboots'){unit+=L('M104 355q12 4 23 0',tint(c,.12),2);for(const [x,y]of[[108,365],[119,372],[111,390],[123,403]])unit+=L(`M${x} ${y}h1.2`,tint(c,-.14),.55);}
         if(shape==='mongolboots')unit+=L('M108 370q7-10 14 1l-2 43M105 419q9-4 18 2','#d8bd77',1.4)+P('M101 433Q114 437 127 433L125 437Q113 442 101 437Z');
         if(shape==='tallboots')unit+=L('M122 361q-3 26-2 52M107 417l14 3',tint(c,-.18),.8);
       }else{
@@ -99,7 +129,7 @@
         top=flat?420:415;
         unit=P(`M106 ${top}Q114 ${top-4} 123 ${top}L124 426Q125 429 128 433 131 438 126 440 112 443 99 439 96 436 100 431L104 426Z`);
         if(flat){
-          unit+=P('M107 420Q114 416 122 420L121 425Q114 429 106 425Z',skin,'stroke-width=".65"');
+          unit+=P(['oxfords','derby'].includes(shape)?'M107 420Q114 416 122 420L121 422Q114 424 106 422Z':'M107 420Q114 416 122 420L121 425Q114 429 106 425Z',skin,'stroke-width=".65"');
           unit+=L('M106 426Q114 431 122 426',shade,.9);
         }else{
           unit+=P('M106 415Q114 411 123 415L122 420Q114 423 105 420Z',shade);
@@ -115,7 +145,8 @@
           if(shape==='loafers')unit+=P('M105 429q8-3 17 0l1 4q-9-2-19 1Z',tint(c,-.1))+L('M112 430h5',light,1.2);
           else for(let x=104;x<124;x+=3)unit+=L(`M${x} 433v2`,light,.6);
         }
-        if(['oxfords','derby'].includes(shape))unit+=L('M110 425l10 1m-11 2 12 1m-13 2 14 1',light,1)+L('M107 425 105 434m16-10 4 10',shade,.65);
+        if(shape==='oxfords')unit+=P('M109 422Q114 420 120 422L123 433Q114 435 106 433Z')+L('M111 421 113 431m5-10-1 10M108 432q7-3 15 0',shade,.75)+L('M112 424l5 1m-5 2 5 1m-5 2h5',light,.85);
+        if(shape==='derby')unit+=P('M106 422 112 421 113 431 104 432Zm13-1 6 1 2 10-9-1Z',tint(c,.09))+L('M111 424l8 1m-8 2 8 1m-7 2 7 1',light,1)+L('M106 423 105 430m19-7 2 7',shade,.65);
         if(shape==='womensflat')unit+=L('M110 429q4 3 8 0m-4 0v3',shade,1);
         if(shape==='slipons')unit+=L('M107 424q8-3 15 1m-14-1-2 6m14-6 3 6',light,.9);
         if(shape==='slippers')unit+=P('M106 416Q114 411 123 416L123 421Q114 417 105 422Z','#e9dfc8')+L('M104 427q9-3 19 1',light,1.1);
@@ -123,8 +154,10 @@
         if(shape==='clogs'){unit+=P('M104 421q10-7 20 1l1 6q-10-5-22 1Z');for(const [x,y]of[[108,429],[114,428],[120,429],[105,433],[112,433],[119,433]])unit+=`<ellipse cx="${x}" cy="${y}" rx="1.2" ry=".7" fill="${shade}" stroke="none"/>`;}
         if(shape==='watershoes')unit+=L('M107 424q7 3 15 0m-14 4q7 3 15 0',light,1.1);
       }
-      const thick=['running','platforms','clogs'].includes(shape)?3.4:['mensflat','loafers','moccasins','oxfords','derby'].includes(shape)?1.2:2.1;
-      unit+=P(`M98 437Q112 441 128 436L128 ${438+thick}Q114 ${445+thick/2} 99 ${440+thick}Z`,sole)+L('M100 438q13 4 26-1',tint(sole,.25),.55);
+      const thick=['running','platforms','clogs'].includes(shape)?3.4:shape==='chelsea'?1.4:['mensflat','loafers','moccasins','oxfords','derby'].includes(shape)?1.2:2.1;
+      if(shape==='mongolboots')unit+=P('M95 430 100 436Q112 441 128 435L128 440.1Q114 446.05 99 442.1Q96 437 95 430Z',sole)+L('M96 431 101 436q12 4 25 0',tint(sole,.25),.55);
+      else if(shape==='hiking')unit+=P('M98 437Q112 441 128 436L128 441 124 443 121 442 117 444 113 443 109 444 105 442 101 443 99 441Z',sole)+L('M101 438q12 4 24-1',tint(sole,.25),.55);
+      else unit+=P(`M98 437Q112 441 128 436L128 ${438+thick}Q114 ${445+thick/2} 99 ${440+thick}Z`,sole)+L('M100 438q13 4 26-1',tint(sole,.25),.55);
     }
     const outline='stroke="#665d50" stroke-width=".95" stroke-linejoin="round" stroke-linecap="round"';
     if(iconMode){const sy=tall?1.25:boot?1.8:1.8,sx=tall?1.32:1.65,tx=48-115*sx,ty=136-444*sy;
@@ -152,13 +185,22 @@
     }else if(shape==='bracelet'||shape==='anklet'){
       s=E(80,74,51,34,'none',9)+L('M34 59q-9 19 4 33',2);
       if(shape==='anklet')s+=L('M119 94v18',2)+gem(119,118,7);
-      if(!iconMode)s=shape==='anklet'?`<g transform="translate(101 408) scale(.18 .12)">${s}</g>`:`<g transform="translate(191 251) scale(.18 .15)">${s}</g>`;
+      if(!iconMode){
+        const center=shape==='anklet'?[114,421]:[204.3,277.5],rx=shape==='anklet'?7.3:5.6,ry=shape==='anklet'?2.8:2.5;
+        s=`<g class="fitted-${shape}" transform="translate(${center[0]} ${center[1]}) rotate(${shape==='anklet'?0:-8})"><ellipse cx="0" cy="0" rx="${rx}" ry="${ry}" fill="none" stroke="${c}" stroke-width="1.25"/><path d="M-${rx} 0Q0 ${ry*2} ${rx} 0" fill="none" stroke="${c}" stroke-width="1.9"/><path d="M-${rx-1} .1Q0 ${ry*1.5} ${rx-1} .1" fill="none" stroke="${tint(c,.3)}" stroke-width=".4"/>${shape==='anklet'?`<path d="M4 2v3" stroke="${c}" stroke-width=".7"/><circle cx="4" cy="5.6" r="1.3" fill="${c}" stroke="none"/>`:''}</g>`;
+      }
     }else if(shape==='brooch'){
       s=L('M29 112 126 35',4)+`<path d="M24 110q-8 9 2 13l8-6m90-83 8 7-7 8" fill="none" stroke="${c}" stroke-width="4"/>`+E(80,73,43,33,c,2)+E(80,73,33,24,'#91b7a6',3)+`<path d="M80 49 58 73 80 97 102 73ZM47 73h66M80 49v48" fill="none" stroke="#d8e8d8" stroke-width="1.5"/>`+L('M45 62q-7 12 0 23m70-23q7 12 0 23',1.5);
       if(!iconMode)s=`<g transform="translate(115 196) scale(.13)">${s}</g>`;
     }else if(shape.includes('piercing')){
-      s=E(80,73,32,35,'none',8)+E(55,48,8,8,c,1)+E(105,99,8,8,c,1);
-      if(!iconMode){const pos=shape==='nosepiercing'?[146,116,.075]:shape==='lippiercing'?[145,132,.06]:[159,91,.075];s=`<g transform="translate(${pos[0]} ${pos[1]}) scale(${pos[2]}) translate(-80 -73)">${s}</g>`;}
+      if(iconMode){
+        if(shape==='nosepiercing')s=`<path d="M75 35Q74 53 63 70Q57 80 68 84Q80 91 89 82M89 82q7-3 11-1" fill="none" stroke="#b2a08a" stroke-width="2.6"/><path d="M91 79C103 73 107 88 97 92" fill="none" stroke="${c}" stroke-width="4"/><circle cx="91" cy="79" r="3" fill="${c}"/>`;
+        else if(shape==='lippiercing')s=`<path d="M43 74Q60 58 73 66L80 70 87 66Q100 58 117 74Q102 96 80 96T43 74Z" fill="#d8b6ab" stroke="#b99b8f" stroke-width="1.4"/><path d="M44 74Q80 86 116 74" fill="none" stroke="#b49489" stroke-width="1.6"/><path d="M91 89v13" fill="none" stroke="${c}" stroke-width="3"/><circle cx="91" cy="102" r="4.2" fill="${c}"/>`;
+        else s=`<path d="M44 72Q75 42 113 58" fill="none" stroke="#7d6d59" stroke-width="7"/><path d="M93 44Q108 56 101 76" fill="none" stroke="${c}" stroke-width="4"/><circle cx="93" cy="44" r="4.5" fill="${c}"/><circle cx="101" cy="76" r="4.5" fill="${c}"/>`;
+      }else{
+        s=E(80,73,32,35,'none',8)+E(55,48,8,8,c,1)+E(105,99,8,8,c,1);
+        const pos=shape==='nosepiercing'?[146,116,.075]:shape==='lippiercing'?[145,132,.06]:[159,91,.075];s=`<g transform="translate(${pos[0]} ${pos[1]}) scale(${pos[2]}) translate(-80 -73)">${s}</g>`;
+      }
     }else{
       if(shape==='choker')s=L('M17 55q63 36 126 0m-126 10q63 36 126 0',6)+gem(80,91,10);
       else if(['beads','pearls'].includes(shape)){
@@ -181,6 +223,17 @@
     }
     return `<g stroke-linecap="round" stroke-linejoin="round">${s}</g>`;
   }
+  const bagGripAnchor={x:205,y:278};
+  function bagGripDrawing(hero,glove,color){
+    const skin=hero==='temuulen'?'#d7aa86':'#e5bb9c',fill=glove?color:skin;
+    const edge=glove?tint(fill,-.3):'#a58368';
+    let grip=`<path d="M-5-10 5-10 6-3Q9 0 7 5Q6 8 2 9L-3 8Q-8 6-8 1L-7-4Z" fill="${fill}" stroke="${edge}" stroke-width="1.05"/>`;
+    if(glove)grip+=`<path d="M-5.5-10.5h11v6h-11Z" fill="${tint(fill,-.07)}" stroke="${edge}" stroke-width=".75"/>`;
+    grip+=`<path d="M-5-3Q-1-7 3-4L5-1Q6 1 4 3L1 2-3 0" fill="${tint(fill,-.045)}" stroke="${edge}" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round"/>`;
+    if(glove!=='mittens')grip+=`<path d="M-5 3Q0 6 6 3M-4 6Q0 8 4 6" fill="none" stroke="${edge}" stroke-width=".65" opacity=".6"/>`;
+    if(glove==='fingerless')grip+=`<path d="M-6 1Q-1 5 6 1L6 5Q3 10-3 8Q-6 7-6 1Z" fill="${skin}" stroke="${edge}" stroke-width=".65"/><path d="M1-3Q4-3 5-1Q6 1 4 3L1 2Z" fill="${skin}" stroke="${edge}" stroke-width=".6"/><path d="M-3 5q3 2 6 0" fill="none" stroke="#ac8265" stroke-width=".55"/>`;
+    return `<g class="bag-grip" transform="translate(${bagGripAnchor.x} ${bagGripAnchor.y})">${grip}</g>`;
+  }
   function handwearDrawing(shape,c){
     const P=(d,f=c)=>`<path d="${d}" fill="${f}"/>`;
     const one=P(shape==='mittens'?'M70 269 83 273 80 281Q86 286 84 290 82 293 79 288L78 300Q73 307 69 300L67 291Q66 285 68 280Z':'M70 269 83 273 80 281Q85 286 84 289 82 292 79 288L78 301Q77 305 75 299L74 291 73 302Q71 305 69 301L67 293Q66 286 68 280Z')+P('M69 267 84 271 82 280 67 276Z',tint(c,-.07))+`<path d="M71 273l9 2M72 284v14m4-15v15" fill="none" stroke="${tint(c,-.22)}" stroke-width=".8" opacity="${shape==='mittens'?.25:.55}"/>`;
@@ -193,7 +246,8 @@
     const shoulder=male?108:110,neck=male?183:184;
     // The straps follow the body's sloping shoulder. One continuous armhole
     // joins the side seam; a second inset contour made the old cut look detached.
-    const outline=`M121 168Q114 169 ${shoulder} 173C110 184 110 196 106 205Q108 224 109 241L106 ${hem}Q140 ${hem+4} 174 ${hem}L171 241Q172 224 174 205C170 196 170 184 ${280-shoulder} 173Q166 169 159 168C158 178 152 ${neck} 140 ${neck}C128 ${neck} 122 178 121 168Z`;
+    const waist=male?109:112;
+    const outline=`M121 168Q114 169 ${shoulder} 173C110 184 110 196 106 205Q108 224 ${waist} 241L106 ${hem}Q140 ${hem+4} 174 ${hem}L${280-waist} 241Q172 224 174 205C170 196 170 184 ${280-shoulder} 173Q166 169 159 168C158 178 152 ${neck} 140 ${neck}C128 ${neck} 122 178 121 168Z`;
     return `<path d="${outline}" fill="${c}"/><path d="M121 168C122 178 128 ${neck} 140 ${neck}C152 ${neck} 158 178 159 168" fill="none" stroke="${binding}" stroke-width="1.65"/><path d="M111 ${hem-5}Q140 ${hem-1} 169 ${hem-5}" fill="none" stroke="${edge}" stroke-width=".65" opacity=".32"/><path d="M111 216q2 8 1 15m56-15q-2 8-1 15" fill="none" stroke="${edge}" stroke-width=".55" opacity=".17"/>`;
   }
   function expandedGarment(i,c,hero){
@@ -202,6 +256,38 @@
     if(['tank','undershirt'].includes(shape))return tankDrawing(c,hero);
     if(i.group==='shoes')return shoeDrawing(shape,c,false,hero);
     if(i.group==='jewelry')return jewelDrawing(shape,c,false,hero);
+    if(shape==='shirtdress'){
+      const cut='M119 166Q107 170 98 177L81 203Q90 211 101 216L111 200Q112 227 114 249Q111 290 91 368Q140 380 189 368Q169 290 166 249Q168 227 169 200L179 216Q190 211 199 203L182 177Q173 170 161 166L140 180Z';
+      let dress=P(cut)+P('M137 182H143V371H137Z',tint(c,.075));
+      dress+=P('M119 166 140 180 128 190 113 172ZM161 166 140 180 152 190 167 172Z',tint(c,.18))+P('M113 249Q140 255 167 249L169 258Q140 265 111 258Z',tint(c,-.04));
+      dress+=P('M152 202h13v17q-6 4-13 0Z',tint(c,.045))+S('M152 205h13M86 201l14 9m80 0 14-9M119 279Q115 320 105 357M161 279Q165 320 175 357M97 363Q140 373 183 363',.7);
+      for(const y of [201,224,247,276,300,324,348])dress+=`<circle cx="140" cy="${y}" r="1.55" fill="#eee5d0" stroke="${shade}" stroke-width=".65"/>`;
+      return dress;
+    }
+    if(shape==='wrapdress'){
+      const cut='M119 166Q107 170 98 177L81 203Q90 211 101 216L111 200Q112 227 114 249Q110 289 91 368Q140 381 189 368Q170 289 166 249Q168 227 169 200L179 216Q190 211 199 203L182 177Q173 170 161 166L140 197Z';
+      let dress=P(cut)+P('M119 166 140 197 143 193 122 167Z',tint(c,-.045))+P('M161 166 139 199 118 254 123 257 145 201 163 168Z',tint(c,.06));
+      dress+=P('M112 249Q140 256 168 249L169 257Q140 264 111 257Z',tint(c,-.045))+S('M122 258Q143 308 181 367M87 202l13 8m80 0 13-8M115 282q-6 35-13 72M97 363Q140 374 183 363',.75);
+      dress+=`<path d="M165 253q10-10 16-3-1 7-16 3m0 0q12 7 14 23m-16-21q3 12 0 24" fill="none" stroke="${tint(c,-.16)}" stroke-width="1.4"/>`;
+      return dress;
+    }
+    if(shape==='nightdress'){
+      const cut='M121 168 112 174Q116 189 109 205Q109 231 112 248Q109 301 98 381Q140 391 182 381Q171 301 168 248Q171 231 171 205Q164 189 168 174L159 168Q156 188 140 189Q124 188 121 168Z';
+      let dress=P(cut)+P('M100 374Q140 384 180 374L182 381Q140 391 98 381Z',tint(c,.075))+S('M121 170Q125 191 140 192Q155 191 159 170M140 194v21M111 216q7 5 15 4m28 0q8 1 15-4M119 266q-1 57-9 102m51-102q1 57 9 102',.65);
+      for(const y of [199,207])dress+=`<circle cx="140" cy="${y}" r="1.2" fill="${tint(c,.52)}" stroke-width=".55"/>`;
+      return dress;
+    }
+    if(shape==='slip'){
+      const cut='M114 187Q140 201 166 187Q172 214 169 242Q169 302 185 370Q140 380 95 370Q111 302 111 242Q108 214 114 187Z';
+      return `<path d="M120 190Q120 181 123 170M160 190Q160 181 157 170" fill="none" stroke="${c}" stroke-width="2.4"/>`+P(cut)+S('M115 189Q140 203 165 189M114 214q8 4 16 3m20 0q8 1 16-3M119 259q0 59-12 101m54-101q0 59 12 101M99 364Q140 374 181 364',.65);
+    }
+    if(shape==='pajamapants'){
+      const cut='M107 278H173Q182 303 178 331L179 416Q165 420 151 416L145 350Q144 333 140 323Q136 333 135 350L129 416Q115 420 101 416L102 331Q98 303 107 278Z';
+      let trousers=P(cut)+P('M107 279Q140 283 173 279V291Q140 296 107 291Z',tint(c,-.055))+S('M112 282v8m6-7v9m7-8v9m8-8v8m14-8v8m8-9v9m7-10v9m6-10v8M110 306q5 10 5 22m55-22q-5 10-5 22M108 410h18m28 0h18',.7);
+      trousers+=`<path d="M139 289q-9-8-12-1 0 6 12 2m2-1q9-8 12-1 0 6-12 2m-2 1-4 17m6-17 5 17" fill="none" stroke="${tint(c,.65)}" stroke-width="1.35"/>`;
+      return trousers;
+    }
+
     if(shape==='paddedvest'){
       const cut='M120 167Q140 178 160 167L178 176Q173 194 177 210Q174 229 179 249L179 281Q140 291 101 281L101 249Q106 229 103 210Q107 194 102 176Z';
       const clip='puffer-panels-'+(++paintSerial);
@@ -210,9 +296,45 @@
       vest+='</g>'+P('M120 165Q140 174 160 165L162 178Q140 188 118 178Z',tint(c,-.06))+P('M137 180h6v104h-6Z',tint(c,-.13))+S('M140 181v100',.85)+S('M111 239l13 10m45-10-13 10',1.5)+P('M102 277Q140 286 178 277v5Q140 292 102 282Z',tint(c,-.07))+`<rect x="138.4" y="201" width="3.2" height="7" rx="1" fill="#d6d1bc" stroke-width=".6"/>`;
       return vest;
     }
+    if(shape==='leatherjacket'){
+      const waist=male?105:111,hem=male?280:275,metal='#cfbd94';
+      const cut=`M119 166 97 176Q86 188 80 207L65 261Q73 267 84 269L103 220Q109 234 ${waist} 249L107 ${hem}Q140 ${hem+7} 173 ${hem}L${280-waist} 249Q171 234 177 220L196 269Q207 267 215 261L200 207Q194 188 183 176L161 166 140 186Z`;
+      return P(cut)+P('M119 166 140 186 128 208 110 185 119 180 113 172Z',tint(c,.13))+P('M161 166 140 186 152 197 170 181 160 178 166 172Z',tint(c,.08))+P(`M107 ${hem-6}Q140 ${hem} 173 ${hem-6}v7Q140 ${hem+8} 107 ${hem+1}Z`,tint(c,-.09))+P('M67 252 86 258 83 269 64 262Zm146 0-19 6 3 11 19-7Z',tint(c,-.06))+`<path d="M151 197 132 ${hem}M111 242l17-10m24 0 17 10" fill="none" stroke="${metal}" stroke-width="1.45"/><path d="M97 177l11 8m75-8-11 8M80 230l12 5m96 0 12-5M119 253l-3 11m45-11 3 11" fill="none" stroke="${shade}" stroke-width=".9" opacity=".5"/><circle cx="120" cy="182" r="1.4" fill="${metal}"/><circle cx="158" cy="179" r="1.4" fill="${metal}"/><rect x="143" y="219" width="3.3" height="6" rx=".8" fill="${metal}" stroke="${shade}" stroke-width=".5"/>`;
+    }
+    if(shape==='raincoat'){
+      const hem=male?360:355;
+      const cut=`M119 164Q140 178 161 164L182 176Q193 190 198 211L217 269Q208 277 196 279L176 224Q173 251 176 282L184 ${hem}Q140 ${hem+13} 96 ${hem}L104 282Q107 251 104 224L84 279Q72 277 63 269L82 211Q87 190 98 176Z`;
+      let rain=P(cut)+P('M112 158Q120 174 140 180Q160 174 168 158L172 170Q159 189 140 187Q121 189 108 170Z',tint(c,-.045));
+      rain+=P('M109 190Q140 201 171 190L173 209Q140 217 107 209Z',tint(c,.045))+P(`M135 184h10v${hem-181}h-10Z`,tint(c,.075));
+      rain+=P('M106 277h25v15h-25Zm43 0h25v15h-25Z',tint(c,-.045))+P('M105 276h27v7h-27Zm43 0h27v7h-27Z',tint(c,.075));
+      rain+=P('M66 260 86 266 83 279 63 270Zm148 0-20 6 3 13 20-9Z',tint(c,-.065));
+      rain+=`<path d="M139 188v${hem-188}M108 219l-6 123m70-123 6 123M99 ${hem-5}Q140 ${hem+5} 181 ${hem-5}" fill="none" stroke="${shade}" stroke-width=".8" opacity=".42"/><path d="M126 182v27m28-27v27" fill="none" stroke="${tint(c,.6)}" stroke-width="1.5"/><path d="M126 207v4m28-4v4" stroke="${shade}" stroke-width="1.8"/><path d="m90 211-10 35m31 65-2 25m62-120 3 21" fill="none" stroke="${tint(c,.65)}" stroke-width="2" opacity=".25" stroke-linecap="round"/>`;
+      for(const y of [220,251,282,315,344])rain+=`<circle cx="141" cy="${y}" r="1.35" fill="#d7d8c7" stroke="${shade}" stroke-width=".55"/>`;
+      return rain;
+    }
 
+    if(shape==='parka'){
+      const hem=male?334:330;
+      const cut=`M119 164Q140 177 161 164L183 176Q194 189 199 209L217 263 196 272 177 222Q175 257 178 282L181 ${hem}Q140 ${hem+12} 99 ${hem}L102 282Q105 257 103 222L84 272 63 263 81 209Q86 189 97 176Z`;
+      let coat=P(cut)+P('M112 158Q120 174 140 180Q160 174 168 158L172 170Q159 188 140 187Q121 188 108 170Z',tint(c,-.055));
+      coat+=P(`M135 183h10v${hem-180}h-10Z`,tint(c,.065))+P('M105 269h27v24h-27Zm43 0h27v24h-27Z',tint(c,-.045))+P('M104 267h29v8h-29Zm43 0h29v8h-29Z',tint(c,.035));
+      coat+=P('M66 257 86 264 83 273 63 264Zm148 0-20 7 3 9 20-9Z',tint(c,-.08));
+      coat+=S(`M140 186v${hem-188}M106 299l-3 25m71-25 3 25M102 ${hem-5}Q140 ${hem+4} 178 ${hem-5}`, .85)+`<path d="M126 182v29m28-29v29" fill="none" stroke="${tint(c,.6)}" stroke-width="1.55"/><path d="M126 209v4m28-4v4" fill="none" stroke="${shade}" stroke-width="1.8"/>`;
+      for(const y of [217,244,271,306,327])coat+=`<circle cx="141" cy="${y}" r="1.5" fill="#d2c7a7" stroke="${shade}" stroke-width=".55"/>`;
+      return coat;
+    }
+    if(['widepants','leggings','skinnyjeans'].includes(shape)){
+      const wide=shape==='widepants',elastic=shape==='leggings';
+      const cut=wide?'M107 278Q140 281 173 278Q178 298 177 318L186 416H148L140 330 132 416H94L103 318Q102 298 107 278Z':elastic?'M108 278Q140 282 172 278Q177 296 174 318L169 343Q167 354 171 376L174 416H157L154 383Q149 361 151 347L146 318Q140 306 134 318L129 347Q131 361 126 383L123 416H106L109 376Q113 354 111 343L106 318Q103 296 108 278Z':'M107 278Q140 281 173 278Q180 296 177 319L172 347Q173 380 174 416H155L151 382Q148 361 150 348L146 320Q140 309 134 320L130 348Q132 361 129 382L125 416H106Q107 380 108 347L103 319Q100 297 107 278Z';
+      let trousers=P(cut)+P(elastic?'M108 278Q140 282 172 278V286Q140 290 108 286Z':'M107 278Q140 281 173 278V286Q140 290 107 286Z',tint(c,elastic?-.045:-.025));
+      if(!elastic){trousers+=S('M137 289v24q0 5 7 7M111 292Q112 301 125 307M169 292Q168 301 155 307',.85)+`<circle cx="141" cy="284" r="1.45" fill="#c4a66a" stroke-width=".65"/>`;}
+      if(wide)trousers+=S('M117 320 110 406M163 320 170 406M98 410h31m22 0h31',.7);
+      else trousers+=S(elastic?'M108 411h13m38 0h13':'M108 411h15m34 0h15',.65);
+      if(shape==='skinnyjeans')trousers+=S('M111 294Q112 308 126 312M169 294Q168 308 154 312M112 281v7m16-6v6m24-6v6m16-7v7',.65)+`<path d="M111 333 113 384M169 333 167 384" fill="none" stroke="${tint(c,.3)}" stroke-width="2" opacity=".16"/>`;
+      return trousers;
+    }
     if(i.variant==='vneck')return garment('sweater',c,hero,'vneck');
-    if(i.variant==='crease')return garment('pants',c,hero)+S('M119 319v83m42-83v83',.9);
+    if(i.variant==='crease')return garment('pants',c,hero,'round',true)+S('M119 319v83m42-83v83',.9);
     if(i.variant==='cargo')return garment('shorts',c,hero)+P('M98 310h21v23H98Zm63 0h21v23h-21Z',tint(c,-.05))+S('M99 315h19m44 0h19');
     if(i.variant==='briefcut')return P('M108 278q32 6 64 0l-3 15q-13 1-22 16h-14q-9-15-22-16Z')+P('M108 278q32 6 64 0v8q-32 6-64 0Z',tint(c,.2));
     if(i.id!==shape&&originalShapes.has(shape))return garment(shape,c,hero);
@@ -226,7 +348,7 @@
     if(['maledeel','femaledeel'].includes(shape))return garment('deel',c,hero);
     if(['tops','outer'].includes(i.category)||['undershirt','bra','sportsbra','thermalshirt','rashguard'].includes(shape)){
       const sleeveless=['tank','undershirt','knitvest','bra','sportsbra'].includes(shape),short=['shortshirt','polo','sportstop','blouse','croptop'].includes(shape),crop=['croptop','bra','sportsbra'].includes(shape),hem=crop?228:shape==='tunic'?313:282;
-      const waist=male?103:106;
+      const waist=male?103:111;
       if(sleeveless)s=P(`M122 167l-14 8q6 17 1 34l2 29-3 ${hem-238}q32 6 64 0l-3 ${238-hem} 2-29q-5-17 1-34l-14-8q-3 20-18 20t-18-20Z`);
       else s=P(`M119 166Q107 169 97 176${short?'L78 204Q87 213 99 217L105 202':'L84 194Q78 207 73 231L63 264Q71 269 82 272L102 220'}Q${short?105:110} ${Math.min(230,hem-17)} ${waist} ${Math.min(248,hem-10)}L${waist-5} ${hem}Q140 ${hem+7} ${285-waist} ${hem}L${280-waist} ${Math.min(248,hem-10)}Q${short?175:170} ${Math.min(230,hem-17)} ${short?'175 202L181 217Q193 213 202 204L183 176':'178 220L198 272Q209 269 217 264L207 231Q202 207 196 194L183 176'}Q173 169 161 166Q140 188 119 166Z`);
 
@@ -240,7 +362,15 @@
       if(shape==='flannelshirt')for(let y=205;y<hem-8;y+=15)s+=S(`M111 ${y}h58`,2.6);
       if(shape==='flannelshirt')for(let x=116;x<=165;x+=16)s+=S(`M${x} 192v82`,2.6);
       if(shape==='denimshirt')s+=P('M114 203h16v19l-8 5-8-5Zm36 0h16v19l-8 5-8-5Z',tint(c,.08));
-      if(shape==='bra'||shape==='sportsbra')s=P('M116 190Q126 181 140 194Q154 181 164 190v18q-10 16-24 5-14 11-24-5Z')+`<path d="M120 190 122 171M160 190 158 171" stroke="${c}" stroke-width="4.5" fill="none"/>`+P('M116 214q24 7 48 0v7q-24 7-48 0Z',tint(c,-.06))+S('M120 194q7 4 16 13m24-13q-7 4-16 13',.8);
+      if(shape==='bra'){
+        s=`<path d="M121 191Q120 180 123 172M159 191Q160 180 157 172" fill="none" stroke="${c}" stroke-width="2.4"/>`+P('M114 203Q140 210 166 203L164 217Q140 226 116 217Z',tint(c,-.055));
+        s+=P('M115 196Q118 186 125 187Q133 187 139 196L138 207Q130 218 120 212Q114 208 115 196Z',tint(c,.035))+P('M165 196Q162 186 155 187Q147 187 141 196L142 207Q150 218 160 212Q166 208 165 196Z');
+        s+=P('M137 197Q140 200 143 197L143 204Q140 207 137 204Z',tint(c,-.04))+S('M119 199Q125 203 134 207M161 199Q155 203 146 207M119 217Q140 223 161 217',.65);
+      }
+      if(shape==='sportsbra'){
+        s=P('M121 169Q115 170 112 174L116 188Q117 196 114 205V216Q140 224 166 216V205Q163 196 164 188L168 174Q165 170 159 169Q156 185 140 186Q124 185 121 169Z');
+        s+=P('M114 210Q140 217 166 210V220Q140 228 114 220Z',tint(c,-.065))+S('M121 171Q125 188 140 189Q155 188 159 171M117 206Q140 212 163 206M118 217Q140 223 162 217',.8);
+      }
       if(['winterjacket','downjacket','parka','windbreaker','raincoat','trench','denimjacket','leatherjacket','bomber','fleece','poncho','furcoat','paddedvest'].includes(shape)){
         const base=['trench','raincoat','parka','furcoat'].includes(shape)?'coat':shape==='paddedvest'?'vest':'jacket';
         s=garment(base,c,hero);
@@ -249,7 +379,10 @@
         if(shape==='denimjacket')s+=P('M111 204h21v23l-11 5-10-5Zm37 0h21v23l-10 5-11-5Z',tint(c,.12))+S('M109 241h62');
         if(shape==='leatherjacket')s+=P('M120 162 149 192 130 211 110 182Z',tint(c,.12))+S('M151 192 131 283',2);
         if(shape==='furcoat')for(let y=188;y<350;y+=15)s+=S(`M108 ${y}q5-4 10 0m45 0q5-4 10 0`,1.4);
-        if(shape==='poncho')s=P('M122 165Q140 177 158 165Q183 170 196 194L224 275Q194 294 167 286L140 300 113 286Q84 294 56 275L84 194Q97 171 122 165Z')+P('M122 165Q140 176 158 165l4 10Q140 187 118 175Z',tint(c,-.08))+S('M121 181Q108 220 94 270M159 181Q172 220 186 270M140 190v99M65 274q24 12 47 5l28 13 28-13q22 7 47-5',1.1);
+        if(shape==='poncho'){
+          s=P('M119 165Q95 169 80 194L56 275Q83 289 109 284L140 298 171 284Q197 289 224 275L200 194Q185 169 161 165L140 184Z');
+          s+=`<path d="M119 165 140 184 161 165" fill="none" stroke="${tint(c,-.1)}" stroke-width="2"/>`+S('M140 185v10M119 187Q104 221 87 268M161 187Q176 221 193 268M140 202Q137 240 140 286M66 274Q88 284 109 278L140 291 171 278Q192 284 214 274',.95);
+        }
       }
       return s;
     }
@@ -274,8 +407,8 @@
     if(i.slot==='full'){
       if(['jumpsuit','shortjumpsuit','overalls','tracksuit','suit','pajamas','shortpajamas'].includes(shape)){
         const bottom=['shortjumpsuit','shortpajamas'].includes(shape)?'shorts':'pants';
-        s=garment(bottom,c,hero)+garment(shape==='suit'?'blazer':shape==='tracksuit'?'jacket':'tshirt',shape==='pajamas'?tint(c,.12):c,hero);
-        if(shape==='overalls')s=garment('pants',c,hero)+P('M111 173h9l5 41h30l5-41h9l-8 50 6 26 8 34q-35 7-70 0l8-34 6-26Z')+P('M115 209h50l-3 41h-44Z',tint(c,.025))+P('M126 222h28v20q-14 8-28 0Z',tint(c,.08))+S('M119 214l-3 33m45-33 3 33M128 226h24',.8)+`<circle cx="121" cy="214" r="2.5" fill="#cbb07d"/><circle cx="159" cy="214" r="2.5" fill="#cbb07d"/>`;
+        s=garment(bottom,c,hero,'round',true)+garment(shape==='suit'?'blazer':shape==='tracksuit'?'jacket':'tshirt',shape==='pajamas'?tint(c,.12):c,hero);
+        if(shape==='overalls')s=garment('pants',c,hero,'round',true)+P('M111 173h9l5 41h30l5-41h9l-8 50 6 26 8 34q-35 7-70 0l8-34 6-26Z')+P('M115 209h50l-3 41h-44Z',tint(c,.025))+P('M126 222h28v20q-14 8-28 0Z',tint(c,.08))+S('M119 214l-3 33m45-33 3 33M128 226h24',.8)+`<circle cx="121" cy="214" r="2.5" fill="#cbb07d"/><circle cx="159" cy="214" r="2.5" fill="#cbb07d"/>`;
         if(shape==='pajamas')for(let y=205;y<275;y+=20)for(let x=118;x<168;x+=20)s+=`<circle cx="${x}" cy="${y}" r="2.5" fill="${tint(c,.45)}" stroke="none"/>`;
         return s;
       }
@@ -283,7 +416,7 @@
         s=shape==='swimsuit'?'':garment('womensbriefs',c,hero);
         if(shape==='swimsuit')s+=P('M121 168l-9 4 1 16q4 16-2 41l-3 47q16 4 21 20l4 9h14l4-9q5-16 21-20l-3-47q-6-25-2-41l1-16-9-4q-4 25-19 25t-19-25Z')+S('M118 239q22 9 44 0');
         else if(shape==='tankini')s+=garment('tank',c,hero);
-        else s+=garment('bra',c,hero)+S('M116 188 126 171m38 17-10-17',2.2);
+        else s+=garment('bra',c,hero);
         return s;
       }
       const long=['maxidress','nightdress','slip','bathrobe'].includes(shape),strap=['sundress','maxidress','nightdress','slip'].includes(shape),bottom=long?409:369;
@@ -316,13 +449,13 @@
     return s;
   }
 
-  function garment(id,c,hero='nomin',neckline='round'){
+  function garment(id,c,hero='nomin',neckline='round',legacyPants=false){
     const expanded=expandedGarment(byId[id],c,hero);if(expanded!==null)return clothWrap(expanded,c);
     const male=hero==='temuulen';
     const shade=tint(c,-.24),light=tint(c,.2),metal='#c4a66a';
     const P=(d,fill=c,extra='')=>`<path d="${d}" fill="${fill}" ${extra}/>`;
     const S=(d,opacity=.5,width=1.1)=>`<path d="${d}" fill="none" stroke="${shade}" stroke-width="${width}" opacity="${opacity}"/>`;
-    const L=male?103:108,R=280-L;
+    const L=male?103:111,R=280-L;
     const longTop=`M119 166Q107 169 97 176L84 194Q78 207 73 231L63 264Q71 269 82 272L102 220Q106 235 ${L} 248L104 284Q140 290 176 284L${R} 248Q174 235 178 220L198 272Q209 269 217 264L207 231Q202 207 196 194L183 176Q173 169 161 166Q140 179 119 166Z`;
     const cuffs=P('m66 253 19 7-3 12-19-8Zm148 0-19 7 3 12 19-8Z',tint(c,-.04));
     const softFolds=S('M102 211q9 12 6 25m70-25q-9 12-6 25M77 239l11 5m104 0 11-5M110 276q9 3 18 0m24 0q9 3 18 0',.42);
@@ -340,7 +473,7 @@
         s+=S('M112 278v7m7-6v7m7-6v7m7-6v7m7-6v7m7-6v7m7-6v7m7-6v7m7-6v7',.3,.7);
         break;
       case 'tshirt':
-        s=P(`M119 166Q106 169 97 176L78 204q9 9 21 13l6-15Q106 225 104 246L${male?102:105} 284Q140 290 ${male?178:175} 284L176 246Q174 225 175 202L181 217q12-4 21-13l-19-28q-9-7-22-10Q140 181 119 166Z`)+P('M120 167Q140 181 160 167l-1 2Q140 183 121 169Z',tint(c,-.035),'stroke="none"')+S('M83 201q7 8 17 10m80 0q10-2 17-10M107 278q33 6 66 0M107 226q-3 12-3 23m72-23q3 12 3 23',.35,.85);
+        s=P(`M119 166Q106 169 97 176L78 204q9 9 21 13l6-15Q${male?'106 225 104':'112 226 111'} 246L${male?102:106} 284Q140 290 ${male?178:174} 284L${male?176:169} 246Q${male?'174 225':'168 226'} 175 202L181 217q12-4 21-13l-19-28q-9-7-22-10Q140 181 119 166Z`)+P('M120 167Q140 181 160 167l-1 2Q140 183 121 169Z',tint(c,-.035),'stroke="none"')+S('M83 201q7 8 17 10m80 0q10-2 17-10M107 278q33 6 66 0M107 226q-3 12-3 23m72-23q3 12 3 23',.35,.85);
         break;
       case 'jacket':
         s=P('M119 161q21 16 42 0l25 14q13 10 18 29l17 62-21 9-24-60 2 77q-38 9-76 0l2-77-24 60-21-9 17-62q5-19 18-29Z')+P('M119 163Q140 178 161 163l2 8Q140 185 117 171Z',tint(c,-.08))+P('M104 281q36 7 72 0v12q-36 8-72 0Z',tint(c,-.08))+P('m62 258 22 7-4 10-21-8Zm156 0-22 7 4 10 21-8Z',tint(c,-.1))+S('M140 174v118m-29-40 20-9m18 0 20 9M86 220l13 5m82 0 13-5M77 245l12 4m102 0 12-4',.65)+`<rect x="137" y="205" width="6" height="10" rx="2" fill="${metal}" stroke-width=".8"/>`+S('M111 201q12 6 23 3m12 0q11 3 23-3',.22);
@@ -359,6 +492,13 @@
         for(const y of [210,230,250,270])s+=`<circle cx="143" cy="${y}" r="1.6" fill="${metal}" stroke-width=".65"/>`;
         break;
       case 'pants':case 'jeans':
+        if(id==='pants'&&!legacyPants){
+          const cut=male?'M103 278Q140 275 177 278Q182 297 181 322L179 360 181 418H151L145 354Q143 338 140 329Q137 338 135 354L129 418H99L101 360 99 322Q98 297 103 278Z':'M107 278Q140 276 173 278Q180 297 179 318L176 350Q174 382 178 415H151L145 353Q143 338 140 329Q137 338 135 353L129 415H102Q106 382 104 350L101 318Q100 297 107 278Z';
+          s=P(cut)+P(male?'M104 279Q140 282 176 279V286Q140 289 104 286Z':'M108 279Q140 282 172 279V286Q140 289 108 286Z',tint(c,-.035));
+          s+=S('M137 289v23q0 6 7 8M111 292Q112 300 123 306M169 292Q168 300 157 306',.65,.85)+S('M127 337 121 406M153 337 159 406',.18,.7)+S(male?'M102 412h26m24 0h26':'M105 409h22m26 0h22',.3,.65);
+          s+=S('M112 280v7m16-6v7m24-7v7m16-8v7',.55,.8)+`<circle cx="141" cy="284" r="1.5" fill="${metal}" stroke-width=".6"/>`;
+          break;
+        }
         s=P(male?'M103 278q-6 23-4 50l1 37-1 53h32l9-85 9 85h32l1-53-1-37q2-27-4-50Z':'M107 278q-7 22-6 40l3 32q4 31-2 65h28l10-86 10 86h28q-6-34-2-65l4-32q-1-18-7-40Z')+P(male?'M104 279h72v6h-72Z':'M108 279h64v6h-64Z',tint(c,-.03))+S('M140 290v41M108 296q1 16 20 19m44-19q-1 16-20 19M104 408h26m20 0h26M108 333l16 5m32 0 16-5m-62 20 14 3m32 0 14-3',.5);
         s+=S('M111 281v10m17-10v10m24-10v10m17-10v10',.5,.9)+`<circle cx="141" cy="285" r="1.7" fill="${metal}" stroke-width=".7"/>`;
         if(id==='jeans')s+=`<path d="m111 332 3 49m55-49-3 49" stroke="${light}" stroke-width="4" opacity=".38" fill="none"/>`+S('M104 295q0 21 24 24m48-24q0 21-24 24',.4,.7);
@@ -414,7 +554,7 @@
         if(male)s+=P('M-20 23h39q4 0 4 5v29q0 5-5 5h-38q-4 0-4-5V28q0-5 4-5Z')+P('M18 24q5 0 5 5v27q0 5-5 5l-3-2V27Z',tint(c,-.14))+P('M-22 24h43v14q-21 10-43 0Z',tint(c,.07));
         else s+=P('M-19 23Q-1 29 17 23L22 58Q-1 68-24 58Z')+P('M13 25l4-2 5 35-8 3Z',tint(c,-.14))+P('M-19 23Q-1 30 17 23l2 13Q-1 46-21 36Z',tint(c,.07));
         s+=`<rect x="-4" y="37" width="7" height="7" rx="1.5" fill="#d5bd86" stroke="${shade}" stroke-width=".8"/><path d="M-19 47l-1 8q18 6 36 0M-14 25l2 2m23-2 2-2" fill="none" stroke="${light}" stroke-width=".7"/>`;
-        s='<g transform="translate(205 278)">'+s+'</g>';
+        s=`<g class="carried-bag" transform="translate(${bagGripAnchor.x} ${bagGripAnchor.y})">`+s+'</g>';
         break;
       case 'glasses':
         s=male?`<g fill="#e6f0e9" fill-opacity=".14" stroke="${c}" stroke-width="3"><rect x="99" y="98" width="34" height="24" rx="7"/><rect x="147" y="98" width="34" height="24" rx="7"/><path d="M133 105q7-6 14 0m-49-2-6-3m90 3 6-3" fill="none"/></g>`:`<g fill="#e6f0e9" fill-opacity=".14" stroke="${c}" stroke-width="3"><path d="M99 98q17-6 34 1v10q-2 16-17 15-16-1-17-15Zm48 1q17-7 34-1v11q-1 14-17 15-15 1-17-15Z"/><path d="M133 104q7-5 14 0m-49-4-6-3m90 3 6-3" fill="none"/></g>`;
@@ -448,6 +588,7 @@
     let box=i.box,s=garment(id,c,hero);
     const outline='stroke="#655e52" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"';
     if(['hoodie','ziphoodie'].includes(i.shape)){box='55 120 170 176';s+=`<g stroke="#73695b" stroke-width="1.4" stroke-linejoin="round"><path d="M117 170Q106 160 108 145 110 125 140 125T172 145Q174 160 163 170l-9 12h-28Z" fill="${c}"/><path d="M122 163Q116 141 140 140t18 23l-7 12h-22Z" fill="${tint(c,-.27)}"/><path d="M126 174v31m28-31v31" fill="none" stroke="${tint(c,.5)}" stroke-width="2"/><path d="M125 202h2m26 0h2" stroke-width="3"/></g>`;}
+    if(['raincoat','parka'].includes(i.shape))s=clothWrap(`<path d="M112 168Q99 155 103 129Q106 98 140 98Q174 98 177 129Q181 155 168 168L158 178H122Z" fill="${c}"/><path d="M116 158Q109 146 112 128Q116 108 140 108Q164 108 168 128Q171 146 164 158L155 170H125Z" fill="${tint(c,-.24)}"/>`,c)+s;
 
 
     if(id==='socks'){
@@ -480,7 +621,7 @@
     if(id==='fingerless'){box='0 0 160 140';const one=`<path d="M23 112 18 80 9 61q-2-6 3-8 5-1 11 10L21 30h10l2 22V30h10l2 23 1-19h10l2 28 4 8q1 21-12 40Z" fill="${c}"/><path d="m21 103 32-3 3 22-32 3Z" fill="${tint(c,-.06)}"/><path d="M23 34h7m6 0h6m7 4h6M24 70q9 4 12 13m-11 27 24-3" fill="none" stroke="${tint(c,-.27)}" stroke-width="1.4"/>`;s=`<g ${outline}><g transform="translate(8 0) rotate(-5 36 74)">${one}</g><g transform="translate(152 0) scale(-1 1) rotate(-5 36 74)">${one}</g></g>`;}
     if(id==='anklesocks'){box='0 0 160 140';const one=`<path d="M22 39 53 41 50 68Q62 70 65 81 67 93 51 96L16 95Q6 92 10 81L23 65Z" fill="${c}"/><path d="m22 39 31 2-1 9-31-2Z" fill="${tint(c,-.08)}"/><path d="M24 42v5m5-4v5m6-4v4m6-3v4m6-4v4M22 67q10 2 12 13M13 85q20-4 48 2" fill="none" stroke="${tint(c,-.25)}" stroke-width="1.3"/>`;s=`<g ${outline}><g transform="translate(3 8) rotate(10 38 70)">${one}</g><g transform="translate(157 0) scale(-1 1) rotate(10 38 70)">${one}</g></g>`;}
     if(id==='belt'){box='0 0 160 140';s=`<g stroke="#71614e" stroke-width="1.6" stroke-linejoin="round"><path d="M22 35Q76 60 138 35l-5 25Q78 85 27 60Z" fill="${c}"/><path d="M32 45q43 18 91 1m-91 9q43 16 88 1" fill="none" stroke="${tint(c,.35)}"/><path d="M104 59q20-8 24 7l-13 14-17-12Z" fill="${tint(c,-.08)}"/><path d="m109 76 14-1 4 48-11-5-8 6Z" fill="${c}"/><path d="m100 69 14 8-18 43-6-9-10 3Z" fill="${tint(c,.12)}"/><path d="m110 123 1 7m5-8 1 7m5-9 1 7m-42-13-3 6m8-4-2 6m8-3-2 6" stroke="${tint(c,-.2)}"/></g>`;}
-    box=artBoxes[hero]?.[id]||box;
+    box=i.shape==='raincoat'?'48 89 184 285':i.shape==='parka'?'48 89 184 258':i.shape==='chelsea'?'11 50 138 94':artBoxes[hero]?.[id]||box;
     const iconPaint='icon-paint-'+(++paintSerial);
     s=s.split('fill="'+c+'"').join('fill="url(#'+iconPaint+')"').split('stroke="'+c+'"').join('stroke="url(#'+iconPaint+')"');
     s=`<defs><linearGradient id="${iconPaint}" x1="0" y1="0" x2="1" y2=".35"><stop offset="0" stop-color="${tint(c,.19)}"/><stop offset=".45" stop-color="${c}"/><stop offset="1" stop-color="${tint(c,-.17)}"/></linearGradient></defs>`+s;
@@ -489,6 +630,31 @@
   }
   const poseHipY=255.6,poseAnkleY=255.6+(423-278)*(184.4/162);
   const legRigShift=(poseAnkleY-poseHipY)*.1;
+  function interpolateLandmark(y,points){
+    if(y<=points[0][0])return points[0][1];
+    for(let n=1;n<points.length;n++)if(y<=points[n][0]){const [a,b]=points[n-1],[c,d]=points[n];return b+(d-b)*(y-a)/(c-a);}
+    return points[points.length-1][1];
+  }
+  function femaleRigX(x,y){
+    if(y<=166||y>=423)return x;
+    const side=Math.sign(x-140),distance=Math.abs(x-140),left=140-distance;
+    const armShift=interpolateLandmark(y,[[166,0],[197,2],[211,4],[237,6],[254,7],[270,9],[308,9],[348,0]]);
+    const arm=x-side*armShift;
+    let fitted;
+    if(y<278){
+      const width=interpolateLandmark(y,[[166,1],[178,1.128],[210,1.056],[242,1.185],[270,1.156],[278,1.24]]);
+      fitted=140+side*distance*width;
+    }else{
+      const sourceOuter=interpolateLandmark(y,[[278,108],[289,110],[350,109],[378,108],[414,107],[423,107]]);
+      const sourceInner=interpolateLandmark(y,[[278,133],[289,133],[350,127],[378,127],[414,122],[423,122]]);
+      const outer=interpolateLandmark(y,[[278,99],[289,100],[350,112],[378,108],[414,109],[423,107]]);
+      const inner=interpolateLandmark(y,[[278,136],[289,136],[350,133],[378,130],[414,124],[423,122]]);
+      const newLeft=interpolateLandmark(left,[[0,0],[90,90],[sourceOuter-8,outer-8],[sourceOuter,outer],[sourceInner,inner],[140,140]]);
+      fitted=140+side*(140-newLeft);
+    }
+    let blend=Math.max(0,Math.min(1,(distance-(y<278?34:38))/(y<278?16:14)));blend=blend*blend*(3-2*blend);
+    return fitted*(1-blend)+arm*blend;
+  }
   function relaxedPose(svg,male){
     const smooth=t=>{t=Math.max(0,Math.min(1,t));return t*t*(3-2*t);};
     // One fitting map is shared by skin, clothes and accessories: a shorter torso,
@@ -497,7 +663,7 @@
     // Keep local shoe/jewelry drawing coordinates unchanged. The final group
     // shifts the whole upper body; only the hip-to-ankle interval is shortened.
     const fitY=y=>{const fitted=torsoFitY(y);return fitted<=poseHipY?fitted:fitted<poseAnkleY?poseHipY+(fitted-poseHipY)*.9:fitted-legRigShift;};
-    const point=(x,y)=>[x-Math.sign(x-140)*(male?17:13)*smooth((Math.abs(x-140)-34)/20)*smooth((y-178)/91)*(1-smooth((y-308)/40)),fitY(y)];
+    const point=(x,y)=>[male?x-Math.sign(x-140)*17*smooth((Math.abs(x-140)-34)/20)*smooth((y-178)/91)*(1-smooth((y-308)/40)):femaleRigX(x,y),fitY(y)];
     const fmt=n=>String(Math.round(n*100)/100);
     function path(d){
       const tokens=d.match(/[a-df-z]|[-+]?(?:\d*\.)?\d+(?:e[-+]?\d+)?/ig)||[];
@@ -530,7 +696,7 @@
   }
 
   function avatar(hero,equipped={},colors={},sizes={}){
-    const hoodId=[equipped.outer,equipped.top,equipped.full].find(id=>id&&['hoodie','ziphoodie'].includes(byId[id].shape));
+    const hoodId=[equipped.outer,equipped.top,equipped.full].find(id=>id&&['hoodie','ziphoodie','raincoat','parka'].includes(byId[id].shape));
     const male=hero==='temuulen',skin=male?'#d7aa86':'#e5bb9c',hair=male?'#413e38':'#584537';
     const bodyTransform=male?'translate(-30.8 -79) scale(1.22 1.5)':'translate(-8.4 -70.7) scale(1.06 1.45)';
     const upperShift=legRigShift*(male?1.5:1.45);
@@ -540,6 +706,10 @@
     function layer(slot){
       const id=equipped[slot];if(!id||(slot==='ring'||slot==='watch')&&equipped.gloves)return '';
       let s=garment(id,colors[id]||byId[id].color,hero);
+      if(slot==='gloves'&&equipped.bag){
+        const handClip=clipId+'-left-glove';
+        s=`<defs><clipPath id="${handClip}"><rect x="0" y="0" width="140" height="450"/></clipPath></defs><g clip-path="url(#${handClip})">${s}</g>`;
+      }
       if(sizes[id]&&sizes[id]!=='fit'){
         const gloves=byId[id].slot==='gloves',pivot=gloves?282:438;const factor=gloves?(sizes[id]==='big'?1.03:.98):(sizes[id]==='big'?1.12:.9);const vertical=gloves?(sizes[id]==='big'?1.02:.98):(sizes[id]==='big'?1.05:.94);
         s=`<g transform="translate(140 ${pivot}) scale(${factor} ${vertical}) translate(-140 -${pivot})">${s}</g>`;
@@ -562,8 +732,9 @@
     const maleLeg='M107 289C103 307 103 327 107 341C109 350 109 355 108 363C105 379 107 399 110 414L110 420Q108 425 103 429L99 433Q96 437 101 440Q109 444 120 440Q125 438 122 433L121 424L122 414C125 399 129 379 128 365C127 357 126 352 127 345C129 327 132 305 134 289Z';
     const femaleLeg='M110 289C107 307 106 327 109 342C110 350 110 355 109 364C107 381 109 400 107 414Q107 420 104 424L100 430Q96 436 100 438Q107 441 118 439Q125 438 123 432L121 423C122 407 125 392 126 380C128 364 126 356 127 345C127 326 131 304 133 289Z';
     const legDrawing=male?`<g class="male-legs" fill="url(#${clipId}-skin)"><path d="${maleLeg}"/><g transform="translate(280 0) scale(-1 1)"><path d="${maleLeg}"/></g><path d="M113 350q6 3 10-1M157 349q4 3 10 0M112 415q4 2 8-1M160 414q4 3 8 1" fill="none" stroke="#a47f60" stroke-width=".8" opacity=".3"/></g>`:`<g class="female-legs" fill="url(#${clipId}-skin)"><path d="${femaleLeg}" stroke="none"/><path d="${femaleLeg.slice(0,-1)}" fill="none"/><g transform="translate(280 0) scale(-1 1)"><path d="${femaleLeg}" stroke="none"/><path d="${femaleLeg.slice(0,-1)}" fill="none"/></g><path d="M113 350q5 2 9-1M158 349q4 3 9 0M109 415q4 2 9 0M162 415q4 2 9 0" fill="none" stroke="#ad8468" stroke-width=".75" opacity=".24"/></g>`;
-    const base=`<defs>${sleeveMask}<linearGradient id="${clipId}-skin" x1="0" y1="0" x2="1" y2="0"><stop stop-color="${tint(skin,.06)}"/><stop offset=".58" stop-color="${skin}"/><stop offset="1" stop-color="${tint(skin,-.065)}"/></linearGradient><clipPath id="${clipId}"><rect x="0" y="0" width="280" height="${footClip?423:450}"/></clipPath></defs><g clip-path="url(#${clipId})" ${sleeveItem?`mask="url(#${clipId}-sleeves)"`: ''} stroke="#a58368" stroke-width="1.6" fill="${skin}">${legDrawing}<path class="upper-body" d="M119 166Q108 169 101 178Q92 181 87 197C84 208 79 238 77 254Q76 260 71 269L68 281Q66 287 68 293Q68 296 71 297Q74 300 77 297Q79 294 79 284L82 287Q85 288 84 284L81 279Q80 277 80 273L80 270C88 249 87 218 104 211${male?'Q110 228 109 244Q107 269 109 292H171Q173 269 171 244Q170 228 176 211':'Q112 227 113 242Q113 260 108 280L110 292H170L172 280Q167 260 167 242Q168 227 176 211'}C193 218 192 249 200 270L200 273Q200 277 199 279L196 284Q195 288 198 287L201 284Q201 294 203 297Q206 300 209 297Q212 296 212 293Q214 287 212 281L209 269Q204 260 203 254C201 238 196 208 193 197Q188 181 179 178Q172 169 161 166Q140 169 119 166Z" stroke="none"/><path d="M119 166Q108 169 101 178Q92 181 87 197C84 208 79 238 77 254Q76 260 71 269L68 281Q66 287 68 293Q68 296 71 297Q74 300 77 297Q79 294 79 284L82 287Q85 288 84 284L81 279Q80 277 80 273L80 270C88 249 87 218 104 211${male?'Q110 228 109 244Q107 269 109 292M171 292Q173 269 171 244Q170 228 176 211':'Q112 227 113 242Q113 260 108 280L110 292M170 292L172 280Q167 260 167 242Q168 227 176 211'}C193 218 192 249 200 270L200 273Q200 277 199 279L196 284Q195 288 198 287L201 284Q201 294 203 297Q206 300 209 297Q212 296 212 293Q214 287 212 281L209 269Q204 260 203 254C201 238 196 208 193 197Q188 181 179 178Q172 169 161 166" fill="none"/><path d="M71 289v6M75 290v7M205 290v7M209 289v6M80 237q2 3 7 1m106 0q5 2 7-1" fill="none" stroke="#a47c5e" stroke-width=".9" opacity=".5"/><path d="M103 433q-2 3 1 5m3-3v4m4-3v4m4-4v3m2-15q-4 3-5 7M177 433q2 3-1 5m-3-3v4m-4-3v4m-4-4v3m-2-15q4 3 5 7" fill="none" stroke="#a47c5e" stroke-width=".9" opacity=".6"/>${(!full||equipped.full==='overalls')&&!equipped.top&&!equipped.outer&&!equipped.vest&&!swimming?clothWrap(tankDrawing('#f2eee5',hero,male?273:269),'#f2eee5'):''}${!full&&!equipped.bottom?(male?'<path d="M107 275q33 6 66 0l3 34q-17 8-31 1l-5-12-5 12q-15 7-31-1Z" fill="#90aaa3" stroke="#728d84"/><path d="M107 275q33 6 66 0v8q-33 6-66 0Z" fill="#d0dad0" stroke="#93a79d" stroke-width="1"/><path d="M140 284v14m-32 6q12 5 24 2m16 0q12 3 24-2" fill="none" stroke="#718d83" stroke-width=".9" opacity=".6"/>':'<path d="M108 275q32 5 64 0l2 23q-12 8-26 5l-8-12-8 12q-14 3-26-5Z" fill="#bea4aa" stroke="#9e828a"/><path d="M108 275q32 5 64 0v6q-32 5-64 0Z" fill="#e3d3d3" stroke="#bda4ab" stroke-width="1"/><path d="M110 295q10 5 20 3m20 0q10 2 20-3" fill="none" stroke="#9e828a" stroke-width=".8" opacity=".6"/>'):''}</g>`;
-    const frontHand=equipped.bag?(equipped.gloves?layer('gloves'):`<g transform="${bodyTransform}">${relaxedPose(`<path d="M200 270L200 273Q200 277 199 279L196 284Q195 288 198 287L201 284Q201 294 203 297Q206 300 209 297Q212 296 212 293Q214 287 212 281L209 269Z" fill="${skin}" stroke="none"/><path d="M200 270L200 273Q200 277 199 279L196 284Q195 288 198 287L201 284Q201 294 203 297Q206 300 209 297Q212 296 212 293Q214 287 212 281L209 269" fill="none" stroke="#a58368" stroke-width="1.3"/><path d="M205 290v6M209 289v6" fill="none" stroke="#a47c5e" stroke-width=".8"/>`,male)}</g>`):'';
+    const base=`<defs>${sleeveMask}<linearGradient id="${clipId}-skin" x1="0" y1="0" x2="1" y2="0"><stop stop-color="${tint(skin,.06)}"/><stop offset=".58" stop-color="${skin}"/><stop offset="1" stop-color="${tint(skin,-.065)}"/></linearGradient><clipPath id="${clipId}"><rect x="0" y="0" width="280" height="${footClip?423:450}"/></clipPath></defs><g clip-path="url(#${clipId})" ${sleeveItem?`mask="url(#${clipId}-sleeves)"`: ''} stroke="#a58368" stroke-width="1.6" fill="${skin}">${legDrawing}<path class="upper-body" d="M119 166Q108 169 101 178Q92 181 87 197C84 208 79 238 77 254Q76 260 71 269L68 281Q66 287 68 293Q68 296 71 297Q74 300 77 297Q79 294 79 284L82 287Q85 288 84 284L81 279Q80 277 80 273L80 270${male?'C88 249 87 218 104 211':'C96 249 97 223 104 211'}${male?'Q110 228 109 244Q107 269 109 292H171Q173 269 171 244Q170 228 176 211':'Q112 227 113 242Q113 260 108 280L110 292H170L172 280Q167 260 167 242Q168 227 176 211'}${male?'C193 218 192 249 200 270':'C183 223 184 249 200 270'}${equipped.bag?'L209 269':'L200 273Q200 277 199 279L196 284Q195 288 198 287L201 284Q201 294 203 297Q206 300 209 297Q212 296 212 293Q214 287 212 281L209 269'}Q204 260 203 254C201 238 196 208 193 197Q188 181 179 178Q172 169 161 166Q140 169 119 166Z" stroke="none"/><path d="M119 166Q108 169 101 178Q92 181 87 197C84 208 79 238 77 254Q76 260 71 269L68 281Q66 287 68 293Q68 296 71 297Q74 300 77 297Q79 294 79 284L82 287Q85 288 84 284L81 279Q80 277 80 273L80 270${male?'C88 249 87 218 104 211':'C96 249 97 223 104 211'}${male?'Q110 228 109 244Q107 269 109 292M171 292Q173 269 171 244Q170 228 176 211':'Q112 227 113 242Q113 260 108 280L110 292M170 292L172 280Q167 260 167 242Q168 227 176 211'}${male?'C193 218 192 249 200 270':'C183 223 184 249 200 270'}${equipped.bag?'L209 269':'L200 273Q200 277 199 279L196 284Q195 288 198 287L201 284Q201 294 203 297Q206 300 209 297Q212 296 212 293Q214 287 212 281L209 269'}Q204 260 203 254C201 238 196 208 193 197Q188 181 179 178Q172 169 161 166" fill="none"/><path d="M71 289v6M75 290v7${equipped.bag?'':'M205 290v7M209 289v6'}M80 237q2 3 7 1m106 0q5 2 7-1" fill="none" stroke="#a47c5e" stroke-width=".9" opacity=".5"/><path d="M103 433q-2 3 1 5m3-3v4m4-3v4m4-4v3m2-15q-4 3-5 7M177 433q2 3-1 5m-3-3v4m-4-3v4m-4-4v3m-2-15q4 3 5 7" fill="none" stroke="#a47c5e" stroke-width=".9" opacity=".6"/>${(!full||equipped.full==='overalls')&&!equipped.top&&!equipped.outer&&!equipped.vest&&!swimming?clothWrap(tankDrawing('#f2eee5',hero,male?273:269),'#f2eee5'):''}${!full&&!equipped.bottom?(male?'<path d="M107 275q33 6 66 0l3 34q-17 8-31 1l-5-12-5 12q-15 7-31-1Z" fill="#90aaa3" stroke="#728d84"/><path d="M107 275q33 6 66 0v8q-33 6-66 0Z" fill="#d0dad0" stroke="#93a79d" stroke-width="1"/><path d="M140 284v14m-32 6q12 5 24 2m16 0q12 3 24-2" fill="none" stroke="#718d83" stroke-width=".9" opacity=".6"/>':'<path d="M108 275q32 5 64 0l2 23q-12 8-26 5l-8-12-8 12q-14 3-26-5Z" fill="#bea4aa" stroke="#9e828a"/><path d="M108 275q32 5 64 0v6q-32 5-64 0Z" fill="#e3d3d3" stroke="#bda4ab" stroke-width="1"/><path d="M110 295q10 5 20 3m20 0q10 2 20-3" fill="none" stroke="#9e828a" stroke-width=".8" opacity=".6"/>'):''}</g>`;
+    const gripGlove=byId[equipped.gloves];
+    const frontHand=equipped.bag?`<g transform="${bodyTransform}">${relaxedPose(bagGripDrawing(hero,gripGlove?.shape,gripGlove?(colors[gripGlove.id]||gripGlove.color):null),male)}</g>`:'';
     const face=`<g fill="${skin}" stroke="#a28166" stroke-width="1.6"><ellipse cx="103" cy="104" rx="6" ry="10"/><ellipse cx="177" cy="104" rx="6" ry="10"/><path d="M105 77q1-31 35-31 35 0 35 31v35q-3 26-35 31-31-5-35-31Z"/></g><path d="M114 90q9-5 17-1m18 0q9-4 17 1" stroke="${hair}" stroke-width="${male?2.9:2}" fill="none" stroke-linecap="round"/><path d="M114 103q9-7 17 0m18 0q9-7 17 0" stroke="#544735" stroke-width="1.8" fill="none"/><ellipse cx="123" cy="103" rx="3.2" ry="4.2" fill="#5b513c"/><ellipse cx="157" cy="103" rx="3.2" ry="4.2" fill="#5b513c"/><circle cx="124" cy="101" r="1" fill="#fffdf3"/><circle cx="158" cy="101" r="1" fill="#fffdf3"/><path d="m140 106-3 10 5 1m-12 11q10 7 20 0" stroke="#a77860" stroke-width="1.6" fill="none" stroke-linecap="round"/>${male?'':`<path d="m114 103-3-2m55 2 3-2" stroke="#544735" stroke-width="1.5"/><ellipse cx="114" cy="117" rx="6" ry="3" fill="#d98c80" opacity=".28"/><ellipse cx="166" cy="117" rx="6" ry="3" fill="#d98c80" opacity=".28"/>`}`;
     const frontHair=male?`<path d="M103 95q-11-25 8-42l-4-10 19 5q34-17 52 4l9-4-6 32-9 17-5-24q-24 8-48-4l-10 27Z" fill="${hair}" stroke="#35352f" stroke-width="2"/><path d="M120 57q23-7 41 1" stroke="#6c5d4d" stroke-width="2" fill="none"/>`:`<path d="M102 91q-5-49 36-50 43-2 41 48-23-3-34-28-12 22-43 30Z" fill="${hair}" stroke="#493c31" stroke-width="1.8"/><path d="M115 65q7-11 21-13m21 11 10 9" stroke="#9e7756" stroke-width="2" fill="none" opacity=".6"/>`;
     return `<svg class="avatar-svg" viewBox="0 0 280 ${male?620:600}" role="img" aria-label="${male?'Тэмүүлэн':'Номин'}"><g class="body-art"><g transform="${headTransform}">${backHair}</g>${hoodBack}<g transform="${bodyTransform}">${relaxedPose(base,male)}</g>${layer('gloves')}${layer('socks')}${layer('anklet')}${!tuckedShoes?layer('shoes'):''}${!full?layer('bottom'):''}${neckModel}<g transform="${headTransform}">${face}${frontHair}</g>${!full?layer('top'):''}${layer('full')}${layer('tie')}${layer('suspenders')}${layer('necklace')}${layer('vest')}${layer('outer')}${layer('belt')}${tuckedShoes?layer('shoes'):''}${layer('scarf')}${layer('watch')}${layer('bracelet')}${layer('ring')}${layer('brooch')}${layer('piercing')}${layer('bag')}${frontHand}${layer('earrings')}${layer('glasses')}${layer('hat')}</g></svg>`;

@@ -12,9 +12,9 @@
     html.game-booting .app-shell,html.game-booting .skip-link,html.game-booting #toast{visibility:hidden}
     html.game-booting .game-loader{box-sizing:border-box;position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;overflow:auto;padding:28px 20px;background:radial-gradient(ellipse at 50% 45%,#eef1e4 0,transparent 66%),#f7f6f0;color:#29483e;font-family:"Avenir Next","Segoe UI",Arial,sans-serif;text-align:center}
     .entry-wordmark{margin:0;font-weight:400;outline:none}.entry-wordmark-small{display:block;margin-bottom:3px;font:500 11px/1.5 "Avenir Next","Segoe UI",Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;color:#75876b}.entry-wordmark-name{display:block;font-family:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;font-size:64px;line-height:1.02;font-weight:600;letter-spacing:2px;color:#294b41;transform:scaleX(.94)}
-    .entry-ornament{display:block;width:156px;height:13px;max-width:80%;margin:9px auto 0;overflow:visible}
+    .entry-ornament{display:block;width:264px;height:auto;aspect-ratio:28/5;max-width:100%;margin:9px auto 0;overflow:visible}
     .topbar .brand-copy{display:flex;flex-direction:column;gap:1px;min-width:0}.topbar .brand-kicker{font:500 8px/1.4 "Avenir Next","Segoe UI",Arial,sans-serif;letter-spacing:1.15px;text-transform:uppercase;color:#829074}.topbar .brand-title{font-family:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;font-size:29px;font-weight:600;line-height:1;letter-spacing:.1px}
-    .game-loader-card{width:min(100%,340px);margin:auto}.game-loader .entry-wordmark-name{font-size:53px}.game-loader .entry-ornament{width:142px;margin-top:10px}.game-loader-art{display:block;width:190px;height:208px;margin:17px auto 15px;overflow:visible}.game-loader-art .loader-shirt{transform-origin:95px 69px;animation:loader-sway 3.3s ease-in-out infinite}.game-loader-copy{margin:0 0 18px;font-size:12px;line-height:1.7;color:#829078}
+    .game-loader-card{width:min(100%,340px);margin:auto}.game-loader .entry-wordmark-name{font-size:53px}.game-loader .entry-ornament{width:244px;margin-top:10px}.game-loader-art{display:block;width:190px;height:208px;margin:17px auto 15px;overflow:visible}.game-loader-art .loader-shirt{transform-origin:95px 69px;animation:loader-sway 3.3s ease-in-out infinite}.game-loader-copy{margin:0 0 18px;font-size:12px;line-height:1.7;color:#829078}
     .game-loader-meter{display:flex;align-items:center;gap:12px;width:250px;max-width:100%;margin:auto}.game-loader-track{flex:1;height:4px;background:#dce3d0;border-radius:8px;overflow:hidden}.game-loader-fill{display:block;width:0;height:100%;background:linear-gradient(90deg,#8da377,#436857);border-radius:8px;transition:width .22s ease-out}.game-loader-percent{min-width:31px;text-align:right;font-size:12px;line-height:1.5;font-weight:600;color:#5d7654;font-variant-numeric:tabular-nums}.game-loader-status{min-height:34px;margin:11px auto 0;max-width:290px;font-size:10px;line-height:1.65;color:#89957d}
     .game-loader-retry{appearance:none;border:1px solid #3f604d;border-radius:12px;min-height:44px;padding:11px 20px;margin-top:14px;background:#3f604d;color:#fffdf5;font:600 13px "Avenir Next","Segoe UI",Arial,sans-serif;cursor:pointer}.game-loader-retry:focus-visible{outline:2px solid #315944;outline-offset:4px}.game-loader-retry[hidden]{display:none}
     .game-loader.has-error .game-loader-status{color:#9a6e59}.game-loader.has-error .game-loader-fill{background:#ba9670}.game-loader.has-error .loader-shirt{animation:none}
@@ -26,21 +26,39 @@
     .welcome-niche-rod{position:absolute;z-index:1;left:13%;right:13%;top:18px;height:3px;border-radius:3px;background:#c1af81;box-shadow:0 1px 0 #fff9df}.welcome-niche-rod:before,.welcome-niche-rod:after{content:"";position:absolute;top:-2px;width:7px;height:7px;border-radius:50%;background:#b5a271}.welcome-niche-rod:before{left:-4px}.welcome-niche-rod:after{right:-4px}.welcome-rug{position:absolute;z-index:1;bottom:7px;left:10%;right:10%;height:18px;border:1px solid #b7c39f;border-radius:50%;background:#c9d4b2;box-shadow:inset 0 0 0 3px #e1e6cf}.welcome-hero-art{position:absolute;z-index:2;inset:2px 8px 1px}.welcome-hero-art>.avatar-svg{display:block;width:100%;height:100%;max-width:100%;max-height:100%;margin:0;overflow:visible;filter:none}
     .welcome-hero-name{display:block;margin-top:10px;font-family:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;font-size:19px;font-weight:600;line-height:1.4;letter-spacing:.1px;color:#4a6249}.welcome-hero-check{position:absolute;z-index:3;top:14px;right:14px;display:grid;place-items:center;width:21px;height:21px;border:1px solid #c9d4b9;border-radius:50%;background:#e4ebd7;color:#4e7150;opacity:0;transform:scale(.8);transition:opacity .18s,transform .18s}.welcome-hero-check svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}.welcome-radio:checked+.welcome-hero{border-color:#718c64;background:#f0f4e8;box-shadow:0 3px 0 #d7dfc9,0 8px 22px #526b4210}.welcome-radio:checked+.welcome-hero:before{border-color:#d4ddc6}.welcome-radio:checked+.welcome-hero .welcome-hero-check{opacity:1;transform:scale(1)}.welcome-radio:focus-visible+.welcome-hero{outline:2px solid #315944;outline-offset:4px}
     .welcome-start{appearance:none;display:block;width:min(100%,260px);min-height:48px;margin:20px auto 0;padding:13px 24px;border:1px solid #365b48;border-radius:13px;background:#3f604d;color:#fffdf5;font:600 13px "Avenir Next","Segoe UI",Arial,sans-serif;cursor:pointer;box-shadow:0 3px 0 #2e493a0d,0 6px 16px #3f604d0a;transition:background .18s,transform .18s}.welcome-start:hover{background:#345641}.welcome-start:active{transform:translateY(1px)}.welcome-start:focus-visible{outline:2px solid #315944;outline-offset:4px}.welcome-note{margin:10px 0 0;font-size:10px;line-height:1.5;color:#959e88}
-    @media(max-width:520px){.welcome-screen{padding:24px 20px 20px}.entry-wordmark-small{font-size:10px;letter-spacing:2.7px}.entry-wordmark-name{font-size:55px;letter-spacing:1.8px}.entry-ornament{width:140px;height:12px;margin-top:8px}.welcome-intro{max-width:285px;margin:11px auto 18px;font-size:11px;line-height:1.7}.welcome-choice legend{font-size:13px;margin-bottom:12px}.welcome-heroes{gap:13px;max-width:360px}.welcome-hero{padding:8px 8px 12px;border-radius:23px}.welcome-hero:before{inset:4px;border-radius:19px}.welcome-hero-scene{height:244px}.welcome-hero-art{inset:2px 3px 1px}.welcome-hero-name{font-size:17px;margin-top:9px}.welcome-hero-check{width:19px;height:19px;top:12px;right:12px}.welcome-start{margin-top:20px;width:min(100%,280px)}.welcome-note{font-size:9px}}
+    @media(max-width:520px){.welcome-screen{padding:24px 20px 20px}.entry-wordmark-small{font-size:10px;letter-spacing:2.7px}.entry-wordmark-name{font-size:55px;letter-spacing:1.8px}.entry-ornament{width:244px;margin-top:8px}.welcome-intro{max-width:285px;margin:11px auto 18px;font-size:11px;line-height:1.7}.welcome-choice legend{font-size:13px;margin-bottom:12px}.welcome-heroes{gap:13px;max-width:360px}.welcome-hero{padding:8px 8px 12px;border-radius:23px}.welcome-hero:before{inset:4px;border-radius:19px}.welcome-hero-scene{height:244px}.welcome-hero-art{inset:2px 3px 1px}.welcome-hero-name{font-size:17px;margin-top:9px}.welcome-hero-check{width:19px;height:19px;top:12px;right:12px}.welcome-start{margin-top:20px;width:min(100%,280px)}.welcome-note{font-size:9px}}
     @media(max-width:350px){.welcome-screen{padding-left:15px;padding-right:15px}.entry-wordmark-name{font-size:50px}.welcome-hero-scene{height:220px}.welcome-heroes{gap:10px}.welcome-hero-name{font-size:16px}}
     @media(max-width:640px){.topbar .brand-title{font-size:25px}.topbar .brand-kicker{font-size:7px;letter-spacing:.95px}}
+    .welcome-audio-note{display:flex;align-items:flex-start;gap:12px;box-sizing:border-box;width:min(100%,450px);margin:20px auto 0;padding:14px 16px;border:1px solid #ddd3b8;border-radius:16px;background:linear-gradient(125deg,#f4f0e3,#f8f6ed);text-align:left;box-shadow:0 3px 12px #635a3805}.welcome-audio-symbol{display:grid;place-items:center;flex:0 0 31px;width:31px;height:31px;border-radius:50%;background:#e9e1ca;color:#746744}.welcome-audio-symbol svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.welcome-audio-note h2{margin:0 0 4px;font:600 13px/1.4 "Avenir Next","Segoe UI",Arial,sans-serif;color:#596347}.welcome-audio-note p{margin:0;font:400 11.5px/1.65 "Avenir Next","Segoe UI",Arial,sans-serif;color:#7b7a64}.welcome-audio-note+.welcome-start{margin-top:16px}
+    @media(max-width:520px){.welcome-audio-note{gap:10px;padding:12px 13px;margin-top:17px;border-radius:14px}.welcome-audio-symbol{flex-basis:27px;width:27px;height:27px}.welcome-audio-note p{font-size:11.5px;line-height:1.6}}
+    @media(min-width:521px) and (max-height:800px){.welcome-screen{padding:18px 24px 14px}.entry-wordmark-name{font-size:56px}.entry-ornament{width:244px;margin-top:7px}.welcome-intro{margin:9px auto 14px}.welcome-choice legend{font-size:13px;margin-bottom:10px}.welcome-hero{padding:8px 8px 11px}.welcome-hero-scene{height:200px}.welcome-hero-name{font-size:17px;margin-top:8px}.welcome-audio-note{margin-top:16px;padding:12px 14px}}
     @keyframes loader-sway{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.2deg)}}
-    @media(max-height:500px){.game-loader .entry-wordmark-name{font-size:40px}.game-loader .entry-wordmark-small{font-size:9px}.game-loader .entry-ornament{height:10px;margin-top:5px}.game-loader-art{width:126px;height:138px;margin:10px auto}.game-loader-copy{font-size:11px;margin-bottom:12px}.game-loader-status{min-height:18px;margin-top:8px}.game-loader-retry{margin-top:10px}}
+    @media(max-height:500px){.game-loader .entry-wordmark-name{font-size:40px}.game-loader .entry-wordmark-small{font-size:9px}.game-loader .entry-ornament{width:196px;margin-top:5px}.game-loader-art{width:126px;height:138px;margin:10px auto}.game-loader-copy{font-size:11px;margin-bottom:12px}.game-loader-status{min-height:18px;margin-top:8px}.game-loader-retry{margin-top:10px}}
     @media(prefers-reduced-motion:reduce){.game-loader-art .loader-shirt{animation:none}.game-loader-fill,.welcome-hero,.welcome-hero-check,.welcome-start{transition:none}}
   </style>
-  <script src="boot.js?v=6.14"></script>
-  <link rel="stylesheet" href="styles.css?v=6.14" data-game-asset="styles">
+  <script src="boot.js?v=6.15"></script>
+  <link rel="stylesheet" href="styles.css?v=6.15" data-game-asset="styles">
 </head>
 <body>
   <section class="game-loader" id="gameLoader" aria-labelledby="gameLoaderTitle" aria-busy="true">
     <div class="game-loader-card">
       <h1 class="entry-wordmark" id="gameLoaderTitle"><span class="entry-wordmark-small">Примерочная</span><span class="entry-wordmark-name" lang="mn">Хувцас</span></h1>
-      <svg class="entry-ornament" viewBox="0 0 156 13" aria-hidden="true"><path d="M0 6.5H24V2H39V11H29V6.5H50V2H61V11H55V6.5H66M90 6.5H101V2H112V11H106V6.5H127V2H142V11H132V6.5H156" fill="none" stroke="#b6a16b" stroke-width="1.15" stroke-linejoin="miter"/><path d="m78 1 5.5 5.5L78 12l-5.5-5.5Z" fill="#335b4e"/><path d="m78 4 2.5 2.5L78 9l-2.5-2.5Z" fill="#be8b70"/></svg>
+      <svg class="entry-ornament" viewBox="0 0 280 50" aria-hidden="true" focusable="false">
+  <g fill="none" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M5 25H11M47 25H60M96 25H113M167 25H184M220 25H233M269 25H275" stroke="#ae955e" stroke-width="1.5"/>
+    <g stroke="#486b59" stroke-width="1.9">
+      <path d="M-12-12H12V12H-12V-4H4V4H-4" transform="translate(29 25) rotate(45)"/>
+      <path d="M-12-12H12V12H-12V-4H4V4H-4" transform="translate(78 25) rotate(45)"/>
+      <path d="M-12-12H12V12H-12V-4H4V4H-4" transform="translate(202 25) scale(-1 1) rotate(45)"/>
+      <path d="M-12-12H12V12H-12V-4H4V4H-4" transform="translate(251 25) scale(-1 1) rotate(45)"/>
+    </g>
+    <g transform="translate(140 25) rotate(-45) scale(.88) translate(-9 -9)" stroke="#355e50" stroke-width="2.9" stroke-linecap="butt" stroke-linejoin="round">
+      <path d="M-9 0H6.1M11.9 0H27M-9 9H-2.9M2.9 9H15.1M20.9 9H27M-9 18H6.1M11.9 18H27"/>
+      <path d="M0-9V-2.9M0 2.9V15.1M0 20.9V27M9-9V6.1M9 11.9V27M18-9V-2.9M18 2.9V15.1M18 20.9V27"/>
+      <path d="M0-9A4.5 4.5 0 0 1 9-9M18-9C18-19 37 0 27 0M27 9A4.5 4.5 0 0 1 27 18M18 27A4.5 4.5 0 0 1 9 27M0 27C0 37-19 18-9 18M-9 9A4.5 4.5 0 0 1-9 0"/>
+    </g>
+  </g>
+</svg>
       <svg class="game-loader-art" viewBox="0 0 190 208" aria-hidden="true">
         <defs><linearGradient id="loaderCurtain" x1="0" x2="1"><stop stop-color="#91a37c"/><stop offset=".5" stop-color="#bfcca7"/><stop offset="1" stop-color="#a4b78d"/></linearGradient><linearGradient id="loaderShirt" x1="0" x2="1"><stop stop-color="#9ac4d3"/><stop offset="1" stop-color="#80adbf"/></linearGradient></defs>
         <ellipse cx="95" cy="194" rx="68" ry="9" fill="#dfe5d1"/>
@@ -73,7 +91,22 @@
   <section class="welcome-screen" id="gameWelcome" aria-labelledby="gameWelcomeTitle" hidden>
     <div class="welcome-content">
       <h1 class="entry-wordmark" id="gameWelcomeTitle" tabindex="-1"><span class="entry-wordmark-small">Примерочная</span><span class="entry-wordmark-name" lang="mn">Хувцас</span></h1>
-      <svg class="entry-ornament" viewBox="0 0 156 13" aria-hidden="true"><path d="M0 6.5H24V2H39V11H29V6.5H50V2H61V11H55V6.5H66M90 6.5H101V2H112V11H106V6.5H127V2H142V11H132V6.5H156" fill="none" stroke="#b6a16b" stroke-width="1.15" stroke-linejoin="miter"/><path d="m78 1 5.5 5.5L78 12l-5.5-5.5Z" fill="#335b4e"/><path d="m78 4 2.5 2.5L78 9l-2.5-2.5Z" fill="#be8b70"/></svg>
+      <svg class="entry-ornament" viewBox="0 0 280 50" aria-hidden="true" focusable="false">
+  <g fill="none" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M5 25H11M47 25H60M96 25H113M167 25H184M220 25H233M269 25H275" stroke="#ae955e" stroke-width="1.5"/>
+    <g stroke="#486b59" stroke-width="1.9">
+      <path d="M-12-12H12V12H-12V-4H4V4H-4" transform="translate(29 25) rotate(45)"/>
+      <path d="M-12-12H12V12H-12V-4H4V4H-4" transform="translate(78 25) rotate(45)"/>
+      <path d="M-12-12H12V12H-12V-4H4V4H-4" transform="translate(202 25) scale(-1 1) rotate(45)"/>
+      <path d="M-12-12H12V12H-12V-4H4V4H-4" transform="translate(251 25) scale(-1 1) rotate(45)"/>
+    </g>
+    <g transform="translate(140 25) rotate(-45) scale(.88) translate(-9 -9)" stroke="#355e50" stroke-width="2.9" stroke-linecap="butt" stroke-linejoin="round">
+      <path d="M-9 0H6.1M11.9 0H27M-9 9H-2.9M2.9 9H15.1M20.9 9H27M-9 18H6.1M11.9 18H27"/>
+      <path d="M0-9V-2.9M0 2.9V15.1M0 20.9V27M9-9V6.1M9 11.9V27M18-9V-2.9M18 2.9V15.1M18 20.9V27"/>
+      <path d="M0-9A4.5 4.5 0 0 1 9-9M18-9C18-19 37 0 27 0M27 9A4.5 4.5 0 0 1 27 18M18 27A4.5 4.5 0 0 1 9 27M0 27C0 37-19 18-9 18M-9 9A4.5 4.5 0 0 1-9 0"/>
+    </g>
+  </g>
+</svg>
       <p class="welcome-intro">Находи одежду, пробуй цвета и собирай новые образы.</p>
       <form class="welcome-form" id="gameWelcomeForm">
         <fieldset class="welcome-choice">
@@ -97,6 +130,10 @@
             </div>
           </div>
         </fieldset>
+        <aside class="welcome-audio-note" aria-labelledby="welcomeAudioTitle">
+          <span class="welcome-audio-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m11 5-5 4H3v6h3l5 4Z"/><path d="M15 8q4 4 0 8m3-11q7 7 0 14"/></svg></span>
+          <div><h2 id="welcomeAudioTitle">Об озвучке</h2><p>Озвучка сгенерирована и передаёт произношение лишь приблизительно. Пожалуйста, уточняйте точное произношение у носителя монгольского языка.</p></div>
+        </aside>
         <button class="welcome-start" id="welcomeStart" type="submit">Начать игру</button>
       </form>
       <p class="welcome-note">Персонажа можно поменять в игре.</p>
@@ -109,9 +146,9 @@
       <a class="brand" href="#" aria-label="Примерочная Хувцас — главная"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M13 9a3 3 0 1 1 5 2c-1 1-2 1-2 3v2M16 15 4 23a1 1 0 0 0 1 2h22a1 1 0 0 0 1-2Z"/></svg></span><span class="brand-copy"><span class="brand-kicker">Примерочная</span><span class="brand-title" lang="mn">Хувцас</span></span></a>
       <nav class="header-actions" aria-label="Материалы игры">
         <button class="text-button help-top" id="helpButton" aria-label="Как играть"><span class="icon" data-icon="help"></span><span>Как играть</span></button>
-        <span class="known-count" id="knownCount" title="Слова, найденные с первой попытки без подсказки"></span>
+        <span class="known-count" id="knownCount" title="Слова, найденные с первой попытки без подсказки" hidden></span>
         <button class="text-button" id="dictionaryButton" aria-label="Открыть словарь"><span class="icon" data-icon="book"></span><span>Словарь</span></button>
-        <button class="album-button" id="albumButton" aria-label="Мои образы"><span class="icon" data-icon="album"></span><span>Мои образы</span><span id="albumCount" class="count-badge">0</span></button>
+        <button class="album-button" id="albumButton" aria-label="Мои образы"><span class="icon" data-icon="album"></span><span>Мои образы</span><span id="albumCount" class="count-badge" hidden></span></button>
       </nav>
     </header>
 
@@ -136,7 +173,7 @@
 
         <section class="wardrobe-panel" aria-label="Гардероб">
           <details class="activity-menu" id="activityMenu">
-            <summary><span class="activity-current-art" id="activityPreview" aria-hidden="true"></span><span class="activity-current-copy"><small id="activityEyebrow">Сегодня в примерочной</small><b id="activityTitle">Узнаём одежду</b><span id="activityDescription">Слова и вещи</span></span><span class="activity-change">Сменить занятие<span class="activity-chevron" aria-hidden="true"></span></span></summary>
+            <summary><span class="activity-current-art" id="activityPreview" aria-hidden="true"></span><span class="activity-current-copy"><small id="activityEyebrow">Сегодня в примерочной</small><b id="activityTitle">Узнаём одежду</b><span id="activityDescription">Слова и вещи</span></span><span class="activity-change">Нажмите для смены режима игры<span class="activity-chevron" aria-hidden="true"></span></span></summary>
             <div class="activity-options" role="group" aria-label="Занятия в примерочной">
               <button id="outfitMode" aria-pressed="false"><span class="activity-art" id="outfitIllustration" aria-hidden="true"></span><span><b>Собрать образ</b><small>Ситуации, одежда и цвета</small></span></button>
               <button id="challengeMode" aria-pressed="true"><span class="activity-art" id="challengeIllustration" aria-hidden="true"></span><span><b>Узнать одежду</b><small>Находим вещи по словам</small></span></button>
@@ -147,8 +184,8 @@
           </details>
           <div class="scene-list" id="sceneList" role="group" aria-label="Палитра заданий"></div>
           <div id="taskCard" class="task-card" aria-live="polite" aria-atomic="true"></div>
-          <div class="closet-shell" id="closetShell"><div class="wardrobe-heading"><div><h2 id="wardrobeTitle">Гардероб</h2><p id="wardrobeSubtitle">Нажми на вещь, чтобы надеть её</p></div><span class="wardrobe-total" id="wardrobeTotal">26 вещей</span></div>
-          <div class="catalogue-tools" id="catalogueTools" hidden><div class="collection-list" id="collectionList" role="group" aria-label="Раздел гардероба"></div><label class="catalogue-search"><span>Найти вещь</span><input id="wardrobeSearch" type="search" placeholder="Название по-русски или по-монгольски" autocomplete="off"></label><span id="catalogueResult" class="catalogue-result" aria-live="polite"></span></div><div class="category-list" id="categoryList" role="group" aria-label="Категория одежды"></div>
+          <div class="closet-shell" id="closetShell"><div class="wardrobe-heading"><div><h2 id="wardrobeTitle">Гардероб</h2><p id="wardrobeSubtitle">Нажми на вещь, чтобы надеть её</p></div><span class="wardrobe-total" id="wardrobeTotal" hidden></span></div>
+          <div class="catalogue-tools" id="catalogueTools" hidden><div class="collection-list" id="collectionList" role="group" aria-label="Раздел гардероба"></div><label class="catalogue-search"><span>Найти вещь</span><input id="wardrobeSearch" type="search" placeholder="Название по-русски или по-монгольски" autocomplete="off"></label><span id="catalogueResult" class="catalogue-result" aria-live="polite" hidden></span></div><div class="category-list" id="categoryList" role="group" aria-label="Категория одежды"></div>
           <div class="clothes-grid" id="clothesGrid"></div><div class="wardrobe-pager" id="wardrobePager" hidden></div>
           <div id="colorPanel" class="color-panel" hidden></div>
           <div class="wardrobe-note" id="wardrobeNote"><span class="icon" data-icon="bulb"></span><span>Сначала попробуй сам. Перевод — в подсказке.</span></div></div>
@@ -160,10 +197,10 @@
 
   <dialog id="modal" class="modal"><div id="modalContent"></div></dialog>
   <div id="toast" class="toast" role="status"></div>
-  <script defer src="clothes.js?v=6.14" data-game-asset="wardrobe"></script>
-  <script defer src="scenarios.js?v=6.14" data-game-asset="stories"></script>
-  <script defer src="audio.js?v=6.14" data-game-asset="audio"></script>
-  <script defer src="app.js?v=6.14" data-game-asset="app"></script>
-  <script defer src="embed.js?v=6.14"></script>
+  <script defer src="clothes.js?v=6.15" data-game-asset="wardrobe"></script>
+  <script defer src="scenarios.js?v=6.15" data-game-asset="stories"></script>
+  <script defer src="audio.js?v=6.15" data-game-asset="audio"></script>
+  <script defer src="app.js?v=6.15" data-game-asset="app"></script>
+  <script defer src="embed.js?v=6.15"></script>
 </body>
 </html>

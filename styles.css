@@ -114,3 +114,19 @@ html.game-embedded dialog.modal{position:fixed;inset:auto 0;top:calc(var(--embed
 .target-word>.phrase-audio-controls{display:flex;align-items:center;gap:10px;flex:0 0 100%;min-width:0;max-width:100%;flex-wrap:wrap;font-size:11px;letter-spacing:0;line-height:1.3}
 .phrase-audio-controls .speech-mode-control{margin:0}
 .phrase-audio-controls .word-audio{background:#f8faf2;border:1px solid #c8d3bc;border-radius:999px;min-width:42px;min-height:42px}
+
+/* Warm ivory cabinet: one quiet surface for browsing clothes and accessories. */
+.wardrobe-panel .closet-shell{--closet-base:#f2eddf;--closet-card:#fffaf0;--closet-line:#d8ccb3;background:var(--closet-base);border:1px solid var(--closet-line);border-radius:21px;margin-top:18px;padding:22px 18px 16px;box-shadow:inset 0 1px 0 #fffaf0,0 3px 0 #e2d7bf66}
+.closet-shell .wardrobe-heading{margin-bottom:18px}.closet-shell .wardrobe-heading h2{color:#4b6047}.closet-shell .wardrobe-heading p{color:#8d8068}
+.closet-shell .collection-list{gap:8px}.closet-shell .collection-button{justify-content:center;background:#f9f4e8;border-color:#d8ccb3;color:#827356;box-shadow:0 1px 0 #fffaf0}.closet-shell .collection-button.active{background:#e4ead5;border-color:#a7b78d;color:#3f604d;box-shadow:inset 0 0 0 1px #bdc9a7}
+.closet-shell .catalogue-search{color:#897b60}.closet-shell .catalogue-search input{background:#fffaf0;border-color:#d8ccb3;color:#344c3e;box-shadow:inset 0 1px 2px #76643f06}.closet-shell .catalogue-search input::placeholder{color:#a1957b}
+.closet-shell .category-list{gap:5px}.closet-shell .category-button{color:#8b7d60}.closet-shell .category-button.active{background:#fffaf0;border-color:#cdbf9e;color:#4b6248}.closet-shell .category-button small{color:#a29477}
+.closet-shell .clothes-grid{padding-top:2px}.wardrobe-panel .closet-shell .clothes-card{background:var(--closet-card);border-color:#ddd2ba;box-shadow:0 3px 0 #ded3bb55,0 5px 13px #6a583008}.wardrobe-panel .closet-shell .clothes-card:hover:not(:disabled){border-color:#b5be9b;box-shadow:0 7px 17px #6a583013}
+.closet-shell .clothes-picture{background:radial-gradient(ellipse at 45% 15%,#fffaf0cc,transparent 70%),linear-gradient(145deg,var(--item-tint,#efe5d0),#f7f1e3)}
+.wardrobe-panel .closet-shell .clothes-card.selected{background:#f2f5e7;border-color:#99ae7f;box-shadow:inset 0 0 0 1px #bac8a2,0 3px 0 #d5ddc4}.wardrobe-panel .closet-shell .clothes-card.selected .clothes-picture{background:linear-gradient(145deg,#e6edd5,#f5f5e7)}
+.wardrobe-panel .closet-shell .clothes-card.wrong-pick{border-color:#cb9d86;background:#fff4e9}.closet-shell .color-panel{background:#f9f3e6;border-color:#d9ccb1}.closet-shell .wardrobe-note{color:#93866b}.closet-shell .pager-button{background:#faf5e9;border-color:#d6c8aa;color:#867757}.closet-shell .wardrobe-pager{margin-top:18px}
+@media(max-width:800px){.wardrobe-panel .closet-shell{padding:19px 14px 14px}.closet-shell .wardrobe-heading{margin-bottom:16px}}
+@media(max-width:620px){.wardrobe-panel .closet-shell{margin-top:0;padding:19px 12px 13px;border-radius:20px}.closet-shell .collection-list{gap:7px}.closet-shell .collection-button{padding:9px 11px}.closet-shell .wardrobe-heading{margin-bottom:15px}}
+.activity-menu summary .activity-change{max-width:160px;width:160px;font-size:11px;line-height:1.45;flex-shrink:0;color:#526d48}
+@media(max-width:1100px){.activity-menu summary .activity-change{max-width:130px;width:130px;font-size:10px}}
+@media(max-width:620px){.activity-menu summary{flex-wrap:wrap}.activity-menu summary .activity-change{flex-basis:100%;max-width:none;width:100%;justify-content:flex-end;font-size:11px;padding-top:7px;border-top:1px solid #dce3d1}}
