@@ -96,3 +96,21 @@
 /* Center embedded dialogs in the part of the game visible on its host page. */
 html.game-embedded{--embed-view-top:0px;--embed-view-height:min(100vh,600px)}
 html.game-embedded dialog.modal{position:fixed;inset:auto 0;top:calc(var(--embed-view-top) + var(--embed-view-height)/2);bottom:auto;transform:translateY(-50%);margin:0 auto;max-height:max(1px,calc(var(--embed-view-height) - 32px));overflow:auto;overscroll-behavior:contain}
+
+/* Keep the translation action easy to find beside a selected word. */
+.free-card .task-content{flex-wrap:wrap;gap:14px;align-items:center}
+.free-card .task-content>div{flex:1 1 220px;min-width:0}
+.free-card .free-translation-button{min-height:46px;max-width:100%;padding:12px 18px;border:2px solid #3f604d;border-radius:12px;background:#3f604d;color:#fffefa;font-size:13px;line-height:1.4;font-weight:650;white-space:normal;box-shadow:0 3px 8px #283f3618;flex:0 0 auto}
+.free-card .free-translation-button:hover{background:#304f3e;border-color:#304f3e;box-shadow:0 4px 11px #283f3624}
+.free-card .free-translation-button:focus-visible{outline:3px solid #bd9049;outline-offset:4px}
+@media(max-width:620px){.free-card .task-content{align-items:flex-start;gap:13px}.free-card .task-content>div{flex-basis:100%}.free-card .free-translation-button{width:100%;min-height:48px;font-size:13px}}
+
+.speech-mode-control{display:inline-flex;align-items:center;gap:3px;max-width:100%;padding:3px;margin-top:12px;border:1px solid #c8d3bc;border-radius:999px;background:#f9faf4}
+.speech-mode-control button{min-height:34px;padding:7px 13px;border-radius:999px;background:transparent;color:#637956;font-size:11px;font-weight:600;line-height:1.3;white-space:nowrap}
+.speech-mode-control button[aria-pressed="true"]{background:#3f604d;color:#fffefa;box-shadow:0 1px 3px #283f3620}
+.speech-mode-control button:focus-visible{outline:2px solid #bd9049;outline-offset:2px}
+@media(max-width:420px){.speech-mode-control{margin-top:11px}.speech-mode-control button{min-height:38px;padding:8px 13px;font-size:11px}}
+.target-word:has(>.phrase-audio-controls){flex-wrap:wrap;row-gap:10px}
+.target-word>.phrase-audio-controls{display:flex;align-items:center;gap:10px;flex:0 0 100%;min-width:0;max-width:100%;flex-wrap:wrap;font-size:11px;letter-spacing:0;line-height:1.3}
+.phrase-audio-controls .speech-mode-control{margin:0}
+.phrase-audio-controls .word-audio{background:#f8faf2;border:1px solid #c8d3bc;border-radius:999px;min-width:42px;min-height:42px}

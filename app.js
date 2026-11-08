@@ -8,7 +8,7 @@ const slots=['top','bottom','full','tie','suspenders','vest','outer','belt','soc
 const modes=['outfits','challenge','colors','stories','free'];
 const outfitData=window.WARDROBE_SCENARIOS||{groups:[],scenarios:[],illustration:()=>''};
 const storageKey='huvtsas-mn-v1';
-const activityCopy={outfits:['Собираем образ','Ситуации, вещи и цвета'],challenge:['Узнаём одежду','Повторяем слова через примерку'],colors:['Играем с цветами','Находим вещь нужного оттенка'],stories:['Истории вещей','Размеры, семья и своя обувь'],free:['Свободная примерка','Примеряем, сочетаем и сохраняем']};
+const activityCopy={outfits:['Собираем образ','Ситуации, вещи и цвета'],challenge:['Узнаём одежду','Повторяем слова через примерку'],colors:['Играем с цветами','Находим вещь нужного оттенка'],stories:['Истории вещей','Размеры, семья и своя обувь'],free:['Свободная примерка','']};
 function activityArt(mode){
  const sets={outfits:[['sweater','#84a77c'],['jeans','#648ab7'],['sneakers','#eee9dc']],challenge:[['shirt','#91bfd4'],['hoodie','#bc9580'],['pants','#8d9b78']],colors:[['gloves','#dca4ba'],['tshirt','#e89d46'],['bag','#729d97']],stories:[['ankleboots','#a17f61'],['sneakers','#91bfd4'],['gloves','#84a77c']],free:[['blouse','#a28ab6'],['leatherbelt','#8d6246'],['bag','#c6a66d']]};
  return '<span class="activity-art-stage">'+sets[mode].map(([id,c],n)=>'<span class="activity-object object-'+n+'">'+art(id,c,state.hero)+'</span>').join('')+'</span>';
@@ -48,9 +48,9 @@ function cleanColors(value){const out={},legacy={'#b1bd76':'lime','#c8d19f':'lig
 function cleanSizes(value){const out={};if(value&&typeof value==='object')for(const i of items)if(['big','small','fit'].includes(value[i.id]))out[i.id]=value[i.id];return out;}
 function readProfile(){let p={};try{p=JSON.parse(localStorage.getItem(storageKey)||'{}')||{};}catch{storageAvailable=false;}
 const hero=p.hero==='temuulen'?'temuulen':'nomin';
-return {outfitPalette:['basic','light','dark','all'].includes(p.outfitPalette)?p.outfitPalette:'basic',outfitAttempts:p.outfitAttempts&&typeof p.outfitAttempts==='object'?p.outfitAttempts:{},outfitGroup:outfitData.groups.some(g=>g.id===p.outfitGroup)?p.outfitGroup:null,outfitId:outfitData.scenarios.some(o=>o.id===p.outfitId)?p.outfitId:null,finishedOutfits:Array.isArray(p.finishedOutfits)?p.finishedOutfits.filter(id=>typeof id==='string'):[],session:p.session&&typeof p.session==='object'?p.session:null,hero,mode:modes.includes(p.mode)?p.mode:'challenge',scene:scenes.some(s=>s.id===p.scene)?p.scene:'walk',colorGroup:['basic','light','dark','all'].includes(p.colorGroup)?p.colorGroup:'basic',known:[...new Set((Array.isArray(p.known)?p.known:[]).filter(id=>byId[id]))],colorKnown:Array.isArray(p.colorKnown)?p.colorKnown.filter(v=>typeof v==='string'):[],seenStories:Array.isArray(p.seenStories)?p.seenStories.filter(id=>stories.some(s=>s.id===id)):[],looks:p.looks&&typeof p.looks==='object'?p.looks:{},equipped:cleanOutfit(p.equipped,hero),colors:cleanColors(p.colors),sizes:cleanSizes(p.sizes),album:(Array.isArray(p.album)?p.album:[]).filter(o=>o&&typeof o.id==='string').slice(0,12).map(o=>({id:o.id,name:String(o.name||'Мой образ').slice(0,45),date:Number(o.date)||Date.now(),hero:o.hero==='temuulen'?'temuulen':'nomin',equipped:cleanOutfit(o.equipped,o.hero),colors:cleanColors(o.colors),sizes:cleanSizes(o.sizes)}))};}
+return {speechMode:p.speechMode==='parts'?'parts':'whole',outfitPalette:['basic','light','dark','all'].includes(p.outfitPalette)?p.outfitPalette:'basic',outfitAttempts:p.outfitAttempts&&typeof p.outfitAttempts==='object'?p.outfitAttempts:{},outfitGroup:outfitData.groups.some(g=>g.id===p.outfitGroup)?p.outfitGroup:null,outfitId:outfitData.scenarios.some(o=>o.id===p.outfitId)?p.outfitId:null,finishedOutfits:Array.isArray(p.finishedOutfits)?p.finishedOutfits.filter(id=>typeof id==='string'):[],session:p.session&&typeof p.session==='object'?p.session:null,hero,mode:modes.includes(p.mode)?p.mode:'challenge',scene:scenes.some(s=>s.id===p.scene)?p.scene:'walk',colorGroup:['basic','light','dark','all'].includes(p.colorGroup)?p.colorGroup:'basic',known:[...new Set((Array.isArray(p.known)?p.known:[]).filter(id=>byId[id]))],colorKnown:Array.isArray(p.colorKnown)?p.colorKnown.filter(v=>typeof v==='string'):[],seenStories:Array.isArray(p.seenStories)?p.seenStories.filter(id=>stories.some(s=>s.id===id)):[],looks:p.looks&&typeof p.looks==='object'?p.looks:{},equipped:cleanOutfit(p.equipped,hero),colors:cleanColors(p.colors),sizes:cleanSizes(p.sizes),album:(Array.isArray(p.album)?p.album:[]).filter(o=>o&&typeof o.id==='string').slice(0,12).map(o=>({id:o.id,name:String(o.name||'Мой образ').slice(0,45),date:Number(o.date)||Date.now(),hero:o.hero==='temuulen'?'temuulen':'nomin',equipped:cleanOutfit(o.equipped,o.hero),colors:cleanColors(o.colors),sizes:cleanSizes(o.sizes)}))};}
 const profile=readProfile();
-const state={outfitPalette:profile.outfitPalette,outfitGroup:profile.outfitGroup,outfitId:profile.outfitId,hero:profile.hero,mode:profile.mode,scene:profile.scene,colorGroup:profile.colorGroup,equipped:{...profile.equipped},colors:{...profile.colors},sizes:{...profile.sizes},selected:null,collection:'clothing',query:'',category:'all',page:0,queue:[],index:0,choices:[],solved:[],independent:0,answered:false,complete:false,hint:false,errors:0,wrong:null,translation:false,searchingOwn:false,foundOwn:false};
+const state={speechMode:profile.speechMode,outfitPalette:profile.outfitPalette,outfitGroup:profile.outfitGroup,outfitId:profile.outfitId,hero:profile.hero,mode:profile.mode,scene:profile.scene,colorGroup:profile.colorGroup,equipped:{...profile.equipped},colors:{...profile.colors},sizes:{...profile.sizes},selected:null,collection:'clothing',query:'',category:'all',page:0,queue:[],index:0,choices:[],solved:[],independent:0,answered:false,complete:false,hint:false,errors:0,wrong:null,translation:false,searchingOwn:false,foundOwn:false};
 let keyboardNavigation=false;
 document.addEventListener?.('keydown',event=>{if(['Tab','Enter',' ','ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))keyboardNavigation=true;},true);
 document.addEventListener?.('pointerdown',()=>{keyboardNavigation=false;},true);
@@ -68,7 +68,7 @@ $('knownCount').innerHTML='<span class="icon">'+icon('star')+'</span>'+profile.k
 $('albumCount').textContent=profile.album.length;
 }
 function persist(){
-Object.assign(profile,{outfitPalette:state.outfitPalette,outfitGroup:state.outfitGroup,outfitId:state.outfitId,hero:state.hero,mode:state.mode,scene:state.scene,colorGroup:state.colorGroup,equipped:{...state.equipped},colors:{...state.colors},sizes:{...state.sizes}});
+Object.assign(profile,{speechMode:state.speechMode,outfitPalette:state.outfitPalette,outfitGroup:state.outfitGroup,outfitId:state.outfitId,hero:state.hero,mode:state.mode,scene:state.scene,colorGroup:state.colorGroup,equipped:{...state.equipped},colors:{...state.colors},sizes:{...state.sizes}});
 profile.session=state.mode==='free'?null:{outfitGroup:state.outfitGroup,outfitId:state.outfitId,hero:state.hero,mode:state.mode,scene:state.scene,colorGroup:state.colorGroup,queue:state.queue.map(t=>({id:t.id,color:t.color,size:t.size,storyId:t.story?.id})),index:state.index,solved:[...state.solved],independent:state.independent,answered:state.answered,complete:state.complete,hint:state.hint,errors:state.errors,searchingOwn:state.searchingOwn,foundOwn:state.foundOwn};
 profile.looks[state.hero]={equipped:{...state.equipped},colors:{...state.colors},sizes:{...state.sizes}};
 try{const text=JSON.stringify(profile);localStorage.setItem(storageKey,text);storageAvailable=localStorage.getItem(storageKey)===text;}catch{storageAvailable=false;}updateStatus();
@@ -76,8 +76,12 @@ try{const text=JSON.stringify(profile);localStorage.setItem(storageKey,text);sto
 function toast(text){clearTimeout(toastTimer);$('toast').textContent=text;$('toast').classList.add('visible');toastTimer=setTimeout(()=>$('toast').classList.remove('visible'),3500);}
 function sparkle(){clearTimeout(sparkleTimer);$('dressSparkles').classList.remove('play');void $('dressSparkles').offsetWidth;$('dressSparkles').classList.add('play');sparkleTimer=setTimeout(()=>$('dressSparkles').classList.remove('play'),700);}
 function getVoice(){nativeVoice=window.speechSynthesis?.getVoices().find(v=>/^mn(?:-|$)/i.test(v.lang));}getVoice();window.speechSynthesis?.addEventListener('voiceschanged',getVoice);
-function soundButton(key,text){return `<button class="small-icon word-audio" data-sound="${esc(key)}" data-spoken="${esc(text)}" aria-label="Послушать: ${esc(text)}" title="Монгольское произношение"><span class="icon">${icon('volume')}</span></button>`;}
-let speechContext,speechToken=0,speechNodes=[];const speechCache=new Map();
+function soundButton(key,text){
+ const button=`<button class="small-icon word-audio" data-sound="${esc(key)}" data-spoken="${esc(text)}" aria-label="Послушать: ${esc(text)}" title="Монгольское произношение"><span class="icon">${icon('volume')}</span></button>`;
+ if(!key.startsWith('phrase-')||recordedPhraseKeys(key,'parts').length!==2)return button;
+ return '<span class="phrase-audio-controls">'+button+'<span class="speech-mode-control" role="group" aria-label="Режим озвучки словосочетания">'+[['whole','Целиком'],['parts','По словам']].map(([mode,label])=>`<button type="button" data-speech-mode="${mode}" aria-pressed="${state.speechMode===mode}">${label}</button>`).join('')+'</span></span>';
+}
+let speechContext,speechToken=0,speechNodes=[],speechFallbackTimer=0;const speechCache=new Map();
 function speechRange(buffer){
  const channel=buffer.getChannelData(0),step=Math.max(1,Math.floor(buffer.sampleRate*.012));let first=-1,last=0;
  for(let n=0;n<channel.length;n+=step){let peak=0;for(let i=n;i<Math.min(channel.length,n+step);i++)peak=Math.max(peak,Math.abs(channel[i]));if(peak>.0025){if(first<0)first=n;last=Math.min(channel.length,n+step);}}
@@ -85,25 +89,47 @@ function speechRange(buffer){
 }
 function speechKeepRanges(buffer){
  const data=buffer.getChannelData(0),rate=buffer.sampleRate,step=Math.max(1,Math.floor(rate*.01)),silences=[];let start=-1;
- for(let n=0;n<=data.length;n+=step){let peak=0;for(let i=n;i<Math.min(data.length,n+step);i++)peak=Math.max(peak,Math.abs(data[i]));if(peak<.0015&&n<data.length){if(start<0)start=n;}else if(start>=0){if(n-start>rate*.14)silences.push([start,Math.min(n,data.length)]);start=-1;}}
+ for(let n=0;n<data.length;n+=step){let peak=0;for(let i=n;i<Math.min(data.length,n+step);i++)peak=Math.max(peak,Math.abs(data[i]));if(peak<.0015){if(start<0)start=n;}else if(start>=0){if(n-start>rate*.14)silences.push([start,n]);start=-1;}}
+ if(start>=0&&data.length-start>rate*.14)silences.push([start,data.length]);
  let cursor=0,ranges=[];for(const [a,b] of silences){const keepLeft=a===0?0:Math.floor(rate*.037),keepRight=b===data.length?0:Math.floor(rate*.037);const end=Math.min(data.length,a+keepLeft);if(end>cursor)ranges.push([cursor,end]);cursor=Math.max(cursor,b-keepRight);}if(cursor<data.length)ranges.push([cursor,data.length]);return ranges.length?ranges:[[0,data.length]];
 }
 async function speechBuffer(key){
  if(speechCache.has(key)){const value=speechCache.get(key);speechCache.delete(key);speechCache.set(key,value);return value;}
  const bytes=Uint8Array.from(atob(sounds[key].split(',')[1]),c=>c.charCodeAt(0));const decoded=await speechContext.decodeAudioData(bytes.buffer),ranges=key.startsWith('story-')?[[0,decoded.length]]:speechKeepRanges(decoded),length=ranges.reduce((n,[a,b])=>n+b-a,0),buffer=speechContext.createBuffer(decoded.numberOfChannels,length,decoded.sampleRate);for(let channel=0;channel<decoded.numberOfChannels;channel++){const source=decoded.getChannelData(channel),target=buffer.getChannelData(channel);let offset=0;for(const [a,b] of ranges){target.set(source.subarray(a,b),offset);offset+=b-a;}}const value={buffer,...speechRange(buffer)};speechCache.set(key,value);if(speechCache.size>48)speechCache.delete(speechCache.keys().next().value);return value;
 }
-async function play(key,text){
- const token=++speechToken;window.speechSynthesis?.cancel();if(playing){playing.onended=null;playing.pause();playing.currentTime=0;}for(const node of speechNodes)try{node.stop();}catch{}speechNodes=[];
- if(sounds[key]){try{const AudioEngine=window.AudioContext||window.webkitAudioContext;if(!AudioEngine)throw new Error('Audio unavailable');speechContext=speechContext||new AudioEngine();await speechContext.resume();const word=await speechBuffer(key);if(token!==speechToken)return;const node=speechContext.createBufferSource();node.buffer=word.buffer;node.connect(speechContext.destination);node.start(0,word.offset,word.duration);speechNodes.push(node);return;}catch{if(token!==speechToken)return;playing=new Audio(sounds[key]);playing.play().catch(()=>toast('Не удалось воспроизвести звук. Нажми ещё раз.'));return;}}
+function joinSpeechBuffers(words){
+ const rate=speechContext.sampleRate,gap=Math.round(rate*(state.speechMode==='parts'?.45:0)),parts=words.map(word=>({word,start:Math.round(word.offset*rate),length:Math.max(1,Math.round(word.duration*rate))}));
+ const length=parts.reduce((n,part)=>n+part.length,0)+gap*(parts.length-1),channels=Math.max(...words.map(word=>word.buffer.numberOfChannels)),buffer=speechContext.createBuffer(channels,length,rate),fade=Math.max(1,Math.round(rate*.006));
+ for(let channel=0;channel<channels;channel++){const target=buffer.getChannelData(channel);let at=0;for(const part of parts){const source=part.word.buffer.getChannelData(Math.min(channel,part.word.buffer.numberOfChannels-1));for(let n=0;n<part.length;n++){const gain=Math.min(1,n/fade,(part.length-1-n)/fade);target[at+n]=(source[part.start+n]||0)*Math.max(0,gain);}at+=part.length+gap;}}
+ return {buffer,offset:0,duration:buffer.duration};
+}
+function recordedPhraseKeys(key,mode=state.speechMode){
  if(key.startsWith('phrase-')){
-  const c=[...palette].sort((a,b)=>b.id.length-a.id.length).find(p=>key.endsWith('-'+p.id));const id=c?key.slice(7,-c.id.length-1):'';
-  if(c&&sounds['color-'+c.id]&&sounds[id]){
-   try{const AudioEngine=window.AudioContext||window.webkitAudioContext;if(!AudioEngine)throw new Error('Audio unavailable');speechContext=speechContext||new AudioEngine();await speechContext.resume();const words=await Promise.all([speechBuffer('color-'+c.id),speechBuffer(id)]);if(token!==speechToken)return;let at=speechContext.currentTime+.025;
-    for(const word of words){const node=speechContext.createBufferSource(),gain=speechContext.createGain();node.buffer=word.buffer;node.connect(gain);gain.connect(speechContext.destination);gain.gain.setValueAtTime(0,at);gain.gain.linearRampToValueAtTime(1,at+.006);gain.gain.setValueAtTime(1,at+Math.max(.007,word.duration-.008));gain.gain.linearRampToValueAtTime(0,at+word.duration);node.start(at,word.offset,word.duration);speechNodes.push(node);at+=word.duration+.018;}return;
-   }catch{if(token!==speechToken)return;}
-  }
+  const c=[...palette].sort((a,b)=>b.id.length-a.id.length).find(p=>key.endsWith('-'+p.id)),id=c?key.slice(7,-c.id.length-1):'';
+  const parts=c&&sounds['color-'+c.id]&&sounds[id]?['color-'+c.id,id]:[];
+  if(mode==='parts'&&parts.length)return parts;
+  if(sounds[key])return [key];
+  return parts;
  }
- if(nativeVoice){window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='mn-MN';u.voice=nativeVoice;u.rate=.9;window.speechSynthesis.speak(u);}else toast('Для этой фразы озвучка пока недоступна.');
+ return sounds[key]?[key]:[];
+}
+function stopSpeech(){
+ const token=++speechToken;clearTimeout(speechFallbackTimer);speechFallbackTimer=0;window.speechSynthesis?.cancel();if(playing){playing.onended=null;playing.onerror=null;playing.pause();playing.currentTime=0;}for(const node of speechNodes)try{node.stop();}catch{}speechNodes=[];return token;
+}
+function setSpeechMode(mode){
+ if(!['whole','parts'].includes(mode)||mode===state.speechMode)return false;
+ stopSpeech();state.speechMode=mode;persist();renderTask();return true;
+}
+function playRecordedFallback(keys,token){
+ const audio=playing=new Audio(),pause=state.speechMode==='parts'&&keys.length>1?450:0;let index=0;audio.preload='auto';
+ const failed=()=>{if(token!==speechToken)return;clearTimeout(speechFallbackTimer);speechFallbackTimer=0;audio.onended=null;audio.onerror=null;audio.pause();toast('Не удалось воспроизвести звук. Нажми ещё раз.');};
+ const next=()=>{if(token!==speechToken)return;if(index>=keys.length){audio.onended=null;audio.onerror=null;return;}audio.src=sounds[keys[index++]];audio.play().catch(failed);};
+ audio.onended=()=>{if(token!==speechToken)return;if(index<keys.length&&pause)speechFallbackTimer=setTimeout(()=>{speechFallbackTimer=0;next();},pause);else next();};audio.onerror=failed;next();
+}
+async function play(key,text){
+ const token=stopSpeech(),keys=recordedPhraseKeys(key);
+ if(keys.length){try{const AudioEngine=window.AudioContext||window.webkitAudioContext;if(!AudioEngine)throw new Error('Audio unavailable');speechContext=speechContext||new AudioEngine();await speechContext.resume();const words=await Promise.all(keys.map(speechBuffer));if(token!==speechToken)return;const word=words.length===1?words[0]:joinSpeechBuffers(words),node=speechContext.createBufferSource();node.buffer=word.buffer;node.connect(speechContext.destination);node.onended=()=>{speechNodes=speechNodes.filter(value=>value!==node);};node.start(0,word.offset,word.duration);speechNodes.push(node);return;}catch{if(token!==speechToken)return;playRecordedFallback(keys,token);return;}}
+ if(nativeVoice){const u=new SpeechSynthesisUtterance(text);u.lang='mn-MN';u.voice=nativeVoice;u.rate=.9;window.speechSynthesis.speak(u);}else toast('Для этой фразы озвучка пока недоступна.');
 }
 function targetText(task){return phrase(task.id,task.color);}
 function prepareChoices(){
@@ -137,13 +163,20 @@ if(state.mode==='free'&&i.slot==='full')delete state.equipped.outer;
 state.equipped[i.slot]=id;state.selected=id;state.sizes[id]=size;
 if(color)state.colors[id]=colorById(color)?.color||color;
 }
-function choose(key){
-const restoreChoiceFocus=keyboardFocusWithin('clothesGrid');
+function isWornChoice(candidate){return state.equipped[byId[candidate.id]?.slot]===candidate.id&&(!candidate.color||(state.colors[candidate.id]||byId[candidate.id].color)===(colorById(candidate.color)?.color||candidate.color));}
+function removeEquipped(id){
+if((state.mode!=='free'&&(state.answered||state.complete))||!byId[id]||state.equipped[byId[id].slot]!==id)return false;
+delete state.equipped[byId[id].slot];if(state.selected===id)state.selected=null;state.translation=false;persist();renderAvatar();renderTask();renderClothes();renderColors();return true;
+}
+function choose(key,clickDetail=0){
+if(clickDetail>1)return;const restoreChoiceFocus=keyboardFocusWithin('clothesGrid');
+const candidate=state.mode==='free'?(available(state.hero).some(i=>i.id===key)?{id:key,color:null}:null):state.choices.find(c=>c.key===key);if(!candidate)return;
+if(isWornChoice(candidate)&&removeEquipped(candidate.id)){if(restoreChoiceFocus)focusChoice(key);return;}
 if(state.mode==='free'){
-if(!available(state.hero).some(i=>i.id===key))return;if(state.equipped[byId[key].slot]===key){delete state.equipped[byId[key].slot];state.selected=null;}else equip(key,null);state.translation=false;persist();renderAvatar();renderTask();renderClothes();renderColors();sparkle();if(restoreChoiceFocus)focusChoice(key);return;
+equip(key,null);state.translation=false;persist();renderAvatar();renderTask();renderClothes();renderColors();sparkle();if(restoreChoiceFocus)focusChoice(key);return;
 }
 if(state.complete){toast('Раунд пройден. Можно повторить или открыть гардероб.');return;}if(state.answered){toast('Нажми «Дальше», чтобы продолжить.');return;}
-const candidate=state.choices.find(c=>c.key===key);if(!candidate)return;const task=current();
+const task=current();
 const rightItem=candidate.id===task.id||(state.mode==='challenge'&&task.id==='boots'&&byId[candidate.id].slot==='shoes');
 if(!rightItem||(task.color&&candidate.color!==task.color)){state.errors++;state.wrong=key;persist();updateCharacterLine();renderTask();renderClothes();if(restoreChoiceFocus)focusChoice(key);return;}
 state.answered=true;state.wrong=null;if(task.own)state.foundOwn=true;state.solved.push(task.id);state.translation=false;
@@ -156,7 +189,7 @@ function findOwnItem(){if(state.mode!=='stories'||!state.answered||!current()?.s
 function render(){renderModes();renderScenes();renderAvatar();renderTask();renderCategories();renderClothes();renderColors();updateStatus();}
 function renderModes(){
 for(const [id,mode] of [['outfitMode','outfits'],['challengeMode','challenge'],['colorMode','colors'],['storiesMode','stories'],['freeMode','free']]){$(id).classList.toggle('active',state.mode===mode);$(id).setAttribute('aria-pressed',String(state.mode===mode));}
-const copy=activityCopy[state.mode];$('activityTitle').textContent=copy[0];$('activityDescription').textContent=copy[1];$('activityPreview').innerHTML=activityArt(state.mode);
+const copy=activityCopy[state.mode];$('activityTitle').textContent=copy[0];$('activityDescription').textContent=copy[1];$('activityDescription').hidden=state.mode==='free';if($('activityEyebrow'))$('activityEyebrow').hidden=state.mode==='free';$('activityPreview').innerHTML=activityArt(state.mode);
 for(const [id,mode] of [['outfitIllustration','outfits'],['challengeIllustration','challenge'],['colorIllustration','colors'],['storiesIllustration','stories'],['freeIllustration','free']])$(id).innerHTML=activityArt(mode);
 $('game').dataset.activity=state.mode;
 $('sceneList').hidden=state.mode!=='colors';$('closetShell').hidden=state.mode==='outfits'&&(!state.outfitId||state.complete);$('catalogueTools').hidden=state.mode!=='free';$('categoryList').hidden=state.mode!=='free';$('clearLookButton').hidden=state.mode!=='free';
@@ -187,7 +220,7 @@ updateCharacterLine();
 $('roomLabel').textContent=state.hero==='nomin'?'НОМИН':'ТЭМҮҮЛЭН';
 document.querySelectorAll('[data-hero]').forEach(b=>{const active=b.dataset.hero===state.hero;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
 const worn=slots.map(s=>state.equipped[s]).filter(Boolean);
-$('outfitChips').innerHTML=worn.length?worn.map(id=>state.mode==='free'?`<button class="outfit-chip removable" data-remove="${id}" aria-label="Снять: ${esc(byId[id].mn)}" lang="mn">${byId[id].mn}</button>`:`<span class="outfit-chip" lang="mn">${byId[id].mn}</span>`).join(''):'';
+$('outfitChips').innerHTML=worn.length?worn.map(id=>state.mode==='free'||(!state.answered&&!state.complete)?`<button class="outfit-chip removable" data-remove="${id}" aria-label="Снять: ${esc(byId[id].mn)}" lang="mn">${byId[id].mn}</button>`:`<span class="outfit-chip" lang="mn">${byId[id].mn}</span>`).join(''):'';
 $('outfitChips').hidden=!worn.length;
 }
 function activeOutfit(){return outfitData.scenarios.find(o=>o.id===state.outfitId);}
@@ -232,7 +265,7 @@ const card=$('taskCard');card.className='task-card';
 if(state.mode==='outfits'){renderOutfitTask(card);return;}
 if(state.mode==='free'){
 card.classList.add('free-card');const i=byId[state.selected];const color=i?palette.find(p=>p.color===(state.colors[i.id]||i.color)):null;const text=i?phrase(i.id,color?.id):null;
-card.innerHTML='<div class="task-header"><span>ТВОЙ ГАРДЕРОБ</span><span>ОДЕЖДА И АКСЕССУАРЫ</span></div>'+(i?`<div class="task-content"><div><div class="task-label">Название и цвет</div><div class="target-word ${text.mn.length>22?'long-word':''}"><span lang="mn">${text.mn}</span>${soundButton(color?'phrase-'+i.id+'-'+color.id:i.id,text.mn)}</div></div><button class="hint-button" id="translationButton">${state.translation?'Скрыть':'Перевод'}</button></div><div class="task-translation">${state.translation?esc(text.ru):'Нажми на динамик, чтобы послушать'}</div>`:'<div class="free-placeholder">Соберём новый образ?</div><div class="task-translation">Одежда, очки, украшения — выбирай, что нравится.</div>');return;
+card.innerHTML=(i?`<div class="task-content"><div><div class="task-label">Название и цвет</div><div class="target-word ${text.mn.length>22?'long-word':''}"><span lang="mn">${text.mn}</span>${soundButton(color?'phrase-'+i.id+'-'+color.id:i.id,text.mn)}</div></div><button class="hint-button free-translation-button" id="translationButton">${state.translation?'Скрыть перевод':'Показать перевод'}</button></div><div class="task-translation">${state.translation?esc(text.ru):'Нажми на динамик, чтобы послушать'}</div>`:'<div class="free-placeholder">Соберём новый образ?</div><div class="task-translation">Одежда, очки, украшения — выбирай, что нравится.</div>');return;
 }
 if(state.complete){card.classList.add('complete');const title=state.mode==='stories'?'Все сценки пройдены!':state.mode==='colors'?'Все цвета найдены!':'Тема пройдена!';card.innerHTML=`<div class="task-header"><span>САЙН БАЙНА!</span><span>${state.queue.length} / ${state.queue.length}</span></div><div class="complete-title">${title}</div><div class="feedback"><span>Наряд можно сохранить в альбом.</span><button class="next-button" id="restartButton">Ещё раз <span class="icon">${icon('reset')}</span></button></div>`;return;}
 const task=current(),text=targetText(task),total=state.queue.length;
@@ -274,7 +307,7 @@ function renderClothes(){
 const free=state.mode==='free',worn=Object.values(state.equipped);let options=[];
 if(free){const filtered=available(state.hero).filter(catalogueFilter).sort((a,b)=>state.category==='summer'?(b.category==='summer')-(a.category==='summer'):0);$('catalogueResult').textContent=plural(filtered.length,'предмет','предмета','предметов');const pages=Math.max(1,Math.ceil(filtered.length/12));state.page=Math.min(state.page,pages-1);options=filtered.slice(state.page*12,state.page*12+12).map(i=>({id:i.id,key:i.id,color:null}));$('wardrobePager').hidden=pages<=1;$('wardrobePager').innerHTML=pages>1?`<button class="pager-button" id="previousPage" ${state.page===0?'disabled':''}>← Назад</button><span>${state.page+1} / ${pages}</span><button class="pager-button" id="nextPage" ${state.page===pages-1?'disabled':''}>Ещё вещи →</button>`:'';}
 else{options=state.choices;$('wardrobePager').hidden=true;}
-$('clothesGrid').innerHTML=(free&&!options.length?'<p class="catalogue-empty">Ничего не найдено. Попробуй другое название или раздел.</p>':'')+options.map((o,n)=>{const i=byId[o.id],c=o.color?colorById(o.color).color:state.colors[i.id]||i.color;const selected=free?worn.includes(i.id):state.answered&&current()?.id===o.id&&(!current().color||current().color===o.color);const reveal=free||selected;const label=phrase(i.id,o.color);return `<button style="--item-tint:${c}22" class="clothes-card ${selected?'selected':''} ${state.wrong===o.key?'wrong-pick':''}" data-item="${o.key}" draggable="true" aria-label="${reveal?esc(label.mn):'Вариант '+(n+1)}" aria-pressed="${selected}">${selected?'<span class="card-status" aria-hidden="true">✓</span>':''}<span class="clothes-picture">${art(i.id,c,state.hero)}</span><span class="clothes-card-footer"><span class="clothes-name ${reveal?'':'hidden-label'}" ${reveal?'lang="mn"':''}>${reveal?i.mn:'Примерить'}</span>${free?'':`<span class="item-color-dot" style="background:${c}" aria-hidden="true"></span>`}</span></button>`;}).join('');
+$('clothesGrid').innerHTML=(free&&!options.length?'<p class="catalogue-empty">Ничего не найдено. Попробуй другое название или раздел.</p>':'')+options.map((o,n)=>{const i=byId[o.id],c=o.color?colorById(o.color).color:state.colors[i.id]||i.color;const selected=isWornChoice(o);const reveal=free||(state.answered&&(current()?.id===o.id||(state.mode==='challenge'&&current()?.id==='boots'&&i.slot==='shoes'))&&(!current().color||current().color===o.color));const label=phrase(i.id,o.color);return `<button style="--item-tint:${c}22" class="clothes-card ${selected?'selected':''} ${state.wrong===o.key?'wrong-pick':''}" data-item="${o.key}" draggable="true" aria-label="${reveal?esc(label.mn):'Вариант '+(n+1)}" aria-pressed="${selected}">${selected?'<span class="card-status" aria-hidden="true">✓</span>':''}<span class="clothes-picture">${art(i.id,c,state.hero)}</span><span class="clothes-card-footer"><span class="clothes-name ${reveal?'':'hidden-label'}" ${reveal?'lang="mn"':''}>${reveal?i.mn:'Примерить'}</span>${free?'':`<span class="item-color-dot" style="background:${c}" aria-hidden="true"></span>`}</span></button>`;}).join('');
 }
 function renderColors(){const show=state.mode==='free'&&byId[state.selected]&&Object.values(state.equipped).includes(state.selected);$('colorPanel').hidden=!show;if(!show){$('colorPanel').innerHTML='';return;}
 const chosen=state.colors[state.selected]||byId[state.selected].color;const selectedColor=palette.find(p=>p.color===chosen);
@@ -320,7 +353,7 @@ for(const [id,mode] of [['outfitMode','outfits'],['challengeMode','challenge'],[
 $('sceneList').addEventListener('click',e=>{const colorGroup=e.target.closest('[data-color-group]');if(colorGroup){state.colorGroup=colorGroup.dataset.colorGroup;newRound('colors',state.scene);return;}const b=e.target.closest('[data-scene]');if(b&&(b.dataset.scene!==state.scene||state.complete))newRound('challenge',b.dataset.scene);});
 document.querySelectorAll('[data-hero]').forEach(b=>b.addEventListener('click',()=>switchHero(b.dataset.hero)));
 document.addEventListener('huvtsas:start',event=>{const hero=event.detail?.hero;if(['nomin','temuulen'].includes(hero))switchHero(hero);});
-$('clothesGrid').addEventListener('click',e=>{const b=e.target.closest('[data-item]');if(b)choose(b.dataset.item);});
+$('clothesGrid').addEventListener('click',e=>{const b=e.target.closest('[data-item]');if(b)choose(b.dataset.item,e.detail);});
 $('clothesGrid').addEventListener('dragstart',e=>{const b=e.target.closest('[data-item]');if(b)e.dataTransfer.setData('text/plain',b.dataset.item);});
 $('characterStage').addEventListener('dragover',e=>e.preventDefault());$('characterStage').addEventListener('drop',e=>{e.preventDefault();choose(e.dataTransfer.getData('text/plain'));});
 $('clothesGrid').addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft','ArrowUp','ArrowDown'].includes(e.key))return;const all=[...$('clothesGrid').querySelectorAll('[data-item]')],n=all.indexOf(document.activeElement);if(n<0)return;e.preventDefault();const cols=getComputedStyle($('clothesGrid')).gridTemplateColumns.split(' ').length;const step={ArrowLeft:-1,ArrowRight:1,ArrowUp:-cols,ArrowDown:cols}[e.key];all[Math.max(0,Math.min(all.length-1,n+step))].focus();});
@@ -330,10 +363,10 @@ $('modal').addEventListener('input',e=>{if(e.target.id==='dictionarySearch'){dic
 $('categoryList').addEventListener('click',e=>{const b=e.target.closest('[data-category]');if(b){state.category=b.dataset.category;state.page=0;renderCategories();renderClothes();}});
 $('wardrobePager').addEventListener('click',e=>{if(e.target.closest('#nextPage'))state.page++;else if(e.target.closest('#previousPage'))state.page--;else return;renderClothes();});
 $('colorPanel').addEventListener('click',e=>{if(e.target.closest('#allColorsButton')){openPalette();return;}const b=e.target.closest('[data-color]');if(b)applyColor(b.dataset.color);});
-$('outfitChips').addEventListener('click',e=>{const b=e.target.closest('[data-remove]');if(b&&state.mode==='free'){delete state.equipped[byId[b.dataset.remove].slot];if(state.selected===b.dataset.remove)state.selected=null;persist();renderAvatar();renderTask();renderClothes();renderColors();}});
+$('outfitChips').addEventListener('click',e=>{const b=e.target.closest('[data-remove]');if(b)removeEquipped(b.dataset.remove);});
 $('taskCard').addEventListener('change',e=>{if(e.target.id==='outfitPalette'){state.outfitPalette=e.target.value;persist();renderTask();}});
 $('taskCard').addEventListener('click',e=>{const place=e.target.closest('[data-outfit-group]');if(place){chooseOutfitPlace(place.dataset.outfitGroup);return;}const outfit=e.target.closest('[data-outfit-id]');if(outfit){startOutfit(outfit.dataset.outfitId);return;}if(e.target.closest('#outfitPlacesButton')){openOutfitPlaces();return;}if(e.target.closest('#outfitMenuButton')){openOutfitPlaces(state.outfitGroup);return;}if(e.target.closest('#outfitAgainButton')){startOutfit(state.outfitId);return;}if(e.target.closest('#outfitNextScenario')){nextOutfit();return;}if(e.target.closest('#outfitSaveButton')){saveDialog();return;}if(e.target.closest('#chooseTopicButton')){chooseTopic();return;}if(e.target.closest('#hintButton')){state.hint=true;persist();renderTask();}else if(e.target.closest('#nextButton'))next();else if(e.target.closest('#restartButton'))newRound(state.mode,state.scene);else if(e.target.closest('#translationButton')){state.translation=!state.translation;renderTask();}else if(e.target.closest('#findOwnButton'))findOwnItem();});
-document.addEventListener('click',e=>{const b=e.target.closest('[data-sound]');if(b)play(b.dataset.sound,b.dataset.spoken);});
+document.addEventListener('click',e=>{const mode=e.target.closest('[data-speech-mode]');if(mode){const focus=document.activeElement===mode;setSpeechMode(mode.dataset.speechMode);if(focus)document.querySelector('[data-speech-mode="'+mode.dataset.speechMode+'"]')?.focus({preventScroll:true});return;}const b=e.target.closest('[data-sound]');if(b)play(b.dataset.sound,b.dataset.spoken);});
 $('clearLookButton').addEventListener('click',()=>{if(state.mode==='free'){state.equipped={};state.sizes={};state.selected=null;persist();render();}});
 $('saveLookButton').addEventListener('click',saveDialog);$('albumButton').addEventListener('click',album);$('dictionaryButton').addEventListener('click',dictionary);$('helpButton').addEventListener('click',help);
 $('modal').addEventListener('change',e=>{if(e.target.id==='outfitPalette'){state.outfitPalette=e.target.value;persist();}});
