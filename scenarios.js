@@ -1,0 +1,161 @@
+(function(){
+'use strict';
+const groups=[
+ {id:'home',title:'Дома',subtitle:'Тихие утра и уютные вечера',color:'#e8dfca'},
+ {id:'office',title:'В офисе',subtitle:'Рабочие дни, встречи и выступления',color:'#dce6e0'},
+ {id:'walk',title:'На прогулке',subtitle:'Парк, город и загородные тропы',color:'#dde7cd'},
+ {id:'summer',title:'Летом',subtitle:'Пляж, бассейн и тёплые поездки',color:'#f1e1bd'},
+ {id:'sport',title:'На тренировке',subtitle:'Движение в зале и на свежем воздухе',color:'#dce5e8'},
+ {id:'occasion',title:'На празднике',subtitle:'В гости, на концерт и на семейный вечер',color:'#ead9d6'},
+ {id:'travel',title:'В поездке',subtitle:'Поезда, самолёты и новые города',color:'#e5dfd1'},
+ {id:'weather',title:'По погоде',subtitle:'Дождь, снег, жара и переменчивый ветер',color:'#dce5e6'},
+ {id:'study',title:'На учёбе',subtitle:'Лекции, библиотека и творческие занятия',color:'#e7e1ed'},
+ {id:'city',title:'В городе',subtitle:'Встречи, покупки и повседневные дела',color:'#e9ded1'}
+];
+const scenarios=[];
+function add(group,id,title,brief,male,female=male){scenarios.push({id,group,title,brief,looks:{temuulen:male.split(' '),nomin:female.split(' ')}});}
+add('home','home-morning','Спокойное утро','Ты остаёшься дома. Собери лёгкий и удобный комплект для завтрака.','tshirt shorts socks','tshirt shorts socks');
+add('home','home-evening','Вечер с фильмом','Вечером хочется устроиться поудобнее. Подбери мягкие вещи и домашнюю обувь.','sweatshirt sweatpants slippers');
+add('home','home-sleep','Пора спать','День закончился. Найди пижаму и носки для прохладной ночи.','pajamas socks');
+add('home','home-summer-night','Тёплая ночь','Сегодня дома жарко. Выбери пижаму с шортами и домашние тапочки.','shortpajamas slippers');
+add('home','home-shower','После душа','Душ уже позади. Надень халат и домашние тапочки.','bathrobe slippers');
+add('home','home-reading','Читаем у окна','У окна немного прохладно. Собери домашний комплект с кардиганом.','tshirt pants cardigan slippers');
+add('office','office-day','Обычный рабочий день','Сегодня спокойный день в офисе. Собери аккуратный комплект с рубашкой и брюками.','shirt pants mensflat watch','shirt pants womensflat watch');
+add('office','office-meeting','Важная встреча','Впереди деловая встреча. Подготовь более строгий комплект.','shirt suitpants tie blazer mensflat','blouse pants cardigan womensflat bag');
+add('office','office-presentation','Выступление','Ты будешь выступать перед коллегами. Найди костюм и подходящую обувь.','suit mensflat watch','suit womensflat watch');
+add('office','office-hot','Летний рабочий день','На улице тепло. Выбери лёгкий верх и удобные брюки для офиса.','polo widepants mensflat leatherbelt','blouse widepants womensflat bag');
+add('office','office-cool','Прохладный офис','В помещении прохладно. Пригодятся свитер, брюки и закрытая обувь.','cashmere pants loafers watch','sweater pants womensflat watch');
+add('office','office-rain','На работу под дождём','Утром дождь. Подготовь рабочую одежду и добавь защиту от непогоды.','shirt pants ankleboots raincoat bag');
+add('walk','walk-park','В парк','Пойдём гулять по парку. Собери повседневный комплект и добавь кепку.','tshirt jeans sneakers cap');
+add('walk','walk-spring','Весенняя прогулка','На улице лёгкий ветер. Собери комплект с ветровкой и кроссовками.','longsleeve pants sneakers windbreaker');
+add('walk','walk-rain','Прогулка после дождя','На дорожках лужи. Найди одежду для прогулки и резиновые сапоги.','tshirt jeans rainboots raincoat');
+add('walk','walk-winter','Зимний парк','На улице холодно. Собери тёплый комплект, не забудь шапку и перчатки.','sweater pants winterboots winterjacket hat gloves');
+add('walk','walk-shopping','По делам в город','Нужно зайти в несколько магазинов. Выбери удобный комплект и сумку.','polo jeans loafers bag','blouse jeans slipons bag');
+add('walk','walk-country','За город','Будем гулять по тропинкам. Найди прочную обувь, брюки с карманами и кепку.','tshirt cargopants hiking cap bag');
+add('summer','summer-beach','На пляж','Сегодня идём к воде. Собери купальный комплект и защити голову от солнца.','swimshorts sandals cap glasses','swimsuit sandals sunhat glasses');
+add('summer','summer-pool','В бассейн','Для бассейна понадобится купальная одежда и обувь для воды.','swimtrunks watershoes','swimsuit watershoes');
+add('summer','summer-seaside','Вечер у моря','После жаркого дня стало прохладнее. Собери лёгкий комплект для вечера у моря.','linenshirt shorts sandals','sundress sandals cardigan');
+add('summer','summer-city','Жаркий день в городе','Днём будет жарко. Выбери лёгкие вещи, головной убор и обувь без каблука.','polo bermuda slipons cap','blouse capri slides sunhat');
+add('summer','summer-trip','Летняя поездка','Отправляемся на небольшую экскурсию. Нужны удобная одежда, кеды и сумка.','tshirt denimshorts canvas bucket bag');
+add('summer','summer-picnic','На пикник','Нас ждёт пикник на траве. Собери простой летний комплект.','shortshirt cargoshorts sneakers cap','shortshirt denimshorts sneakers cap');
+add('sport','sport-running','Утренняя пробежка','Подбери одежду для бега и беговые кроссовки.','sportstop sweatpants anklesocks running');
+add('sport','sport-stretch','Растяжка дома','Для растяжки дома выбери лёгкую одежду. Обувь сегодня не понадобится.','tank shorts','sportsbra leggings');
+add('sport','sport-gym','В тренажёрный зал','Выбери спортивную футболку, брюки, носки и спортивную обувь.','sportstop sweatpants socks sportshoes');
+add('sport','sport-hike','Активный маршрут','Впереди прогулка по длинному маршруту. Найди одежду с карманами и походные ботинки.','tshirt cargopants hiking windbreaker');
+add('sport','sport-tennis','На теннисный корт','Нужны поло, шорты, короткие носки и кроссовки.','polo shorts anklesocks sneakers');
+add('sport','sport-cool','Тренировка на улице','Вечером прохладно. Подготовь спортивные брюки, худи и кроссовки.','hoodie sweatpants sneakers');
+add('occasion','occasion-birthday','День рождения друга','Собери наряд для дружеского дня рождения.','polo pants loafers watch','dress womensflat earrings bag');
+add('occasion','occasion-family','Семейный праздник','Сегодня семейный праздник. Найди дээл и подходящую обувь.','maledeel tallboots watch','femaledeel tallboots earrings');
+add('occasion','occasion-dinner','В гости на ужин','Подготовь аккуратный комплект для вечернего ужина в гостях.','shirt pants vest loafers','blouse skirt womensflat necklace');
+add('occasion','occasion-concert','Вечерний концерт','На концерт хочется одеться нарядно. Собери комплект и добавь аксессуар.','suit bowtie mensflat watch','maxidress pumps necklace bag');
+add('occasion','occasion-cafe','Встреча в кафе','Собери удобный комплект для встречи с друзьями в кафе.','vneck jeans loafers','tunic jeans womensflat bracelet');
+add('occasion','occasion-exhibition','На выставку','Подготовь комплект для спокойного дня на выставке.','shirt pants blazer loafers','shirtdress womensflat cardigan bag');
+add('home','home-cooking','Готовим завтрак','На кухне удобнее в лёгкой футболке, шортах и тапочках.','tshirt shorts slippers');
+add('home','home-remote','Работаем из дома','Сегодня рабочий стол дома. Собери удобный комплект для звонков и заметок.','polo sweatpants socks','blouse sweatpants socks');
+add('home','home-cleaning','Наводим порядок','Для домашних дел выбери вещи, в которых легко двигаться.','longsleeve shorts clogs');
+add('home','home-balcony','Чай на балконе','На балконе прохладнее, чем в комнате. Пригодится тёплый верх.','sweater jeans slippers');
+add('home','home-friends','Друзья придут в гости','Подготовь простой домашний комплект к приходу друзей.','shortshirt pants moccasins','blouse skirt slippers');
+add('home','home-boardgames','Настольные игры','Весь вечер будем играть за столом. Выбери мягкие вещи и носки.','hoodie sweatpants socks');
+add('office','office-firstday','Первый день на работе','Знакомимся с командой. Нужен сдержанный комплект и удобная обувь.','shirt suitpants mensflat leatherbelt','blouse pencilskirt womensflat bag');
+add('office','office-friday','Свободная пятница','Сегодня можно прийти в джинсах. Добавь поло и обувь без каблука.','polo jeans loafers','polo jeans womensflat');
+add('office','office-interview','Собеседование','Подготовь деловой комплект для встречи с новой командой.','shirt suitpants blazer mensflat watch','blouse pants cardigan womensflat watch');
+add('office','office-client','Поездка к клиенту','Рабочая встреча будет в другом здании. Не забудь сумку.','shirt pants trench derby bag','blouse pants trench womensflat bag');
+add('office','office-late','Работа допоздна','К вечеру станет прохладнее. Добавь к рабочей одежде тёплый слой.','vneck suitpants loafers watch','turtleneck pants cardigan womensflat');
+add('office','office-team','День команды','Сегодня совместная работа без строгого дресс-кода. Подойдут джинсы и рубашка.','denimshirt jeans sneakers watch');
+add('walk','walk-dog','Гуляем с собакой','Для длинной прогулки выбери удобные брюки и закрытую обувь.','hoodie cargopants sneakers cap');
+add('walk','walk-sunset','Встречаем закат','После захода солнца похолодает. Возьми лёгкую куртку.','longsleeve jeans bomber canvas');
+add('walk','walk-river','Вдоль реки','У воды ветрено. Собери комплект с шарфом и ветровкой.','tshirt pants windbreaker scarf sneakers');
+add('walk','walk-leaves','Осенние листья','Пойдём по осеннему парку. Понадобятся свитер и ботинки.','sweater jeans ankleboots scarf');
+add('walk','walk-photo','Прогулка с фотоаппаратом','Сегодня будем много ходить и искать красивые виды.','flannelshirt cargopants hiking bag');
+add('walk','walk-market','На уличный рынок','Выбираем фрукты на рынке. Нужны удобная одежда и сумка.','polo bermuda sandals bag','tshirt maxiskirt sandals bag');
+add('summer','summer-lake','День на озере','Собери купальный комплект для отдыха у озера.','swimshorts flipflops bucket','bikini flipflops sunhat');
+add('summer','summer-waterpark','В аквапарк','Выбери купальную одежду и обувь, в которой удобно у воды.','swimtrunks watershoes','tankini watershoes');
+add('summer','summer-garden','В саду','Проводим день среди грядок. Надень лёгкую одежду и резиновые сабо.','tshirt cargoshorts clogs bucket','tshirt shorts clogs bucket');
+add('summer','summer-terrace','Летняя веранда','Обедаем на открытой веранде. Собери лёгкий городской комплект.','linenshirt bermuda moccasins glasses','sundress womensflat glasses bracelet');
+add('summer','summer-camp','Утро в лагере','После завтрака отправимся гулять. Нужны шорты, футболка и кеды.','tshirt denimshorts canvas cap');
+add('summer','summer-eveningwind','Ветер после жары','Жаркий день закончился, поднялся ветер. Добавь лёгкую толстовку.','tshirt shorts ziphoodie slipons','tshirt capri ziphoodie slipons');
+add('sport','sport-cycling','Велопрогулка','Выбери спортивный верх, шорты и кроссовки для поездки.','sportstop shorts sneakers anklesocks');
+add('sport','sport-courtyard','Разминка во дворе','Начинаем день с небольшой разминки на улице.','tshirt sweatpants running');
+add('sport','sport-dance','На танцы','Для репетиции выбери вещи, которые не мешают двигаться.','tshirt sweatpants canvas','sportstop leggings canvas');
+add('sport','sport-match','Игра с друзьями','Собери спортивный комплект для игры на площадке.','sportstop shorts socks sportshoes');
+add('sport','sport-warmup','Разогрев перед тренировкой','До начала тренировки пригодится спортивный костюм.','tracksuit sneakers anklesocks');
+add('sport','sport-windy','Пробежка в ветреный день','На улице ветер. Поверх спортивной одежды нужна ветровка.','sportstop sweatpants running windbreaker cap');
+add('occasion','occasion-theatre','В театр','Подготовь наряд для вечернего спектакля.','shirt suitpants blazer derby watch','wrapdress pumps necklace bag');
+add('occasion','occasion-graduation','Вручение диплома','Сегодня торжественная церемония. Нужен нарядный комплект.','suit tie mensflat watch','dress womensflat earrings bracelet');
+add('occasion','occasion-newyear','Новогодний вечер','Собираемся на праздничный ужин и добавляем украшение или часы.','shirt suitpants bowtie mensflat watch','maxidress pumps drops bag');
+add('occasion','occasion-reunion','Встреча выпускников','Впереди встреча старых друзей. Собери удобный наряд для вечера.','vneck pants loafers watch','blouse pleatedskirt womensflat earrings');
+add('occasion','occasion-naadam','Летний семейный праздник','Выбери традиционный дээл и сапоги для семейного праздника.','maledeel ballet watch','femaledeel ballet earrings');
+add('occasion','occasion-homedinner','Праздничный обед дома','Нарядимся к семейному столу. Удобная обувь тоже может быть нарядной.','shirt pants vest moccasins','blouse maxiskirt womensflat pendant');
+add('travel','travel-train','Ночной поезд','В дороге важны удобство и тепло. Подбери мягкий комплект.','sweatshirt sweatpants slipons socks');
+add('travel','travel-plane','Ранний самолёт','В салоне может быть прохладно. Возьми кардиган и удобную обувь.','tshirt pants cardigan sneakers bag');
+add('travel','travel-road','В дорогу на машине','Собери комплект для долгой поездки с остановками.','polo cargopants sneakers cap');
+add('travel','travel-hotel','Утро в гостинице','После душа нужны халат и тапочки.','bathrobe slippers');
+add('travel','travel-city','Знакомство с новым городом','Сегодня будет много пеших маршрутов. Не забудь удобную обувь.','tshirt jeans sneakers windbreaker bag');
+add('travel','travel-museum','День музеев','Весь день проведём на выставках. Собери удобный городской комплект.','shirt pants loafers bag','shirtdress womensflat cardigan bag');
+add('travel','travel-mountains','Горная тропа','Для горной прогулки нужны прочные ботинки и защита от ветра.','thermalshirt cargopants hiking windbreaker hat');
+add('travel','travel-ferry','На пароме','На палубе ветрено. Пригодятся куртка и шарф.','longsleeve jeans jacket sneakers scarf');
+add('travel','travel-south','Поездка на юг','Собери лёгкую одежду для тёплого дня.','linenshirt bermuda sandals bucket','sundress sandals sunhat');
+add('travel','travel-snow','В зимнюю поездку','Едем туда, где лежит снег. Собери тёплый комплект.','sweater pants downjacket winterboots hat gloves');
+add('travel','travel-souvenirs','За сувенирами','После экскурсии идём за подарками. Нужна вместительная сумка.','polo jeans slipons bag','blouse capri slipons bag');
+add('travel','travel-return','Возвращаемся домой','Для обратной дороги выбери мягкую толстовку и брюки.','hoodie sweatpants sneakers bag');
+add('weather','weather-drizzle','Мелкий дождь','На улице моросит. Добавь к обычной одежде дождевик.','tshirt jeans raincoat rainboots');
+add('weather','weather-puddles','Большие лужи','После дождя двор мокрый. Надень резиновые сапоги.','sweatshirt pants rainboots jacket');
+add('weather','weather-frost','Морозное утро','Сегодня сильный холод. Нужны пуховик, варежки и тёплая обувь.','sweater pants downjacket feltboots hat mittens');
+add('weather','weather-snowfall','Первый снег','Пойдём смотреть на снег. Не забудь шапку и шарф.','turtleneck jeans parka winterboots hat scarf');
+add('weather','weather-thaw','Оттепель','Снег тает, на дорожках вода. Подбери непромокаемую обувь.','sweater pants jacket rainboots');
+add('weather','weather-mist','Туманное утро','На улице сыро и прохладно. Собери комплект с тёплым слоем.','longsleeve jeans fleece hiking');
+add('weather','weather-wind','Сильный ветер','Сегодня пригодятся ветровка и закрытая обувь.','hoodie cargopants windbreaker sneakers cap');
+add('weather','weather-heat','Полуденная жара','Выбери лёгкие вещи и не забудь головной убор.','tank shorts sandals bucket','tshirt shorts sandals sunhat');
+add('weather','weather-evening','Прохладный вечер','Днём было тепло, но вечером нужен дополнительный слой.','tshirt jeans cardigan loafers');
+add('weather','weather-autumn','Сухая осень','Собери осенний комплект с пальто и ботинками.','sweater pants coat chelsea scarf');
+add('weather','weather-spring','Солнце и прохлада','Весной хочется лёгкую куртку и удобные кеды.','longsleeve jeans denimjacket canvas');
+add('weather','weather-coldhome','Дома стало холодно','Пока батареи не согрелись, надень тёплую домашнюю одежду.','sweater pajamapants socks slippers');
+add('study','study-lecture','На лекцию','Собери повседневный комплект и возьми сумку с конспектами.','polo jeans sneakers bag','blouse jeans womensflat bag');
+add('study','study-library','В библиотеку','Будем читать и делать заметки. Выбери удобную одежду.','turtleneck pants loafers bag');
+add('study','study-exam','День экзамена','Подготовь аккуратный комплект, в котором удобно сидеть за столом.','shirt pants mensflat watch','blouse pants womensflat watch');
+add('study','study-language','Разговорный клуб','Сегодня встречаемся практиковать язык. Собери простой городской образ.','sweater jeans canvas','cardigan pants womensflat');
+add('study','study-drawing','На рисование','Для работы в мастерской выбери свободную одежду.','longsleeve cargopants clogs');
+add('study','study-workshop','Практическое занятие','Нужен комбинезон и закрытая обувь для занятия в мастерской.','overalls sneakers');
+add('study','study-project','Командный проект','Весь день будем обсуждать проект. Подбери мягкие и удобные вещи.','sweatshirt jeans slipons bag');
+add('study','study-talk','Доклад перед группой','Собери чуть более строгий комплект для выступления.','shirt suitpants vest mensflat','blouse pencilskirt womensflat pendant');
+add('study','study-outside','Занятие на улице','Сегодня урок пройдёт в парке. Нужны кроссовки и ветровка.','tshirt cargopants windbreaker sneakers cap');
+add('study','study-computer','В компьютерный класс','В классе прохладно. Подойдёт удобный верх с длинным рукавом.','longsleeve pants sneakers bag');
+add('study','study-music','На репетицию','Собери повседневный комплект для музыкального занятия.','flannelshirt jeans canvas');
+add('study','study-course','Вечерние курсы','После работы идём учиться. Пригодятся удобная обувь и сумка.','polo pants cardigan loafers bag','blouse pants cardigan womensflat bag');
+add('city','city-groceries','За продуктами','Нужно быстро сходить в магазин. Возьми удобные вещи и сумку.','tshirt jeans sneakers bag');
+add('city','city-post','На почту','Заберём посылку и немного прогуляемся.','hoodie pants slipons bag');
+add('city','city-haircut','На стрижку','Собери простой повседневный комплект для поездки в салон.','polo jeans loafers','blouse jeans womensflat');
+add('city','city-cinema','В кино','В кинозале может быть прохладно. Добавь кардиган.','tshirt jeans cardigan sneakers');
+add('city','city-bookshop','В книжный магазин','Посмотрим новинки и зайдём в кафе. Выбери удобный комплект.','vneck jeans loafers bag','turtleneck skirt womensflat bag');
+add('city','city-breakfast','Завтрак с другом','Встречаемся утром в кафе. Подойдёт лёгкий аккуратный комплект.','shortshirt pants moccasins watch','blouse maxiskirt womensflat bracelet');
+add('city','city-longday','Много дел за день','Сегодня несколько поездок по городу. Удобная обувь особенно пригодится.','tshirt cargopants sneakers jacket bag');
+add('city','city-station','Встречаем на вокзале','На платформе ветрено. Собери городской комплект с курткой.','longsleeve jeans bomber sneakers scarf');
+add('city','city-weekend','Свободный выходной','Отправляемся гулять без спешки. Выбери джинсы и кеды.','denimshirt jeans canvas cap');
+add('city','city-coffee','Кофе навынос','На улице тепло. Собери лёгкий комплект для короткой прогулки.','polo shorts slipons glasses','tshirt denimskirt womensflat glasses');
+add('city','city-errandsrain','Дела под дождём','Отменить поездки не получится. Найди плащ и закрытую обувь.','shirt pants trench ankleboots bag','blouse pants trench ankleboots bag');
+add('city','city-eveningfriends','После работы к друзьям','Собери комплект, который подойдёт и для работы, и для встречи вечером.','shirt jeans blazer loafers watch','blouse jeans cardigan womensflat earrings');
+let illustrationSerial=0;
+function illustration(group){
+ const common='fill="none" stroke="#81755f" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"';let s='';
+ if(group==='home')s='<rect x="24" y="17" width="45" height="36" rx="3" fill="#d9e7df"/><path d="M46 18v35M25 36h43" '+common+'/><path d="M34 62v-9q0-7 8-7h60q8 0 8 7v9" fill="#a9b89a"/><rect x="28" y="60" width="88" height="23" rx="6" fill="#a9b89a"/><path d="M36 83v7m72-7v7M72 49v29" '+common+'/><path d="M128 80V34m-13 0 5-15h17l5 15Z" fill="#dbbe7a" '+common+'/><ellipse cx="128" cy="85" rx="13" ry="3" fill="#c9bea1"/>';
+ if(group==='office')s='<rect x="36" y="20" width="50" height="33" rx="4" fill="#adc3be"/><path d="M61 53v8m-11 0h22" '+common+'/><path d="M20 63h114v7H20Z" fill="#c3ac83"/><path d="M30 71v20m94-20v20" '+common+'/><path d="M84 77q0-14 14-14t14 14v11H84Z" fill="#a6b393"/><path d="M97 88v8m-10 0h20" '+common+'/><path d="M138 69V39m0 17-8-10m8 1 9-13" '+common+'/><path d="m127 69 4 18h15l4-18Z" fill="#c88f79"/><path d="M28 56h12v6H28Z" fill="#d5b869"/>';
+ if(group==='walk')s='<circle cx="129" cy="21" r="11" fill="#e1c16e"/><path d="M81 93q-36-17 0-32 20-10 7-19" fill="none" stroke="#d3c39d" stroke-width="18"/><path d="M31 76V35m0 26-11-11m11 1 12-12" '+common+'/><path d="M31 12q-28 9-21 34 18 16 42-1 9-23-21-33Z" fill="#a4b78b"/><path d="M118 70h31m-27 0v17m23-17v17m-25-23h27" '+common+'/><path d="M111 90h41" stroke="#b4bf9a" stroke-width="3"/>';
+ if(group==='summer')s='<path d="M0 59q30-7 56 0t56 0 48 0v40H0Z" fill="#b9d5d3"/><path d="M0 76q66-9 160 5v19H0Z" fill="#e4cf9f"/><circle cx="127" cy="24" r="13" fill="#e5c26b"/><path d="M45 35v51m-12 0h24" '+common+'/><path d="M12 37q32-48 65 0Z" fill="#c98e79"/><path d="M45 8q-14 11-17 29h34Q59 19 45 8Z" fill="#f1dfbb"/><path d="m89 85 15-21 30 12-10 14Z" fill="#95b3aa"/><path d="m103 66 5-12m26 23 7 5" '+common+'/>';
+ if(group==='sport')s='<path d="M19 84h123" stroke="#b7bfaf" stroke-width="3"/><path d="M38 22v51m84-51v51M30 28h100" '+common+'/><rect x="52" y="60" width="56" height="10" rx="3" fill="#a8b69a"/><path d="M58 70v17m44-17v17" '+common+'/><path d="M43 27h74" stroke="#807c6c" stroke-width="4"/><path d="M38 18v19m8-19v19m65-19v19m8-19v19" stroke="#b6a280" stroke-width="7" stroke-linecap="round"/><circle cx="133" cy="76" r="12" fill="#ceaa71"/>';
+ if(group==='occasion')s='<path d="M13 16q68 30 136 0" '+common+'/><path d="m20 19 4 15 12-10m15 5 8 15 9-12m16 1 9 12 8-16m16-5 11 9 6-15" fill="#b1bc95"/><path d="M50 64h61v20H50Z" fill="#cf9c8c"/><path d="M46 84h69v6H46Z" fill="#cfb77f"/><path d="M50 64q10 9 20 0 10 9 20 0 10 9 21 0" fill="none" stroke="#f4e5cc" stroke-width="5"/><path d="M68 64V48m25 16V48" '+common+'/><path d="M68 47q-6-5 0-11 6 6 0 11m25 0q-6-5 0-11 6 6 0 11" fill="#e1bd68"/><ellipse cx="133" cy="42" rx="13" ry="17" fill="#aebfc0"/><path d="M133 60q-10 12 0 24" '+common+'/>';
+ if(group==='travel')s='<path d="M18 19h69v45H18Z" fill="#c3d9d9"/><path d="M22 23h61v37H22Z" fill="#e5eee7"/><path d="m24 57 22-19 13 10 22-29v39Z" fill="#b0c3a3"/><path d="M52 23v37" '+common+'/><rect x="89" y="41" width="47" height="47" rx="8" fill="#b99477"/><path d="M103 42V31q8-6 17 0v11m-24 5v34m32-34v34" '+common+'/><path d="M103 52h18v25h-18Z" fill="#c6a88b"/><circle cx="99" cy="91" r="3" fill="#81755f"/><circle cx="129" cy="91" r="3" fill="#81755f"/><path d="m37 74 21-5 4 14-21 5Z" fill="#789b91"/><path d="M43 77h11m-9 4h8" stroke="#f6f0df" stroke-width="1.5"/>';
+ if(group==='weather')s='<rect x="18" y="13" width="61" height="66" rx="3" fill="#b9d2d1"/><path d="M48 14v65M19 46h59" stroke="#f1eadb" stroke-width="3"/><path d="m28 27-3 7m18-14-3 7m17-4-3 7m13 2-3 7M31 54l-3 7m33-8-3 7" stroke="#f3f6ea" stroke-width="1.3"/><path d="M106 40v43q-7 9-13 0" '+common+'/><path d="M82 43q24-40 50 0Z" fill="#d4ad77"/><path d="M107 14q-12 13-13 29h26q-2-17-13-29Z" fill="#efe1ba"/><path d="m127 67 17-2 1 19q8 3 7 9h-28Z" fill="#8fa68f"/><path d="M125 89h26" stroke="#687b68" stroke-width="3"/>';
+ if(group==='study')s='<path d="M24 70q28-12 56 0 28-12 56 0v18q-28-12-56 0-28-12-56 0Z" fill="#c6ae88"/><path d="M24 40q28-10 56 0 28-10 56 0v43q-28-10-56 0-28-10-56 0Z" fill="#f7efda"/><path d="M80 40v42M33 49q17-4 35 0m-35 8q17-4 35 0m-35 8q17-4 35 0m23-16q17-4 35 0m-35 8q17-4 35 0m-35 8q17-4 35 0" fill="none" stroke="#b9b69f" stroke-width="1.1"/><path d="m50 19 53 4-1 8-53-4Z" fill="#99b4a4"/><path d="m105 16 31 17-4 6-31-17Z" fill="#d4b477"/><path d="m101 22-8-8 12 2" fill="#b7956c"/><path d="m89 79 4 15 5-8 6 3-4-13" fill="#c08f85"/>';
+ if(group==='city')s='<path d="M21 43h50v42H21Z" fill="#cdb494"/><path d="M84 23h47v62H84Z" fill="#acbfaf"/><path d="M14 44 46 22l32 22" fill="#9caa8b"/><path d="M30 57h13v14H30Zm19 0h13v14H49Zm44-25h12v12H93Zm17 0h12v12h-12Zm-17 20h12v12H93Zm17 0h12v12h-12Z" fill="#e8eee2"/><path d="M44 74h11v11H44Zm58-3h14v14h-14Z" fill="#879c89"/><path d="M10 87h139" '+common+'/><circle cx="134" cy="45" r="13" fill="#b5c49b"/><path d="M134 45v37m0-24-7-6" '+common+'/><path d="m15 96 35-5m57 5 37-5" stroke="#d2c2a5" stroke-width="2"/>';
+ if(group==='home')s+='<path d="m44 52 15 1-2 15-15-1Zm37-1 18 1-1 14-18-1Z" fill="#e0c6a3"/><path d="M29 78h86" stroke="#899d7c" stroke-width="1"/><path d="M66 78v11m-6-2h26" stroke="#b4a17d" stroke-width="2"/><path d="M62 72h25v6H62Z" fill="#d2b991"/>';
+ if(group==='office')s+='<path d="M23 63h17m68 0h14" stroke="#a48a64" stroke-width="1"/><rect x="90" y="50" width="17" height="10" rx="1" fill="#f1e7cd"/><path d="M94 53h10m-10 3h7" stroke="#b6ad94" stroke-width=".8"/><path d="M129 81h19" stroke="#ad7863" stroke-width="1"/>';
+ if(group==='walk')s+='<path d="M18 83q9-4 21 0m-20 2 4-6m13 6 2-6M56 90l4-6m-1 8 6-3" stroke="#91aa79" stroke-width="1.4"/><path d="M121 68h25m-25-4h25" stroke="#e5dcc4" stroke-width="1"/>';
+ if(group==='summer')s+='<path d="M4 65q17-3 32 0m40 0q15-3 30 0m10 4h22" fill="none" stroke="#eef2df" stroke-width="1.4"/><path d="m17 87 20 2 4 6-25-2Z" fill="#c6937e"/><path d="M21 89l13 2" stroke="#f3e1c0" stroke-width="1.2"/>';
+ if(group==='sport')s+='<path d="M120 73q12 5 22 0m-10-8q-6 12 2 22" fill="none" stroke="#a98a59" stroke-width=".8"/><path d="M54 64h51" stroke="#d6dfc8" stroke-width="1.2"/><path d="m24 81 12 2v6H24Z" fill="#9db4b4"/>';
+ if(group==='occasion')s+='<path d="M55 75h52" stroke="#e5bdab" stroke-width="1.2"/><circle cx="29" cy="64" r="2" fill="#d9bb73"/><circle cx="120" cy="30" r="1.5" fill="#d9bb73"/><path d="m28 48 2-4 2 4-2 4Zm111 30 2-4 2 4-2 4Z" fill="#e0c98c"/>';
+ const id='place-scene-'+(++illustrationSerial),base=groups.find(g=>g.id===group)?.color||'#e5e8db';
+ s=s.replaceAll('fill="#a9b89a"','fill="url(#'+id+'-fabric)"');
+ return `<svg class="place-illustration" viewBox="0 0 160 100" aria-hidden="true"><defs><linearGradient id="${id}-wall" x2=".8" y2="1"><stop stop-color="#fbf9ed"/><stop offset="1" stop-color="${base}"/></linearGradient><linearGradient id="${id}-fabric" x2=".9" y2="1"><stop stop-color="#c2cdb1"/><stop offset=".55" stop-color="#abb99a"/><stop offset="1" stop-color="#91a27e"/></linearGradient><radialGradient id="${id}-light"><stop stop-color="#fffdf4" stop-opacity=".85"/><stop offset="1" stop-color="#fffdf4" stop-opacity="0"/></radialGradient></defs><rect width="160" height="100" fill="url(#${id}-wall)"/><path d="M0 77h160v23H0Z" fill="${base}"/><path d="M0 77h160" stroke="#fffdf4" stroke-opacity=".55"/><ellipse cx="41" cy="30" rx="65" ry="60" fill="url(#${id}-light)"/><ellipse cx="80" cy="89" rx="69" ry="6" fill="#756b4f" opacity=".09"/>${s}</svg>`;
+}
+window.WARDROBE_SCENARIOS={groups,scenarios,illustration};
+})();

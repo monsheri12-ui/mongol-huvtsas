@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f6f0">
+  <meta name="description" content="Играйте с одеждой, цветами и аксессуарами на монгольском. Два гардероба, сценки о размере и семье, альбом образов.">
+  <title>Хувцас</title>
+  <style id="gameLoaderStyles">
+    .game-loader{display:none}.game-loader[hidden]{display:none!important}
+    html.game-booting{overflow:hidden;background:#f7f6f0}html.game-booting body{margin:0}
+    html.game-booting .app-shell,html.game-booting .skip-link,html.game-booting #toast{visibility:hidden}
+    html.game-booting .game-loader{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;overflow:auto;padding:28px 20px;background:radial-gradient(ellipse at 50% 30%,#eef3e5 0,transparent 62%),#f7f6f0;color:#283f36;font-family:"Avenir Next","Segoe UI",Arial,sans-serif;text-align:center}
+    .game-loader-card{width:min(100%,330px);margin:auto}.game-loader-art{display:block;width:142px;height:152px;margin:0 auto 18px;overflow:visible}.game-loader-art .loader-shirt{transform-origin:71px 49px;animation:loader-sway 2.8s ease-in-out infinite}
+    .game-loader-brand{margin:0 0 12px;color:#7e9170;font-size:12px;letter-spacing:2px;font-weight:650}.game-loader h1{font-size:27px;line-height:1.25;letter-spacing:-.65px;margin:0;font-weight:700}.game-loader-copy{font-size:13px;line-height:1.65;margin:12px 0 23px;color:#809075}
+    .game-loader-track{width:210px;height:5px;max-width:100%;margin:0 auto;background:#dfe7d4;border-radius:8px;overflow:hidden}.game-loader-fill{display:block;width:0;height:100%;background:#8aa476;border-radius:8px;transition:width .22s ease-out}.game-loader-status{min-height:36px;margin:12px 0 0;font-size:11px;line-height:1.6;color:#869579}
+    .game-loader-retry{appearance:none;border:1px solid #3f604d;border-radius:12px;min-height:44px;padding:11px 20px;margin-top:15px;background:#3f604d;color:#fffdf5;font:600 13px "Avenir Next","Segoe UI",Arial,sans-serif;cursor:pointer}.game-loader-retry:focus-visible{outline:3px solid #c98c46;outline-offset:4px}.game-loader-retry[hidden]{display:none}
+    .game-loader.has-error .game-loader-status{color:#9a6e59}.game-loader.has-error .game-loader-fill{background:#c19c74}.game-loader.has-error .loader-shirt{animation:none}
+    @keyframes loader-sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+    @media(max-height:430px){.game-loader-art{width:94px;height:100px;margin-bottom:10px}.game-loader h1{font-size:23px}.game-loader-copy{margin:10px 0 16px}.game-loader-brand{margin-bottom:8px}}
+    @media(prefers-reduced-motion:reduce){.game-loader-art .loader-shirt{animation:none}.game-loader-fill{transition:none}}
+  </style>
+  <script src="boot.js?v=6.11"></script>
+  <link rel="stylesheet" href="styles.css?v=6.11" data-game-asset="styles">
+</head>
+<body>
+  <section class="game-loader" id="gameLoader" aria-labelledby="gameLoaderTitle" aria-busy="true">
+    <div class="game-loader-card">
+      <svg class="game-loader-art" viewBox="0 0 142 152" aria-hidden="true">
+        <ellipse cx="71" cy="141" rx="52" ry="7" fill="#dce5d0"/>
+        <path d="M27 19Q71 9 115 19V135H27Z" fill="#fffdf5" stroke="#b6c5a3" stroke-width="2"/>
+        <path d="M71 17V134M34 29H108" fill="none" stroke="#d7dec9" stroke-width="1.5"/>
+        <path d="M30 31H112" stroke="#b2a584" stroke-width="4" stroke-linecap="round"/>
+        <g class="loader-shirt">
+          <path d="M67 37q0-5 4-5 5 0 5 4 0 3-5 5v5M71 45 46 59H96Z" fill="none" stroke="#9a8b6c" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M59 54 45 61 36 79 49 86 55 75 54 116Q71 122 88 116L87 75 93 86 106 79 97 61 83 54Q71 64 59 54Z" fill="#91bfd4" stroke="#6f8274" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M60 55Q71 68 82 55M58 110Q71 113 84 110" fill="none" stroke="#76a8bd" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M75 76h9v13q-4 3-9 0Z" fill="#a3cbd9" stroke="#6f8274" stroke-width="1"/>
+        </g>
+        <path d="M22 135H120" stroke="#aebc9a" stroke-width="3" stroke-linecap="round"/>
+        <path d="m117 43 2 5 5 2-5 2-2 5-2-5-5-2 5-2ZM20 104l1.5 3.5L25 109l-3.5 1.5L20 114l-1.5-3.5L15 109l3.5-1.5Z" fill="#cbb579"/>
+      </svg>
+      <p class="game-loader-brand" lang="mn">Хувцас</p>
+      <h1 id="gameLoaderTitle">Открываем примерочную</h1>
+      <p class="game-loader-copy">Сейчас появятся одежда, цвета и истории.</p>
+      <div class="game-loader-track" id="gameLoaderProgress" role="progressbar" aria-label="Подготовка игры" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><span class="game-loader-fill" id="gameLoaderFill"></span></div>
+      <p class="game-loader-status" id="gameLoaderStatus" role="status" aria-live="polite">Подготавливаем игру…</p>
+      <button class="game-loader-retry" id="gameLoaderRetry" type="button" hidden>Попробовать ещё раз</button>
+    </div>
+  </section>
+  <noscript><style>.app-shell,.skip-link{display:none!important}</style><p style="padding:30px;font:16px/1.6 Arial,sans-serif;color:#3f604d">Чтобы открыть примерочную, включи JavaScript в браузере.</p></noscript>
+  <a class="skip-link" href="#game">Перейти к игре</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Хувцас — главная"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M13 9a3 3 0 1 1 5 2c-1 1-2 1-2 3v2M16 15 4 23a1 1 0 0 0 1 2h22a1 1 0 0 0 1-2Z"/></svg></span><span lang="mn">Хувцас</span></a>
+      <nav class="header-actions" aria-label="Материалы игры">
+        <button class="text-button help-top" id="helpButton" aria-label="Как играть"><span class="icon" data-icon="help"></span><span>Как играть</span></button>
+        <span class="known-count" id="knownCount" title="Слова, найденные с первой попытки без подсказки"></span>
+        <button class="text-button" id="dictionaryButton" aria-label="Открыть словарь"><span class="icon" data-icon="book"></span><span>Словарь</span></button>
+        <button class="album-button" id="albumButton" aria-label="Мои образы"><span class="icon" data-icon="album"></span><span>Мои образы</span><span id="albumCount" class="count-badge">0</span></button>
+      </nav>
+    </header>
+
+    <main id="game">
+      <div class="game-layout">
+        <section class="character-panel" aria-label="Примерочная">
+          <div class="room-label"><span class="room-dot"></span><span id="roomLabel">ПРИМЕРОЧНАЯ</span></div>
+          <div class="character-stage" id="characterStage" aria-label="Персонаж в выбранной одежде">
+            <div class="room-window" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            <div class="room-poster" aria-hidden="true"><svg viewBox="0 0 60 76"><path d="M5 65 28 22l12 24 10-17 9 36" fill="#9fb49a"/><circle cx="43" cy="16" r="9" fill="#e6c76e"/><path d="m18 40 10-18 9 18-9-6Z" fill="#f4f2e8"/></svg></div>
+            <div class="fitting-booth" aria-hidden="true"><div class="booth-rod"></div><div class="curtain curtain-left"></div><div class="curtain curtain-right"></div><div class="booth-base"></div></div>
+            <span class="hello-bubble" lang="mn" id="helloBubble">Сайн уу!</span>
+            <div class="room-plant" aria-hidden="true"><svg viewBox="0 0 70 130"><path d="M35 100V32M35 75 15 56M35 61l21-28" fill="none" stroke="#526c51" stroke-width="3"/><path d="M35 62C8 64 5 43 10 40c14-2 24 8 25 22M35 48c-1-25 12-37 20-32 5 14-4 28-20 32M35 84c0-23 16-31 24-25 3 15-10 25-24 25" fill="#92a77e"/><path d="m15 98 6 29h28l6-29Z" fill="#d2a08b" stroke="#916e60" stroke-width="2"/><path d="M16 104h38" stroke="#b28470" stroke-width="3"/></svg></div>
+            <div class="floor-rug" aria-hidden="true"></div>
+            <div class="avatar-mount" id="avatarMount"></div>
+            <div class="dress-sparkles" id="dressSparkles" aria-hidden="true">✦<span>✧</span>✦</div>
+          </div>
+          <div class="character-bottom"><span class="character-caption">Выбери персонажа и гардероб</span><div class="hero-switch" role="group" aria-label="Выбери персонажа"><button data-hero="nomin" class="active" aria-pressed="true"><span class="hero-dot nomin"></span>Номин</button><button data-hero="temuulen" aria-pressed="false"><span class="hero-dot temuulen"></span>Тэмүүлэн</button></div></div>
+          <div id="outfitChips" class="outfit-chips" aria-label="Надетые вещи"></div>
+          <div class="character-actions"><button class="save-look" id="saveLookButton"><span class="icon" data-icon="camera"></span>Сохранить образ</button><button class="small-icon reset-look" id="clearLookButton" title="Убрать выбранную одежду" aria-label="Убрать выбранную одежду"><span class="icon" data-icon="reset"></span></button></div>
+        </section>
+
+        <section class="wardrobe-panel" aria-label="Гардероб">
+          <details class="activity-menu" id="activityMenu">
+            <summary><span class="activity-current-art" id="activityPreview" aria-hidden="true"></span><span class="activity-current-copy"><small>Сегодня в примерочной</small><b id="activityTitle">Узнаём одежду</b><span id="activityDescription">Слова и вещи</span></span><span class="activity-change">Сменить занятие<span class="activity-chevron" aria-hidden="true"></span></span></summary>
+            <div class="activity-options" role="group" aria-label="Занятия в примерочной">
+              <button id="outfitMode" aria-pressed="false"><span class="activity-art" id="outfitIllustration" aria-hidden="true"></span><span><b>Собрать образ</b><small>Ситуации, одежда и цвета</small></span></button>
+              <button id="challengeMode" aria-pressed="true"><span class="activity-art" id="challengeIllustration" aria-hidden="true"></span><span><b>Узнать одежду</b><small>Находим вещи по словам</small></span></button>
+              <button id="colorMode" aria-pressed="false"><span class="activity-art" id="colorIllustration" aria-hidden="true"></span><span><b>Игра с цветами</b><small>Названия и оттенки</small></span></button>
+              <button id="storiesMode" aria-pressed="false"><span class="activity-art" id="storiesIllustration" aria-hidden="true"></span><span><b>Истории вещей</b><small>Размеры, семья и своя обувь</small></span></button>
+              <button id="freeMode" aria-pressed="false"><span class="activity-art" id="freeIllustration" aria-hidden="true"></span><span><b>Свободная примерка</b><small>Весь гардероб и украшения</small></span></button>
+            </div>
+          </details>
+          <div class="scene-list" id="sceneList" role="group" aria-label="Палитра заданий"></div>
+          <div id="taskCard" class="task-card" aria-live="polite" aria-atomic="true"></div>
+          <div class="closet-shell" id="closetShell"><div class="wardrobe-heading"><div><h2 id="wardrobeTitle">Гардероб</h2><p id="wardrobeSubtitle">Нажми на вещь, чтобы надеть её</p></div><span class="wardrobe-total" id="wardrobeTotal">26 вещей</span></div>
+          <div class="catalogue-tools" id="catalogueTools" hidden><div class="collection-list" id="collectionList" role="group" aria-label="Раздел гардероба"></div><label class="catalogue-search"><span>Найти вещь</span><input id="wardrobeSearch" type="search" placeholder="Название по-русски или по-монгольски" autocomplete="off"></label><span id="catalogueResult" class="catalogue-result" aria-live="polite"></span></div><div class="category-list" id="categoryList" role="group" aria-label="Категория одежды"></div>
+          <div class="clothes-grid" id="clothesGrid"></div><div class="wardrobe-pager" id="wardrobePager" hidden></div>
+          <div id="colorPanel" class="color-panel" hidden></div>
+          <div class="wardrobe-note" id="wardrobeNote"><span class="icon" data-icon="bulb"></span><span>Сначала попробуй сам. Перевод — в подсказке.</span></div></div>
+        </section>
+      </div>
+      <footer class="footer"><span id="storageStatus"><span class="status-dot"></span>Прогресс сохраняется в этом браузере</span></footer>
+    </main>
+  </div>
+
+  <dialog id="modal" class="modal"><div id="modalContent"></div></dialog>
+  <div id="toast" class="toast" role="status"></div>
+  <script defer src="clothes.js?v=6.11" data-game-asset="wardrobe"></script>
+  <script defer src="scenarios.js?v=6.11" data-game-asset="stories"></script>
+  <script defer src="audio.js?v=6.11" data-game-asset="audio"></script>
+  <script defer src="app.js?v=6.11" data-game-asset="app"></script>
+  <script defer src="embed.js?v=6.11"></script>
+</body>
+</html>
