@@ -84,3 +84,15 @@
 @media(max-width:620px){.translated-action{width:100%}.action-translation{left:0;right:auto}}
 
 .task-card.story-card{overflow:visible}
+
+/* Keep narrow embedded headers and dialogs within their available width. */
+.modal .dictionary-row,.modal .color-dictionary-row{min-width:0}
+.modal .dictionary-row>div,.modal .color-dictionary-row>div{min-width:0;overflow-wrap:anywhere}
+.modal .dictionary-word,.modal .dictionary-translation,.modal .color-dictionary-row b,.modal .color-dictionary-row small{overflow-wrap:anywhere}
+@media(max-width:420px){.modal .dictionary-list,.modal #dictionaryRows,.modal .color-dictionary,.modal .album-grid,.modal .plans-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:360px){.topbar{height:auto;min-height:76px;flex-wrap:wrap;gap:10px;padding:12px 0}.topbar .brand{max-width:100%}.header-actions{max-width:100%;margin-left:auto;flex-wrap:wrap}}
+@media(max-width:620px){.story-speech{position:relative}.story-word{position:static}.story-word-tip{left:0;right:auto;top:100%;bottom:auto;transform:none;width:max-content;min-width:0;max-width:100%;z-index:30}}
+
+/* Center embedded dialogs in the part of the game visible on its host page. */
+html.game-embedded{--embed-view-top:0px;--embed-view-height:min(100vh,600px)}
+html.game-embedded dialog.modal{position:fixed;inset:auto 0;top:calc(var(--embed-view-top) + var(--embed-view-height)/2);bottom:auto;transform:translateY(-50%);margin:0 auto;max-height:max(1px,calc(var(--embed-view-height) - 32px));overflow:auto;overscroll-behavior:contain}
