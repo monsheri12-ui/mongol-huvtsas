@@ -5,64 +5,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f6f0">
   <meta name="description" content="Играйте с одеждой, цветами и аксессуарами на монгольском. Два гардероба, сценки о размере и семье, альбом образов.">
-  <title>Хувцас</title>
+  <title>Примерочная Хувцас</title>
   <style id="gameLoaderStyles">
     .game-loader{display:none}.game-loader[hidden]{display:none!important}
     html.game-booting{overflow:hidden;background:#f7f6f0}html.game-booting body{margin:0}
     html.game-booting .app-shell,html.game-booting .skip-link,html.game-booting #toast{visibility:hidden}
-    html.game-booting .game-loader{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;overflow:auto;padding:28px 20px;background:radial-gradient(ellipse at 50% 30%,#eef3e5 0,transparent 62%),#f7f6f0;color:#283f36;font-family:"Avenir Next","Segoe UI",Arial,sans-serif;text-align:center}
-    .game-loader-card{width:min(100%,330px);margin:auto}.game-loader-art{display:block;width:142px;height:152px;margin:0 auto 18px;overflow:visible}.game-loader-art .loader-shirt{transform-origin:71px 49px;animation:loader-sway 2.8s ease-in-out infinite}
-    .game-loader-brand{margin:0 0 12px;color:#7e9170;font-size:12px;letter-spacing:2px;font-weight:650}.game-loader h1{font-size:27px;line-height:1.25;letter-spacing:-.65px;margin:0;font-weight:700}.game-loader-copy{font-size:13px;line-height:1.65;margin:12px 0 23px;color:#809075}
-    .game-loader-percent{display:block;margin:0 0 9px;font-size:13px;font-weight:600;color:#5e7850;font-variant-numeric:tabular-nums}.game-loader-track{width:210px;height:5px;max-width:100%;margin:0 auto;background:#dfe7d4;border-radius:8px;overflow:hidden}.game-loader-fill{display:block;width:0;height:100%;background:#8aa476;border-radius:8px;transition:width .22s ease-out}.game-loader-status{min-height:36px;margin:12px 0 0;font-size:11px;line-height:1.6;color:#869579}
-    .game-loader-retry{appearance:none;border:1px solid #3f604d;border-radius:12px;min-height:44px;padding:11px 20px;margin-top:15px;background:#3f604d;color:#fffdf5;font:600 13px "Avenir Next","Segoe UI",Arial,sans-serif;cursor:pointer}.game-loader-retry:focus-visible{outline:3px solid #c98c46;outline-offset:4px}.game-loader-retry[hidden]{display:none}
-    .game-loader.has-error .game-loader-status{color:#9a6e59}.game-loader.has-error .game-loader-fill{background:#c19c74}.game-loader.has-error .loader-shirt{animation:none}
+    html.game-booting .game-loader{box-sizing:border-box;position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;overflow:auto;padding:28px 20px;background:radial-gradient(ellipse at 50% 45%,#eef1e4 0,transparent 66%),#f7f6f0;color:#29483e;font-family:"Avenir Next","Segoe UI",Arial,sans-serif;text-align:center}
+    .entry-wordmark{margin:0;font-weight:400;outline:none}.entry-wordmark-small{display:block;margin-bottom:3px;font:500 11px/1.5 "Avenir Next","Segoe UI",Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;color:#75876b}.entry-wordmark-name{display:block;font-family:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;font-size:64px;line-height:1.02;font-weight:600;letter-spacing:2px;color:#294b41;transform:scaleX(.94)}
+    .entry-ornament{display:block;width:156px;height:13px;max-width:80%;margin:9px auto 0;overflow:visible}
+    .topbar .brand-copy{display:flex;flex-direction:column;gap:1px;min-width:0}.topbar .brand-kicker{font:500 8px/1.4 "Avenir Next","Segoe UI",Arial,sans-serif;letter-spacing:1.15px;text-transform:uppercase;color:#829074}.topbar .brand-title{font-family:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;font-size:29px;font-weight:600;line-height:1;letter-spacing:.1px}
+    .game-loader-card{width:min(100%,340px);margin:auto}.game-loader .entry-wordmark-name{font-size:53px}.game-loader .entry-ornament{width:142px;margin-top:10px}.game-loader-art{display:block;width:190px;height:208px;margin:17px auto 15px;overflow:visible}.game-loader-art .loader-shirt{transform-origin:95px 69px;animation:loader-sway 3.3s ease-in-out infinite}.game-loader-copy{margin:0 0 18px;font-size:12px;line-height:1.7;color:#829078}
+    .game-loader-meter{display:flex;align-items:center;gap:12px;width:250px;max-width:100%;margin:auto}.game-loader-track{flex:1;height:4px;background:#dce3d0;border-radius:8px;overflow:hidden}.game-loader-fill{display:block;width:0;height:100%;background:linear-gradient(90deg,#8da377,#436857);border-radius:8px;transition:width .22s ease-out}.game-loader-percent{min-width:31px;text-align:right;font-size:12px;line-height:1.5;font-weight:600;color:#5d7654;font-variant-numeric:tabular-nums}.game-loader-status{min-height:34px;margin:11px auto 0;max-width:290px;font-size:10px;line-height:1.65;color:#89957d}
+    .game-loader-retry{appearance:none;border:1px solid #3f604d;border-radius:12px;min-height:44px;padding:11px 20px;margin-top:14px;background:#3f604d;color:#fffdf5;font:600 13px "Avenir Next","Segoe UI",Arial,sans-serif;cursor:pointer}.game-loader-retry:focus-visible{outline:2px solid #315944;outline-offset:4px}.game-loader-retry[hidden]{display:none}
+    .game-loader.has-error .game-loader-status{color:#9a6e59}.game-loader.has-error .game-loader-fill{background:#ba9670}.game-loader.has-error .loader-shirt{animation:none}
     .welcome-screen{display:none}.welcome-screen[hidden]{display:none!important}html.game-welcome{overflow:auto}html.game-welcome .app-shell{display:none}html.game-welcome .welcome-screen{display:block}
-    .welcome-screen{box-sizing:border-box;width:100%;padding:34px 24px 30px;background:radial-gradient(ellipse at 50% 40%,#edf2e3 0,transparent 68%),#f7f6f0;color:#283f36;font-family:"Avenir Next","Segoe UI",Arial,sans-serif;text-align:center}
-    .welcome-content{width:min(100%,680px);margin:0 auto}.welcome-eyebrow{margin:0 0 8px;color:#7c8e6d;font-size:10px;font-weight:600;letter-spacing:1.7px;text-transform:uppercase}.welcome-screen h1{margin:0;font-size:44px;font-weight:700;line-height:1.2;letter-spacing:-1.6px;outline:none}.welcome-intro{max-width:410px;margin:12px auto 23px;color:#819078;font-size:13px;line-height:1.7}
-    .welcome-form{margin:0}.welcome-choice{padding:0;margin:0;border:0;min-width:0}.welcome-choice legend{float:left;width:100%;padding:0;margin:0 0 15px;font-size:15px;line-height:1.5;font-weight:600}.welcome-heroes{clear:both;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:19px;max-width:440px;margin:0 auto}
-    .welcome-radio{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.welcome-hero{position:relative;display:flex;flex-direction:column;align-items:center;box-sizing:border-box;padding:15px 13px 18px;border:1.5px solid #dce2d0;border-radius:24px;background:#fffdf8;cursor:pointer;box-shadow:0 4px 0 #dfe5d333;transition:background .18s,border-color .18s,box-shadow .18s}
-    .welcome-hero-scene{position:relative;display:grid;place-items:center;width:100%;height:260px;border-radius:90px 90px 16px 16px;background:linear-gradient(180deg,#edf0e4,#f5f5eb);overflow:hidden}.welcome-hero-scene:after{content:"";position:absolute;bottom:5px;left:15%;right:15%;height:12px;border-radius:50%;background:#ccd7b8;opacity:.65}.welcome-hero-art{position:relative;z-index:1;width:100%;height:100%;display:flex;align-items:center;justify-content:center}.welcome-hero-art>.avatar-svg{display:block;width:auto;height:100%;max-width:100%;margin:0;overflow:visible;filter:none}.welcome-hero-name{display:block;margin-top:13px;font-size:17px;font-weight:600;line-height:1.4}.welcome-hero-check{position:absolute;z-index:2;top:13px;right:13px;display:grid;place-items:center;width:23px;height:23px;border-radius:50%;background:#dfe9cf;color:#56754a;opacity:0;transform:scale(.8);transition:opacity .18s,transform .18s}.welcome-hero-check svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}.welcome-radio:checked+.welcome-hero{border-color:#8ca578;background:#f1f5e9;box-shadow:0 0 0 2px #dfe8d3,0 4px 0 #dfe5d333}.welcome-radio:checked+.welcome-hero .welcome-hero-check{opacity:1;transform:scale(1)}.welcome-radio:focus-visible+.welcome-hero{outline:3px solid #c98c46;outline-offset:5px}
-    .welcome-start{appearance:none;display:block;width:min(100%,256px);min-height:48px;margin:23px auto 0;padding:13px 24px;border:1px solid #3f604d;border-radius:14px;background:#3f604d;color:#fffdf5;font:600 14px "Avenir Next","Segoe UI",Arial,sans-serif;cursor:pointer;box-shadow:0 4px 10px #3f604d0d;transition:background .18s,transform .18s}.welcome-start:hover{background:#345641}.welcome-start:active{transform:translateY(1px)}.welcome-start:focus-visible{outline:3px solid #c98c46;outline-offset:4px}.welcome-note{margin:12px 0 0;font-size:10px;line-height:1.5;color:#929d85}
-    @media(max-width:520px){.welcome-screen{padding:28px 20px 25px}.welcome-screen h1{font-size:38px}.welcome-intro{max-width:300px;margin:11px auto 22px;font-size:12px}.welcome-choice legend{font-size:14px;margin-bottom:15px}.welcome-heroes{gap:12px;max-width:360px}.welcome-hero{padding:11px 9px 15px;border-radius:21px}.welcome-hero-scene{height:250px}.welcome-hero-name{font-size:15px;margin-top:12px}.welcome-hero-check{width:21px;height:21px;top:9px;right:9px}.welcome-start{margin-top:23px;width:min(100%,290px)}}
-    @media(max-width:350px){.welcome-screen{padding-left:15px;padding-right:15px}.welcome-hero-scene{height:220px}.welcome-heroes{gap:10px}.welcome-hero-name{font-size:14px}}
-    @keyframes loader-sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
-    @media(max-height:430px){.game-loader-art{width:94px;height:100px;margin-bottom:10px}.game-loader h1{font-size:23px}.game-loader-copy{margin:10px 0 16px}.game-loader-brand{margin-bottom:8px}}
+    .welcome-screen{box-sizing:border-box;width:100%;padding:25px 24px 20px;background:radial-gradient(ellipse at 50% 46%,#edf1e3 0,transparent 68%),#f7f6f0;color:#29483e;font-family:"Avenir Next","Segoe UI",Arial,sans-serif;text-align:center}.welcome-content{width:min(100%,760px);margin:0 auto}.welcome-intro{max-width:450px;margin:12px auto 19px;color:#839078;font-size:12px;line-height:1.65}
+    .welcome-form{margin:0}.welcome-choice{padding:0;margin:0;border:0;min-width:0}.welcome-choice legend{float:left;width:100%;padding:0;margin:0 0 13px;font-size:14px;line-height:1.5;font-weight:500;color:#51664e}.welcome-heroes{clear:both;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;max-width:450px;margin:0 auto}
+    .welcome-radio{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.welcome-hero{position:relative;display:block;box-sizing:border-box;padding:10px 10px 14px;border:1px solid #d8ddcc;border-radius:25px;background:#fffdf7;cursor:pointer;box-shadow:0 3px 0 #e0dfcf77,0 9px 22px #53603e05;transition:background .18s,border-color .18s,box-shadow .18s}.welcome-hero:before{content:"";position:absolute;inset:5px;border:1px solid #e9e6d9;border-radius:20px;pointer-events:none}
+    .welcome-hero-scene{position:relative;display:block;width:100%;height:249px;border:1px solid #dddcc9;box-sizing:border-box;border-radius:100px 100px 13px 13px;background:radial-gradient(ellipse at 50% 34%,#fffdf3 0,#f9f7eb 55%,#eef0e0 100%);overflow:hidden;isolation:isolate}.welcome-hero-scene:before,.welcome-hero-scene:after{content:"";position:absolute;top:20px;bottom:13px;width:25%;z-index:0;background:linear-gradient(90deg,#91a77b,#bccaa3 49%,#a6b68d);opacity:.85}.welcome-hero-scene:before{left:0;clip-path:polygon(0 0,100% 0,76% 32%,49% 62%,74% 100%,0 100%)}.welcome-hero-scene:after{right:0;transform:scaleX(-1);clip-path:polygon(0 0,100% 0,76% 32%,49% 62%,74% 100%,0 100%)}
+    .welcome-niche-rod{position:absolute;z-index:1;left:13%;right:13%;top:18px;height:3px;border-radius:3px;background:#c1af81;box-shadow:0 1px 0 #fff9df}.welcome-niche-rod:before,.welcome-niche-rod:after{content:"";position:absolute;top:-2px;width:7px;height:7px;border-radius:50%;background:#b5a271}.welcome-niche-rod:before{left:-4px}.welcome-niche-rod:after{right:-4px}.welcome-rug{position:absolute;z-index:1;bottom:7px;left:10%;right:10%;height:18px;border:1px solid #b7c39f;border-radius:50%;background:#c9d4b2;box-shadow:inset 0 0 0 3px #e1e6cf}.welcome-hero-art{position:absolute;z-index:2;inset:2px 8px 1px}.welcome-hero-art>.avatar-svg{display:block;width:100%;height:100%;max-width:100%;max-height:100%;margin:0;overflow:visible;filter:none}
+    .welcome-hero-name{display:block;margin-top:10px;font-family:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;font-size:19px;font-weight:600;line-height:1.4;letter-spacing:.1px;color:#4a6249}.welcome-hero-check{position:absolute;z-index:3;top:14px;right:14px;display:grid;place-items:center;width:21px;height:21px;border:1px solid #c9d4b9;border-radius:50%;background:#e4ebd7;color:#4e7150;opacity:0;transform:scale(.8);transition:opacity .18s,transform .18s}.welcome-hero-check svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}.welcome-radio:checked+.welcome-hero{border-color:#718c64;background:#f0f4e8;box-shadow:0 3px 0 #d7dfc9,0 8px 22px #526b4210}.welcome-radio:checked+.welcome-hero:before{border-color:#d4ddc6}.welcome-radio:checked+.welcome-hero .welcome-hero-check{opacity:1;transform:scale(1)}.welcome-radio:focus-visible+.welcome-hero{outline:2px solid #315944;outline-offset:4px}
+    .welcome-start{appearance:none;display:block;width:min(100%,260px);min-height:48px;margin:20px auto 0;padding:13px 24px;border:1px solid #365b48;border-radius:13px;background:#3f604d;color:#fffdf5;font:600 13px "Avenir Next","Segoe UI",Arial,sans-serif;cursor:pointer;box-shadow:0 3px 0 #2e493a0d,0 6px 16px #3f604d0a;transition:background .18s,transform .18s}.welcome-start:hover{background:#345641}.welcome-start:active{transform:translateY(1px)}.welcome-start:focus-visible{outline:2px solid #315944;outline-offset:4px}.welcome-note{margin:10px 0 0;font-size:10px;line-height:1.5;color:#959e88}
+    @media(max-width:520px){.welcome-screen{padding:24px 20px 20px}.entry-wordmark-small{font-size:10px;letter-spacing:2.7px}.entry-wordmark-name{font-size:55px;letter-spacing:1.8px}.entry-ornament{width:140px;height:12px;margin-top:8px}.welcome-intro{max-width:285px;margin:11px auto 18px;font-size:11px;line-height:1.7}.welcome-choice legend{font-size:13px;margin-bottom:12px}.welcome-heroes{gap:13px;max-width:360px}.welcome-hero{padding:8px 8px 12px;border-radius:23px}.welcome-hero:before{inset:4px;border-radius:19px}.welcome-hero-scene{height:244px}.welcome-hero-art{inset:2px 3px 1px}.welcome-hero-name{font-size:17px;margin-top:9px}.welcome-hero-check{width:19px;height:19px;top:12px;right:12px}.welcome-start{margin-top:20px;width:min(100%,280px)}.welcome-note{font-size:9px}}
+    @media(max-width:350px){.welcome-screen{padding-left:15px;padding-right:15px}.entry-wordmark-name{font-size:50px}.welcome-hero-scene{height:220px}.welcome-heroes{gap:10px}.welcome-hero-name{font-size:16px}}
+    @media(max-width:640px){.topbar .brand-title{font-size:25px}.topbar .brand-kicker{font-size:7px;letter-spacing:.95px}}
+    @keyframes loader-sway{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.2deg)}}
+    @media(max-height:500px){.game-loader .entry-wordmark-name{font-size:40px}.game-loader .entry-wordmark-small{font-size:9px}.game-loader .entry-ornament{height:10px;margin-top:5px}.game-loader-art{width:126px;height:138px;margin:10px auto}.game-loader-copy{font-size:11px;margin-bottom:12px}.game-loader-status{min-height:18px;margin-top:8px}.game-loader-retry{margin-top:10px}}
     @media(prefers-reduced-motion:reduce){.game-loader-art .loader-shirt{animation:none}.game-loader-fill,.welcome-hero,.welcome-hero-check,.welcome-start{transition:none}}
   </style>
-  <script src="boot.js?v=6.12"></script>
-  <link rel="stylesheet" href="styles.css?v=6.12" data-game-asset="styles">
+  <script src="boot.js?v=6.13"></script>
+  <link rel="stylesheet" href="styles.css?v=6.13" data-game-asset="styles">
 </head>
 <body>
   <section class="game-loader" id="gameLoader" aria-labelledby="gameLoaderTitle" aria-busy="true">
     <div class="game-loader-card">
-      <svg class="game-loader-art" viewBox="0 0 142 152" aria-hidden="true">
-        <ellipse cx="71" cy="141" rx="52" ry="7" fill="#dce5d0"/>
-        <path d="M27 19Q71 9 115 19V135H27Z" fill="#fffdf5" stroke="#b6c5a3" stroke-width="2"/>
-        <path d="M71 17V134M34 29H108" fill="none" stroke="#d7dec9" stroke-width="1.5"/>
-        <path d="M30 31H112" stroke="#b2a584" stroke-width="4" stroke-linecap="round"/>
+      <h1 class="entry-wordmark" id="gameLoaderTitle"><span class="entry-wordmark-small">Примерочная</span><span class="entry-wordmark-name" lang="mn">Хувцас</span></h1>
+      <svg class="entry-ornament" viewBox="0 0 156 13" aria-hidden="true"><path d="M0 6.5H24V2H39V11H29V6.5H50V2H61V11H55V6.5H66M90 6.5H101V2H112V11H106V6.5H127V2H142V11H132V6.5H156" fill="none" stroke="#b6a16b" stroke-width="1.15" stroke-linejoin="miter"/><path d="m78 1 5.5 5.5L78 12l-5.5-5.5Z" fill="#335b4e"/><path d="m78 4 2.5 2.5L78 9l-2.5-2.5Z" fill="#be8b70"/></svg>
+      <svg class="game-loader-art" viewBox="0 0 190 208" aria-hidden="true">
+        <defs><linearGradient id="loaderCurtain" x1="0" x2="1"><stop stop-color="#91a37c"/><stop offset=".5" stop-color="#bfcca7"/><stop offset="1" stop-color="#a4b78d"/></linearGradient><linearGradient id="loaderShirt" x1="0" x2="1"><stop stop-color="#9ac4d3"/><stop offset="1" stop-color="#80adbf"/></linearGradient></defs>
+        <ellipse cx="95" cy="194" rx="68" ry="9" fill="#dfe5d1"/>
+        <path d="M22 184V80a73 73 0 0 1 146 0v104Z" fill="#e8ecdc" stroke="#b5bea1" stroke-width="1.5"/>
+        <path d="M29 181V80a66 66 0 0 1 132 0v101Z" fill="#fcfaef" stroke="#d9d8c4"/>
+        <path d="M25 72h140v109H25Z" fill="#f8f6e9"/>
+        <path d="M27 65h29q-2 50-14 77l9 39H27Z" fill="url(#loaderCurtain)"/>
+        <path d="M163 65h-29q2 50 14 77l-9 39h24Z" fill="url(#loaderCurtain)"/>
+        <path d="m29 139 14 3m104 0 14-3" stroke="#d4bd7c" stroke-width="3"/>
+        <path d="M32 63H158" stroke="#b6a475" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="30" cy="63" r="4" fill="#c4b184"/><circle cx="160" cy="63" r="4" fill="#c4b184"/>
         <g class="loader-shirt">
-          <path d="M67 37q0-5 4-5 5 0 5 4 0 3-5 5v5M71 45 46 59H96Z" fill="none" stroke="#9a8b6c" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-          <path d="M59 54 45 61 36 79 49 86 55 75 54 116Q71 122 88 116L87 75 93 86 106 79 97 61 83 54Q71 64 59 54Z" fill="#91bfd4" stroke="#6f8274" stroke-width="1.5" stroke-linejoin="round"/>
-          <path d="M60 55Q71 68 82 55M58 110Q71 113 84 110" fill="none" stroke="#76a8bd" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M75 76h9v13q-4 3-9 0Z" fill="#a3cbd9" stroke="#6f8274" stroke-width="1"/>
+          <path d="M91 72q0-5 4-5t4 4q0 3-4 5v5M95 79 68 94h54Z" fill="none" stroke="#a18b60" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="m80 87-16 8-14 30 13 7 12-23-2 54q22 5 44 0l-2-54 12 23 13-7-14-30-16-8-15 7Z" fill="url(#loaderShirt)" stroke="#718f91" stroke-width="1.2" stroke-linejoin="round"/>
+          <path d="m81 87 14 7-8 10-10-14m32-3-14 7 8 10 10-14" fill="#efecda" stroke="#718f91" stroke-width="1.1" stroke-linejoin="round"/>
+          <path d="M95 96v64m-18-4q18 4 36 0M67 123l-3 6m59-6 3 6" stroke="#6c9aae" stroke-width="1" fill="none"/>
+          <path d="M101 111h10v13q-5 4-10 0Z" fill="#a5cbd5" stroke="#718f91" stroke-width=".9"/>
+          <g fill="#f5f1df"><circle cx="95" cy="111" r="1.2"/><circle cx="95" cy="124" r="1.2"/><circle cx="95" cy="137" r="1.2"/><circle cx="95" cy="150" r="1.2"/></g>
         </g>
-        <path d="M22 135H120" stroke="#aebc9a" stroke-width="3" stroke-linecap="round"/>
-        <path d="m117 43 2 5 5 2-5 2-2 5-2-5-5-2 5-2ZM20 104l1.5 3.5L25 109l-3.5 1.5L20 114l-1.5-3.5L15 109l3.5-1.5Z" fill="#cbb579"/>
+        <ellipse cx="95" cy="182" rx="51" ry="8" fill="#c8d2b1" stroke="#b2c099"/><ellipse cx="95" cy="181" rx="43" ry="5" fill="none" stroke="#e5e8d3"/>
+        <path d="M23 185h144" stroke="#b5aa83" stroke-width="3" stroke-linecap="round"/>
+        <path d="M49 29h9v-6h12v12H62v-6h14m38 0h9v-6h12v12h-8v-6h14" fill="none" stroke="#b8a16d" stroke-width="1.2" opacity=".75"/>
       </svg>
-      <p class="game-loader-brand" lang="mn">Хувцас</p>
-      <h1 id="gameLoaderTitle">Открываем примерочную</h1>
-      <p class="game-loader-copy">Сейчас появятся одежда, цвета и истории.</p>
-      <span class="game-loader-percent" id="gameLoaderPercent" aria-hidden="true">0%</span>
-      <div class="game-loader-track" id="gameLoaderProgress" role="progressbar" aria-label="Подготовка игры" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="game-loader-fill" id="gameLoaderFill"></span></div>
+      <p class="game-loader-copy">Готовим одежду, цвета и истории.</p>
+      <div class="game-loader-meter"><div class="game-loader-track" id="gameLoaderProgress" role="progressbar" aria-label="Подготовка игры" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="game-loader-fill" id="gameLoaderFill"></span></div><span class="game-loader-percent" id="gameLoaderPercent" aria-hidden="true">0%</span></div>
       <p class="game-loader-status" id="gameLoaderStatus" role="status" aria-live="polite">Подготавливаем игру…</p>
       <button class="game-loader-retry" id="gameLoaderRetry" type="button" hidden>Попробовать ещё раз</button>
     </div>
   </section>
   <section class="welcome-screen" id="gameWelcome" aria-labelledby="gameWelcomeTitle" hidden>
     <div class="welcome-content">
-      <p class="welcome-eyebrow">Примерочная по-монгольски</p>
-      <h1 id="gameWelcomeTitle" tabindex="-1" lang="mn">Хувцас</h1>
-      <p class="welcome-intro">Находи одежду, пробуй цвета<br>и собирай новые образы.</p>
+      <h1 class="entry-wordmark" id="gameWelcomeTitle" tabindex="-1"><span class="entry-wordmark-small">Примерочная</span><span class="entry-wordmark-name" lang="mn">Хувцас</span></h1>
+      <svg class="entry-ornament" viewBox="0 0 156 13" aria-hidden="true"><path d="M0 6.5H24V2H39V11H29V6.5H50V2H61V11H55V6.5H66M90 6.5H101V2H112V11H106V6.5H127V2H142V11H132V6.5H156" fill="none" stroke="#b6a16b" stroke-width="1.15" stroke-linejoin="miter"/><path d="m78 1 5.5 5.5L78 12l-5.5-5.5Z" fill="#335b4e"/><path d="m78 4 2.5 2.5L78 9l-2.5-2.5Z" fill="#be8b70"/></svg>
+      <p class="welcome-intro">Находи одежду, пробуй цвета и собирай новые образы.</p>
       <form class="welcome-form" id="gameWelcomeForm">
         <fieldset class="welcome-choice">
           <legend>Кто отправится в примерочную?</legend>
@@ -71,7 +83,7 @@
               <input class="welcome-radio" type="radio" name="welcomeHero" value="nomin" id="welcomeHeroNomin" checked>
               <label class="welcome-hero" for="welcomeHeroNomin">
                 <span class="welcome-hero-check" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m3 8 3 3 7-7"/></svg></span>
-                <span class="welcome-hero-scene" aria-hidden="true"><span class="welcome-hero-art" id="welcomeArtNomin"></span></span>
+                <span class="welcome-hero-scene" aria-hidden="true"><span class="welcome-niche-rod"></span><span class="welcome-rug"></span><span class="welcome-hero-art" id="welcomeArtNomin"></span></span>
                 <span class="welcome-hero-name" lang="mn">Номин</span>
               </label>
             </div>
@@ -79,7 +91,7 @@
               <input class="welcome-radio" type="radio" name="welcomeHero" value="temuulen" id="welcomeHeroTemuulen">
               <label class="welcome-hero" for="welcomeHeroTemuulen">
                 <span class="welcome-hero-check" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m3 8 3 3 7-7"/></svg></span>
-                <span class="welcome-hero-scene" aria-hidden="true"><span class="welcome-hero-art" id="welcomeArtTemuulen"></span></span>
+                <span class="welcome-hero-scene" aria-hidden="true"><span class="welcome-niche-rod"></span><span class="welcome-rug"></span><span class="welcome-hero-art" id="welcomeArtTemuulen"></span></span>
                 <span class="welcome-hero-name" lang="mn">Тэмүүлэн</span>
               </label>
             </div>
@@ -94,7 +106,7 @@
   <a class="skip-link" href="#game">Перейти к игре</a>
   <div class="app-shell">
     <header class="topbar">
-      <a class="brand" href="#" aria-label="Хувцас — главная"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M13 9a3 3 0 1 1 5 2c-1 1-2 1-2 3v2M16 15 4 23a1 1 0 0 0 1 2h22a1 1 0 0 0 1-2Z"/></svg></span><span lang="mn">Хувцас</span></a>
+      <a class="brand" href="#" aria-label="Примерочная Хувцас — главная"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M13 9a3 3 0 1 1 5 2c-1 1-2 1-2 3v2M16 15 4 23a1 1 0 0 0 1 2h22a1 1 0 0 0 1-2Z"/></svg></span><span class="brand-copy"><span class="brand-kicker">Примерочная</span><span class="brand-title" lang="mn">Хувцас</span></span></a>
       <nav class="header-actions" aria-label="Материалы игры">
         <button class="text-button help-top" id="helpButton" aria-label="Как играть"><span class="icon" data-icon="help"></span><span>Как играть</span></button>
         <span class="known-count" id="knownCount" title="Слова, найденные с первой попытки без подсказки"></span>
@@ -148,10 +160,10 @@
 
   <dialog id="modal" class="modal"><div id="modalContent"></div></dialog>
   <div id="toast" class="toast" role="status"></div>
-  <script defer src="clothes.js?v=6.12" data-game-asset="wardrobe"></script>
-  <script defer src="scenarios.js?v=6.12" data-game-asset="stories"></script>
-  <script defer src="audio.js?v=6.12" data-game-asset="audio"></script>
-  <script defer src="app.js?v=6.12" data-game-asset="app"></script>
-  <script defer src="embed.js?v=6.12"></script>
+  <script defer src="clothes.js?v=6.13" data-game-asset="wardrobe"></script>
+  <script defer src="scenarios.js?v=6.13" data-game-asset="stories"></script>
+  <script defer src="audio.js?v=6.13" data-game-asset="audio"></script>
+  <script defer src="app.js?v=6.13" data-game-asset="app"></script>
+  <script defer src="embed.js?v=6.13"></script>
 </body>
 </html>
