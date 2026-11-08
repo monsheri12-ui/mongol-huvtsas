@@ -4,6 +4,9 @@
   const resources = new Set(['styles', 'wardrobe', 'stories', 'audio', 'app']);
   const loaded = new Set();
   const failed = new Set();
+  const welcomeSessionKey = 'huvtsas:welcome-started';
+  const heroes = new Set(['nomin', 'temuulen']);
+  let selectedHero = 'nomin';
   let phase = 'loading';
   let slow = false;
   let failureText = '';
@@ -30,18 +33,27 @@
   function render() {
     const loader = $('gameLoader');
     lockGame(phase !== 'ready');
+    const welcome = $('gameWelcome');
+    if (welcome) {
+      welcome.hidden = phase !== 'welcome';
+      welcome.inert = phase !== 'welcome';
+    }
+    root.classList.toggle('game-welcome', phase === 'welcome');
     if (!loader) return;
-    loader.hidden = phase === 'ready';
+    loader.hidden = phase === 'ready' || phase === 'welcome';
     loader.classList.toggle('has-error', phase === 'error');
     loader.setAttribute('aria-busy', phase === 'loading' ? 'true' : 'false');
-    const count = phase === 'ready' ? resources.size : loaded.size;
+    const count = phase === 'ready' || phase === 'welcome' ? resources.size : loaded.size;
+    const percent = Math.round(count / resources.size * 100);
     const progress = $('gameLoaderProgress');
     if (progress) {
-      progress.setAttribute('aria-valuenow', String(count));
-      progress.setAttribute('aria-valuetext', message());
+      progress.setAttribute('aria-valuenow', String(percent));
+      progress.setAttribute('aria-valuetext', percent + '% · ' + count + ' из ' + resources.size + ' этапов. ' + message());
     }
+    const number = $('gameLoaderPercent');
+    if (number) number.textContent = percent + '%';
     const fill = $('gameLoaderFill');
-    if (fill) fill.style.width = (count / resources.size * 100) + '%';
+    if (fill) fill.style.width = percent + '%';
     const status = $('gameLoaderStatus');
     if (status) status.textContent = phase === 'ready' ? 'Примерочная готова.' : message();
     const retry = $('gameLoaderRetry');
@@ -51,16 +63,53 @@
     clearTimeout(slowTimer);
     clearTimeout(timeoutTimer);
   }
-  function ready() {
-    // App initialization can succeed with missing optional globals. Every marked
-    // asset is required for the complete game, so its download failure needs a
-    // fresh attempt. Slow/timeout screens still recover after a late ready signal.
-    if (phase === 'ready' || failed.size) return;
+  function hasStarted() {
+    try { return sessionStorage.getItem(welcomeSessionKey) === '1'; }
+    catch (_) { return false; }
+  }
+  function drawWelcome() {
+    const wardrobe = window.WARDROBE;
+    if (typeof wardrobe?.avatar === 'function') {
+      const nomin = $('welcomeArtNomin');
+      const temuulen = $('welcomeArtTemuulen');
+      // Preview outfits live only inside these SVG illustrations. They never
+      // change the learner's equipped clothes, saved looks, or progress.
+      if (nomin) nomin.innerHTML = wardrobe.avatar('nomin',
+        { top: 'shirt', bottom: 'jeans', shoes: 'sneakers' },
+        { shirt: '#91bfd4', jeans: '#648ab7', sneakers: '#f1eee4' });
+      if (temuulen) temuulen.innerHTML = wardrobe.avatar('temuulen',
+        { top: 'sweater', bottom: 'pants', shoes: 'sneakers' },
+        { sweater: '#84a77c', pants: '#ccba91', sneakers: '#f1eee4' });
+    }
+    const nominRadio = $('welcomeHeroNomin');
+    const temuulenRadio = $('welcomeHeroTemuulen');
+    if (nominRadio) nominRadio.checked = selectedHero === 'nomin';
+    if (temuulenRadio) temuulenRadio.checked = selectedHero === 'temuulen';
+  }
+  function enterGame() {
     phase = 'ready';
-    clearTimers();
     root.classList.remove('game-booting');
     render();
     document.dispatchEvent(new CustomEvent('huvtsas:ready'));
+  }
+  function ready(options = {}) {
+    // App initialization can succeed with missing optional globals. Every marked
+    // asset is required for the complete game, so its download failure needs a
+    // fresh attempt. Slow/timeout screens still recover after a late ready signal.
+    if (phase === 'ready' || phase === 'welcome' || failed.size) return;
+    clearTimers();
+    failureText = '';
+    slow = false;
+    if (hasStarted()) {
+      enterGame();
+      return;
+    }
+    selectedHero = heroes.has(options.hero) ? options.hero : 'nomin';
+    drawWelcome();
+    phase = 'welcome';
+    render();
+    document.dispatchEvent(new CustomEvent('huvtsas:welcome'));
+    $('gameWelcomeTitle')?.focus?.({ preventScroll: true });
   }
   function fail(text) {
     if (phase === 'ready') return;
@@ -93,6 +142,29 @@
   document.addEventListener('DOMContentLoaded', render, { once: true });
   document.addEventListener('click', event => {
     if (event.target?.closest?.('#gameLoaderRetry')) location.reload();
+  });
+  document.addEventListener('change', event => {
+    const target = event.target;
+    if (phase === 'welcome' && target?.name === 'welcomeHero' && heroes.has(target.value)) {
+      selectedHero = target.value;
+    }
+  });
+  document.addEventListener('submit', event => {
+    if (event.target?.id !== 'gameWelcomeForm') return;
+    event.preventDefault();
+    if (phase !== 'welcome' || failed.size) return;
+    // The app applies the selected hero synchronously while it is still hidden.
+    const accepted = document.dispatchEvent(new CustomEvent('huvtsas:start', {
+      detail: { hero: selectedHero }, cancelable: true
+    }));
+    if (accepted === false || phase !== 'welcome' || failed.size) return;
+    try { sessionStorage.setItem(welcomeSessionKey, '1'); } catch (_) {}
+    enterGame();
+    const game = $('game');
+    if (game) {
+      game.setAttribute('tabindex', '-1');
+      game.focus?.({ preventScroll: true });
+    }
   });
   slowTimer = setTimeout(() => {
     if (phase !== 'loading') return;

@@ -10,7 +10,8 @@
   let lastHeight = 0;
 
   function contentHeight() {
-    const shell = document.querySelector('.app-shell');
+    const welcome = document.getElementById('gameWelcome');
+    const shell = welcome && !welcome.hidden ? welcome : document.querySelector('.app-shell');
     if (!shell) return 0;
 
     // scrollHeight is at least the current iframe viewport height. Measuring the
@@ -46,11 +47,15 @@
   window.addEventListener('load', scheduleMeasure);
   window.addEventListener('resize', scheduleMeasure);
   window.addEventListener('huvtsas:ready', scheduleMeasure);
+  document.addEventListener('huvtsas:welcome', scheduleMeasure);
+  document.addEventListener('huvtsas:ready', scheduleMeasure);
 
   const shell = document.querySelector('.app-shell');
   if (typeof ResizeObserver === 'function') {
     const observer = new ResizeObserver(scheduleMeasure);
     if (shell) observer.observe(shell);
+    const welcome = document.getElementById('gameWelcome');
+    if (welcome) observer.observe(welcome);
     if (document.body) observer.observe(document.body);
   }
   if (document.fonts && document.fonts.ready) {

@@ -13,15 +13,24 @@
     html.game-booting .game-loader{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;overflow:auto;padding:28px 20px;background:radial-gradient(ellipse at 50% 30%,#eef3e5 0,transparent 62%),#f7f6f0;color:#283f36;font-family:"Avenir Next","Segoe UI",Arial,sans-serif;text-align:center}
     .game-loader-card{width:min(100%,330px);margin:auto}.game-loader-art{display:block;width:142px;height:152px;margin:0 auto 18px;overflow:visible}.game-loader-art .loader-shirt{transform-origin:71px 49px;animation:loader-sway 2.8s ease-in-out infinite}
     .game-loader-brand{margin:0 0 12px;color:#7e9170;font-size:12px;letter-spacing:2px;font-weight:650}.game-loader h1{font-size:27px;line-height:1.25;letter-spacing:-.65px;margin:0;font-weight:700}.game-loader-copy{font-size:13px;line-height:1.65;margin:12px 0 23px;color:#809075}
-    .game-loader-track{width:210px;height:5px;max-width:100%;margin:0 auto;background:#dfe7d4;border-radius:8px;overflow:hidden}.game-loader-fill{display:block;width:0;height:100%;background:#8aa476;border-radius:8px;transition:width .22s ease-out}.game-loader-status{min-height:36px;margin:12px 0 0;font-size:11px;line-height:1.6;color:#869579}
+    .game-loader-percent{display:block;margin:0 0 9px;font-size:13px;font-weight:600;color:#5e7850;font-variant-numeric:tabular-nums}.game-loader-track{width:210px;height:5px;max-width:100%;margin:0 auto;background:#dfe7d4;border-radius:8px;overflow:hidden}.game-loader-fill{display:block;width:0;height:100%;background:#8aa476;border-radius:8px;transition:width .22s ease-out}.game-loader-status{min-height:36px;margin:12px 0 0;font-size:11px;line-height:1.6;color:#869579}
     .game-loader-retry{appearance:none;border:1px solid #3f604d;border-radius:12px;min-height:44px;padding:11px 20px;margin-top:15px;background:#3f604d;color:#fffdf5;font:600 13px "Avenir Next","Segoe UI",Arial,sans-serif;cursor:pointer}.game-loader-retry:focus-visible{outline:3px solid #c98c46;outline-offset:4px}.game-loader-retry[hidden]{display:none}
     .game-loader.has-error .game-loader-status{color:#9a6e59}.game-loader.has-error .game-loader-fill{background:#c19c74}.game-loader.has-error .loader-shirt{animation:none}
+    .welcome-screen{display:none}.welcome-screen[hidden]{display:none!important}html.game-welcome{overflow:auto}html.game-welcome .app-shell{display:none}html.game-welcome .welcome-screen{display:block}
+    .welcome-screen{box-sizing:border-box;width:100%;padding:34px 24px 30px;background:radial-gradient(ellipse at 50% 40%,#edf2e3 0,transparent 68%),#f7f6f0;color:#283f36;font-family:"Avenir Next","Segoe UI",Arial,sans-serif;text-align:center}
+    .welcome-content{width:min(100%,680px);margin:0 auto}.welcome-eyebrow{margin:0 0 8px;color:#7c8e6d;font-size:10px;font-weight:600;letter-spacing:1.7px;text-transform:uppercase}.welcome-screen h1{margin:0;font-size:44px;font-weight:700;line-height:1.2;letter-spacing:-1.6px;outline:none}.welcome-intro{max-width:410px;margin:12px auto 23px;color:#819078;font-size:13px;line-height:1.7}
+    .welcome-form{margin:0}.welcome-choice{padding:0;margin:0;border:0;min-width:0}.welcome-choice legend{float:left;width:100%;padding:0;margin:0 0 15px;font-size:15px;line-height:1.5;font-weight:600}.welcome-heroes{clear:both;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:19px;max-width:440px;margin:0 auto}
+    .welcome-radio{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.welcome-hero{position:relative;display:flex;flex-direction:column;align-items:center;box-sizing:border-box;padding:15px 13px 18px;border:1.5px solid #dce2d0;border-radius:24px;background:#fffdf8;cursor:pointer;box-shadow:0 4px 0 #dfe5d333;transition:background .18s,border-color .18s,box-shadow .18s}
+    .welcome-hero-scene{position:relative;display:grid;place-items:center;width:100%;height:260px;border-radius:90px 90px 16px 16px;background:linear-gradient(180deg,#edf0e4,#f5f5eb);overflow:hidden}.welcome-hero-scene:after{content:"";position:absolute;bottom:5px;left:15%;right:15%;height:12px;border-radius:50%;background:#ccd7b8;opacity:.65}.welcome-hero-art{position:relative;z-index:1;width:100%;height:100%;display:flex;align-items:center;justify-content:center}.welcome-hero-art>.avatar-svg{display:block;width:auto;height:100%;max-width:100%;margin:0;overflow:visible;filter:none}.welcome-hero-name{display:block;margin-top:13px;font-size:17px;font-weight:600;line-height:1.4}.welcome-hero-check{position:absolute;z-index:2;top:13px;right:13px;display:grid;place-items:center;width:23px;height:23px;border-radius:50%;background:#dfe9cf;color:#56754a;opacity:0;transform:scale(.8);transition:opacity .18s,transform .18s}.welcome-hero-check svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}.welcome-radio:checked+.welcome-hero{border-color:#8ca578;background:#f1f5e9;box-shadow:0 0 0 2px #dfe8d3,0 4px 0 #dfe5d333}.welcome-radio:checked+.welcome-hero .welcome-hero-check{opacity:1;transform:scale(1)}.welcome-radio:focus-visible+.welcome-hero{outline:3px solid #c98c46;outline-offset:5px}
+    .welcome-start{appearance:none;display:block;width:min(100%,256px);min-height:48px;margin:23px auto 0;padding:13px 24px;border:1px solid #3f604d;border-radius:14px;background:#3f604d;color:#fffdf5;font:600 14px "Avenir Next","Segoe UI",Arial,sans-serif;cursor:pointer;box-shadow:0 4px 10px #3f604d0d;transition:background .18s,transform .18s}.welcome-start:hover{background:#345641}.welcome-start:active{transform:translateY(1px)}.welcome-start:focus-visible{outline:3px solid #c98c46;outline-offset:4px}.welcome-note{margin:12px 0 0;font-size:10px;line-height:1.5;color:#929d85}
+    @media(max-width:520px){.welcome-screen{padding:28px 20px 25px}.welcome-screen h1{font-size:38px}.welcome-intro{max-width:300px;margin:11px auto 22px;font-size:12px}.welcome-choice legend{font-size:14px;margin-bottom:15px}.welcome-heroes{gap:12px;max-width:360px}.welcome-hero{padding:11px 9px 15px;border-radius:21px}.welcome-hero-scene{height:250px}.welcome-hero-name{font-size:15px;margin-top:12px}.welcome-hero-check{width:21px;height:21px;top:9px;right:9px}.welcome-start{margin-top:23px;width:min(100%,290px)}}
+    @media(max-width:350px){.welcome-screen{padding-left:15px;padding-right:15px}.welcome-hero-scene{height:220px}.welcome-heroes{gap:10px}.welcome-hero-name{font-size:14px}}
     @keyframes loader-sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
     @media(max-height:430px){.game-loader-art{width:94px;height:100px;margin-bottom:10px}.game-loader h1{font-size:23px}.game-loader-copy{margin:10px 0 16px}.game-loader-brand{margin-bottom:8px}}
-    @media(prefers-reduced-motion:reduce){.game-loader-art .loader-shirt{animation:none}.game-loader-fill{transition:none}}
+    @media(prefers-reduced-motion:reduce){.game-loader-art .loader-shirt{animation:none}.game-loader-fill,.welcome-hero,.welcome-hero-check,.welcome-start{transition:none}}
   </style>
-  <script src="boot.js?v=6.11"></script>
-  <link rel="stylesheet" href="styles.css?v=6.11" data-game-asset="styles">
+  <script src="boot.js?v=6.12"></script>
+  <link rel="stylesheet" href="styles.css?v=6.12" data-game-asset="styles">
 </head>
 <body>
   <section class="game-loader" id="gameLoader" aria-labelledby="gameLoaderTitle" aria-busy="true">
@@ -43,9 +52,42 @@
       <p class="game-loader-brand" lang="mn">Хувцас</p>
       <h1 id="gameLoaderTitle">Открываем примерочную</h1>
       <p class="game-loader-copy">Сейчас появятся одежда, цвета и истории.</p>
-      <div class="game-loader-track" id="gameLoaderProgress" role="progressbar" aria-label="Подготовка игры" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><span class="game-loader-fill" id="gameLoaderFill"></span></div>
+      <span class="game-loader-percent" id="gameLoaderPercent" aria-hidden="true">0%</span>
+      <div class="game-loader-track" id="gameLoaderProgress" role="progressbar" aria-label="Подготовка игры" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="game-loader-fill" id="gameLoaderFill"></span></div>
       <p class="game-loader-status" id="gameLoaderStatus" role="status" aria-live="polite">Подготавливаем игру…</p>
       <button class="game-loader-retry" id="gameLoaderRetry" type="button" hidden>Попробовать ещё раз</button>
+    </div>
+  </section>
+  <section class="welcome-screen" id="gameWelcome" aria-labelledby="gameWelcomeTitle" hidden>
+    <div class="welcome-content">
+      <p class="welcome-eyebrow">Примерочная по-монгольски</p>
+      <h1 id="gameWelcomeTitle" tabindex="-1" lang="mn">Хувцас</h1>
+      <p class="welcome-intro">Находи одежду, пробуй цвета<br>и собирай новые образы.</p>
+      <form class="welcome-form" id="gameWelcomeForm">
+        <fieldset class="welcome-choice">
+          <legend>Кто отправится в примерочную?</legend>
+          <div class="welcome-heroes">
+            <div>
+              <input class="welcome-radio" type="radio" name="welcomeHero" value="nomin" id="welcomeHeroNomin" checked>
+              <label class="welcome-hero" for="welcomeHeroNomin">
+                <span class="welcome-hero-check" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m3 8 3 3 7-7"/></svg></span>
+                <span class="welcome-hero-scene" aria-hidden="true"><span class="welcome-hero-art" id="welcomeArtNomin"></span></span>
+                <span class="welcome-hero-name" lang="mn">Номин</span>
+              </label>
+            </div>
+            <div>
+              <input class="welcome-radio" type="radio" name="welcomeHero" value="temuulen" id="welcomeHeroTemuulen">
+              <label class="welcome-hero" for="welcomeHeroTemuulen">
+                <span class="welcome-hero-check" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m3 8 3 3 7-7"/></svg></span>
+                <span class="welcome-hero-scene" aria-hidden="true"><span class="welcome-hero-art" id="welcomeArtTemuulen"></span></span>
+                <span class="welcome-hero-name" lang="mn">Тэмүүлэн</span>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+        <button class="welcome-start" id="welcomeStart" type="submit">Начать игру</button>
+      </form>
+      <p class="welcome-note">Персонажа можно поменять в игре.</p>
     </div>
   </section>
   <noscript><style>.app-shell,.skip-link{display:none!important}</style><p style="padding:30px;font:16px/1.6 Arial,sans-serif;color:#3f604d">Чтобы открыть примерочную, включи JavaScript в браузере.</p></noscript>
@@ -106,10 +148,10 @@
 
   <dialog id="modal" class="modal"><div id="modalContent"></div></dialog>
   <div id="toast" class="toast" role="status"></div>
-  <script defer src="clothes.js?v=6.11" data-game-asset="wardrobe"></script>
-  <script defer src="scenarios.js?v=6.11" data-game-asset="stories"></script>
-  <script defer src="audio.js?v=6.11" data-game-asset="audio"></script>
-  <script defer src="app.js?v=6.11" data-game-asset="app"></script>
-  <script defer src="embed.js?v=6.11"></script>
+  <script defer src="clothes.js?v=6.12" data-game-asset="wardrobe"></script>
+  <script defer src="scenarios.js?v=6.12" data-game-asset="stories"></script>
+  <script defer src="audio.js?v=6.12" data-game-asset="audio"></script>
+  <script defer src="app.js?v=6.12" data-game-asset="app"></script>
+  <script defer src="embed.js?v=6.12"></script>
 </body>
 </html>

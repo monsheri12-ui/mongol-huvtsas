@@ -319,6 +319,7 @@ function help(){openModal(modalHeader('Как играть')+'<ol class="help-li
 for(const [id,mode] of [['outfitMode','outfits'],['challengeMode','challenge'],['colorMode','colors'],['storiesMode','stories'],['freeMode','free']])$(id).addEventListener('click',()=>{$('activityMenu').open=false;switchMode(mode);});
 $('sceneList').addEventListener('click',e=>{const colorGroup=e.target.closest('[data-color-group]');if(colorGroup){state.colorGroup=colorGroup.dataset.colorGroup;newRound('colors',state.scene);return;}const b=e.target.closest('[data-scene]');if(b&&(b.dataset.scene!==state.scene||state.complete))newRound('challenge',b.dataset.scene);});
 document.querySelectorAll('[data-hero]').forEach(b=>b.addEventListener('click',()=>switchHero(b.dataset.hero)));
+document.addEventListener('huvtsas:start',event=>{const hero=event.detail?.hero;if(['nomin','temuulen'].includes(hero))switchHero(hero);});
 $('clothesGrid').addEventListener('click',e=>{const b=e.target.closest('[data-item]');if(b)choose(b.dataset.item);});
 $('clothesGrid').addEventListener('dragstart',e=>{const b=e.target.closest('[data-item]');if(b)e.dataTransfer.setData('text/plain',b.dataset.item);});
 $('characterStage').addEventListener('dragover',e=>e.preventDefault());$('characterStage').addEventListener('drop',e=>{e.preventDefault();choose(e.dataTransfer.getData('text/plain'));});
@@ -355,5 +356,5 @@ function restoreRound(){
  if(!state.complete)prepareChoices();render();return true;
 }
 if(state.mode==='free')render();else if(!restoreRound())newRound(state.mode,state.scene);
-window.HUVTSAS_BOOT?.ready();
+window.HUVTSAS_BOOT?.ready({hero:state.hero});
 })();
