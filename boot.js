@@ -80,6 +80,9 @@
       if (temuulen) temuulen.innerHTML = wardrobe.avatar('temuulen',
         { top: 'sweater', bottom: 'pants', shoes: 'sneakers' },
         { sweater: '#84a77c', pants: '#ccba91', sneakers: '#f1eee4' });
+      for (const preview of [nomin, temuulen]) {
+        preview?.querySelector?.('svg')?.setAttribute('preserveAspectRatio', 'xMidYMax meet');
+      }
     }
     const nominRadio = $('welcomeHeroNomin');
     const temuulenRadio = $('welcomeHeroTemuulen');
